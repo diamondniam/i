@@ -1,0 +1,17 @@
+@layer utilities {
+  .textL {
+    @apply text-4xl font-medium;
+  }
+
+  .textM {
+    @apply text-xl font-medium;
+  }
+
+  .textS {
+    @apply text-lg font-medium;
+  }
+
+  .textXS {
+    @apply text-sm;
+  }
+}

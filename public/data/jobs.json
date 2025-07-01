@@ -1,0 +1,252 @@
+[
+  {
+    "id": "rennord",
+    "header": {
+      "title": "Rennord",
+      "url": "https://www.rennord.com/",
+      "position": "Lead Frontend Developer",
+      "dateRange": ["2025-06-28T23:34:54.304Z", "2025-06-28T23:34:54.304Z"],
+      "isCurrent": true,
+      "tags": {
+        "main": [
+          {
+            "id": "vue",
+            "title": "Vue",
+            "styles": {
+              "color": "#204A2D",
+              "background": "#398D52"
+            }
+          },
+          {
+            "id": "i18n",
+            "title": "i18n",
+            "styles": {
+              "color": "#2D3E18",
+              "background": "#668D39"
+            }
+          },
+          {
+            "id": "tailwind",
+            "title": "Tailwind",
+            "styles": {
+              "color": "#163C36",
+              "background": "#398D80"
+            }
+          },
+          {
+            "id": "ci-cd",
+            "title": "CI/CD",
+            "styles": {
+              "color": "#1E3C4A",
+              "background": "#39728D"
+            }
+          },
+          {
+            "id": "ui-ux",
+            "title": "UI/UX",
+            "styles": {
+              "color": "#2B334F",
+              "background": "#546292"
+            }
+          }
+        ],
+        "other": [
+          {
+            "id": "vuex",
+            "title": "Vuex",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "less",
+            "title": "Less",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "router",
+            "title": "Router",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+
+          {
+            "id": "gitlab",
+            "title": "GitLab",
+            "styles": {
+              "color": "#FC6D26",
+              "background": "#FC6D26"
+            }
+          },
+          {
+            "id": "docker",
+            "title": "Docker",
+            "styles": {
+              "color": "#FC6D26",
+              "background": "#FC6D26"
+            }
+          },
+          {
+            "id": "vitest",
+            "title": "Vitest",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "cypress",
+            "title": "Cypress",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "javascript",
+            "title": "Javascript",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "aria",
+            "title": "ARIA",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "persisted-state",
+            "title": "Persisted State",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "indexed-db",
+            "title": "IndexedDB",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          }
+        ]
+      }
+    },
+    "body": {
+      "description": {
+        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code."
+      }
+    }
+  },
+  {
+    "id": "freelance",
+    "header": {
+      "title": "Freelance",
+      "position": "Frontend Developer",
+      "dateRange": ["2025-06-28T23:34:54.304Z", "2025-06-28T23:34:54.304Z"],
+      "isCurrent": false,
+      "tags": {
+        "main": [
+          {
+            "id": "next",
+            "title": "Next",
+            "styles": {
+              "color": "#1A4046",
+              "background": "#31747D"
+            }
+          },
+          {
+            "id": "react",
+            "title": "React",
+            "styles": {
+              "color": "#123338",
+              "background": "#31647D"
+            }
+          },
+          {
+            "id": "vue",
+            "title": "Vue",
+            "styles": {
+              "color": "#204A2D",
+              "background": "#398D52"
+            }
+          },
+          {
+            "id": "typescript",
+            "title": "TypeScript",
+            "styles": {
+              "color": "#232B39",
+              "background": "#485B82"
+            }
+          },
+          {
+            "id": "nuxt",
+            "title": "Nuxt",
+            "styles": {
+              "color": "#223E17",
+              "background": "#467D31"
+            }
+          }
+        ],
+        "other": [
+          {
+            "id": "scss",
+            "title": "SCSS",
+            "styles": {
+              "color": "#F7DF1E",
+              "background": "#F7DF1E"
+            }
+          },
+          {
+            "id": "tailwind",
+            "title": "Tailwind",
+            "styles": {
+              "color": "#F7DF1E",
+              "background": "#F7DF1E"
+            }
+          },
+          {
+            "id": "Redux",
+            "title": "Redux",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "router",
+            "title": "Router",
+            "styles": {
+              "color": "#61DAFB",
+              "background": "#61DAFB"
+            }
+          },
+          {
+            "id": "git",
+            "title": "Git",
+            "styles": {
+              "color": "#FC6D26",
+              "background": "#FC6D26"
+            }
+          }
+        ]
+      }
+    },
+    "body": {
+      "description": {
+        "en": "Created e-commerce webs and landings.\n\nInitiated projects, ensured stability, fixed current app state, ensured best practices and best user experience, integrated API."
+      }
+    }
+  }
+]

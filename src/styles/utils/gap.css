@@ -1,0 +1,13 @@
+@layer utilities {
+  .gapL {
+    @apply flex flex-col gap-14 max-lg:gap-10 max-sm:gap-3;
+  }
+
+  .gapM {
+    @apply flex flex-col gap-5;
+  }
+
+  .gapS {
+    @apply flex flex-col gap-2;
+  }
+}
