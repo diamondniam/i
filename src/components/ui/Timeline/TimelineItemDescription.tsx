@@ -1,4 +1,6 @@
-import { getBreakedText } from "@/utils/useText";
+import TimelineItemDescriptionHighlighted from "@/components/ui/Timeline/TimelineItemDescriptionHighlighted";
+import { TimelineItemDescriptionHightlightedProps } from "@/components/ui/Timeline/types";
+import { getBreakedText } from "@/utils";
 import parse, { domToReact } from "html-react-parser";
 import { motion } from "motion/react";
 import { useMemo } from "react";
@@ -9,25 +11,8 @@ export default function TimelineItemDescription({
   description: Record<string, string>;
 }) {
   const descriptionComponentsMap: Record<string, React.ElementType> = {
-    highlighted: (props: { children: React.ReactNode; color: string }) => {
-      return (
-        <motion.button
-          className="rounded-sm px-0.5"
-          initial={{
-            color: "var(--foreground)",
-            background: "transparent",
-          }}
-          whileInView={{
-            color: props.color,
-            backgroundColor: `${props.color}20`,
-          }}
-          transition={{ duration: 0.5, delay: 2 }}
-          viewport={{ once: true }}
-        >
-          {props.children}
-        </motion.button>
-      );
-    },
+    highlighted: ({ ...props }: TimelineItemDescriptionHightlightedProps) =>
+      TimelineItemDescriptionHighlighted({ ...props }),
   };
 
   const descriptionParseOptions = {

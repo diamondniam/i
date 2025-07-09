@@ -1,9 +1,8 @@
 import { useProvider } from "@/components/ui/Timeline/Provider";
-import { TimelineProps } from "@/components/ui/Timeline/types";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
-export default function Timeline({ items }: TimelineProps) {
+export default function Timeline() {
   const {
     containerRef,
     lineRef,
@@ -31,11 +30,12 @@ export default function Timeline({ items }: TimelineProps) {
   const getLineHeight = useMemo(() => {
     if (isSet && containerRef.current) {
       const containerY = containerRef.current.getBoundingClientRect().y;
-      const firstItemDot = itemsDotRefs.current[items[0].id];
-      const lastItemDot = itemsDotRefs.current[items[items.length - 1].id];
+      const firstItemDot = itemsDotRefs.current[0];
+      const lastItemDot = itemsDotRefs.current[itemsDotRefs.current.length - 1];
       const lastItemY =
-        itemsRefs.current[items[items.length - 1].id]?.getBoundingClientRect()
-          .y;
+        itemsRefs.current[
+          itemsDotRefs.current.length - 1
+        ]?.getBoundingClientRect().y;
 
       if (lastItemY && firstItemDot && lastItemDot) {
         return (
@@ -67,14 +67,13 @@ export default function Timeline({ items }: TimelineProps) {
             height: `${getLineHeight}px`,
             top: `${
               isSet
-                ? Number(itemsHeaderRefs.current[items[0].id]?.offsetHeight) /
-                    2 +
+                ? Number(itemsHeaderRefs.current[0]?.offsetHeight) / 2 +
                   TIMELINE_DOT_SIZE / 2
                 : "auto"
             }px`,
           }}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{
             duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
@@ -82,6 +81,7 @@ export default function Timeline({ items }: TimelineProps) {
               TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
               TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
           }}
+          viewport={{ once: true }}
         >
           <motion.div
             className={`w-[1px] absolute bg-gradient-to-t from-transparent via-[var(--foreground)] to-transparent`}

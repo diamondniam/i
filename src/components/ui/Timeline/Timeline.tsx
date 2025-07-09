@@ -9,11 +9,11 @@ import TimelineItems from "@/components/ui/Timeline/TimelineItems";
 
 export default function Timeline(props: TimelineProps) {
   return (
-    <Provider items={props.items}>
-      <div id="timeline" className="flex relative pl-4 overflow-hidden">
-        <TimelinePosition items={props.items} />
+    <Provider highlightedMap={props.highlightedMap}>
+      <div className="flex relative pl-3 overflow-hidden">
+        <TimelinePosition />
 
-        <TimelineItems items={props.items} />
+        <TimelineItems>{props.children}</TimelineItems>
       </div>
     </Provider>
   );

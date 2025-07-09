@@ -8,6 +8,7 @@ import {
   Transition,
   useInView,
 } from "motion/react";
+import { useResize } from "@/utils";
 
 const TAG_ANIMATION_SCALE_INITIAL_AMOUNT = 0.3;
 const TAG_ANIMATION_DELAY = 1;
@@ -35,6 +36,8 @@ export default function TimelineItemTags({
   const [buttonsAnimations, setButtonsAnimations] = useState<
     Record<string, { animation: TargetAndTransition; transition: Transition }>
   >({});
+
+  const windowSize = useResize({ debounceDelay: 200 });
 
   const activeTags = useMemo(() => {
     if (isShowAll) {
@@ -94,11 +97,15 @@ export default function TimelineItemTags({
     setButtonsAnimations(newButtonAnimations);
   }, [activeTags, isInView, isShowAll]);
 
+  useEffect(() => {
+    setContainerHeight();
+  }, [windowSize]);
+
   return (
     <div className="relative">
       <motion.div
         ref={containerRef}
-        className="flex gap-1 flex-wrap overflow-hidden"
+        className="flex gap-1 flex-wrap overflow-hidden mt-2 mb-3"
         animate={{
           overflow: isOverflowing ? "hidden" : "visible",
           maxHeight: maxContainerHeight,
@@ -145,7 +152,7 @@ export default function TimelineItemTags({
               onHoverStart={() => setIsOverflowing(false)}
             >
               <Image
-                src="/icons/add.svg"
+                src="/images/add.svg"
                 width={SHOW_ALL_BUTTON_WIDTH}
                 height={28}
                 alt="More icon"

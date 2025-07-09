@@ -1,8 +1,10 @@
-export type Provider = {
+import { CodeProps } from "@/components/ui/Code/types";
+
+export type Context = {
   containerRef: React.RefObject<HTMLDivElement | null>;
-  itemsRefs: React.RefObject<Record<string, HTMLDivElement | null>>;
-  itemsHeaderRefs: React.RefObject<Record<string, HTMLDivElement | null>>;
-  itemsDotRefs: React.RefObject<Record<string, HTMLDivElement | null>>;
+  itemsRefs: React.RefObject<(HTMLDivElement | null)[]>;
+  itemsHeaderRefs: React.RefObject<(HTMLDivElement | null)[]>;
+  itemsDotRefs: React.RefObject<(HTMLDivElement | null)[]>;
   lineRef: React.RefObject<HTMLDivElement | null>;
 
   CONTENT_INITIAL_OPACITY_ANIMATION_DURATION: number;
@@ -21,10 +23,17 @@ export type Provider = {
   isActiveLineVisible: boolean;
   isMounted: boolean;
 
+  highlightedMap?: Record<string, CodeProps>;
+
   containerWidth: number;
   containerHeight: number;
 
   setTimelineActiveLineTop: (value: number) => void;
   setIsActiveLineVisible: (value: boolean) => void;
   setIsMounted: (value: boolean) => void;
+};
+
+export type Provider = {
+  children: React.ReactNode;
+  highlightedMap?: Record<string, CodeProps>;
 };

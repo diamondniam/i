@@ -145,7 +145,7 @@
     },
     "body": {
       "description": {
-        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code."
+        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted id='aria' color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted id='vitest' color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted id='validations' color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code."
       }
     }
   },

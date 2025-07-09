@@ -1,0 +1,34 @@
+[
+  {
+    "id": "merchArtwork",
+    "description": "Merch. Release. Something Around Evil. 8DEC.\n\n🧿",
+    "type": "video",
+    "image": "/images/socialMediaPosts/merchArtwork.png",
+    "likes": 13,
+    "comments": 6
+  },
+  {
+    "id": "guitarShow",
+    "description": "cycle one.wav\n\n@diamondmusiclibrary",
+    "type": "video",
+    "image": "/images/socialMediaPosts/guitarShow.png",
+    "likes": 48,
+    "comments": 17
+  },
+  {
+    "id": "nickRoom",
+    "description": "Track List 🧶",
+    "type": "image",
+    "image": "/images/socialMediaPosts/nickRoom.png",
+    "likes": 20,
+    "comments": 0
+  },
+  {
+    "id": "loopPack",
+    "description": "Circle One is coming…\n\nFlipped one from this",
+    "type": "video",
+    "image": "/images/socialMediaPosts/loopPackShow.png",
+    "likes": 22,
+    "comments": 2
+  }
+]

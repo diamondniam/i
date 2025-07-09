@@ -1,12 +1,15 @@
-import { Text } from "@/components/animations";
-import { useProvider } from "@/components/ui/Timeline/Provider";
-import TimelineItemTags from "@/components/ui/Timeline/TimelineItemTags";
 import { TimelineItemHeaderProps } from "@/components/ui/Timeline/types";
+
+import { Text } from "@/components/animations";
+import TimelineItemTags from "@/components/ui/Timeline/TimelineItemTags";
 import { LinkIcon } from "@heroicons/react/24/outline";
-import { motion, useInView } from "motion/react";
-import { useFormatter } from "next-intl";
 import Link from "next/link";
+
+import { motion, useInView } from "motion/react";
+
+import { useProvider } from "@/components/ui/Timeline/Provider";
 import { useRef, useState } from "react";
+import { useFormatter } from "next-intl";
 
 export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
   const { itemsHeaderRefs } = useProvider();
@@ -28,7 +31,7 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
   return (
     <div
       ref={(el: HTMLDivElement | null) => {
-        itemsHeaderRefs.current[props.id] = el;
+        itemsHeaderRefs.current[props.index] = el;
       }}
     >
       <motion.div
@@ -36,7 +39,7 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
         initial={{ opacity: 0, x: 100 }}
         transition={{ delay: 1, duration: 0.5 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }}
       >
         {format.dateTime(new Date(props.dateRange[0]), "short")} -{" "}
         {format.dateTime(new Date(props.dateRange[1]), "short")}
@@ -49,6 +52,7 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
             letterArgs={{
               animate: isTitleInView ? "visible" : "hidden",
             }}
+            delay={0.5}
           />
         </h2>
 
@@ -98,9 +102,9 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
         className="text-[var(--gray)] textM !font-light overflow-hidden"
       >
         <motion.p
-          initial={{ y: 40 }}
-          animate={isJobPositionInView ? { y: 0 } : { y: 40 }}
-          transition={{ delay: 1, duration: 0.5 }}
+          initial={{ y: 60 }}
+          animate={isJobPositionInView ? { y: 0 } : { y: 60 }}
+          transition={{ delay: 1.5, duration: 0.5 }}
         >
           {props.position}
         </motion.p>

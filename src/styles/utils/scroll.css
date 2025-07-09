@@ -1,0 +1,53 @@
+.smallScrollbar {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+.mainScrollbar {
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-main);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+.removeScrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.socialMediaScrollbar {
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}

@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  Provider as ProviderType,
-  TimelineItem,
+  Context as ContextProps,
+  Provider as ProviderProps,
 } from "@/components/ui/Timeline/types";
 import { useResizeObserver } from "@/utils";
 import {
@@ -14,11 +14,11 @@ import {
   useEffect,
 } from "react";
 
-const Context = createContext<ProviderType | null>(null);
+const Context = createContext<ContextProps | null>(null);
 
 const TIMELINE_DOT_SIZE = 20;
 const TIMELINE_ACTIVE_LINE_HEIGHT = 300;
-const TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT = 30;
+const TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT = 20;
 
 const CONTENT_INITIAL_OPACITY_ANIMATION_DURATION = 1500 / 1000;
 const TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION = 500 / 1000;
@@ -33,12 +33,12 @@ export const useProvider = () => {
   return context;
 };
 
-export const Provider = ({ children }: { children: React.ReactNode }) => {
+export const Provider = ({ children, highlightedMap }: ProviderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemsRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const itemsHeaderRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const lineRef = useRef<HTMLDivElement | null>(null);
-  const itemsDotRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const itemsRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const itemsHeaderRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const itemsDotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [timelineActiveLineTop, setTimelineActiveLineTop] = useState(0);
   const [isActiveLineVisible, setIsActiveLineVisible] = useState(false);
@@ -48,19 +48,14 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
     useResizeObserver<HTMLDivElement | null>({ ref: containerRef });
 
   const isSet = useMemo(() => {
-    return !!(
-      isMounted &&
-      containerRef.current &&
-      Object.keys(itemsRefs.current).length === items.length &&
-      Object.keys(itemsHeaderRefs.current).length === items.length
-    );
-  }, [items, isMounted]);
+    return !!(isMounted && containerRef.current);
+  }, [itemsRefs.current, isMounted]);
 
   const handleScroll = () => {
     const clientHeight = window.innerHeight;
-    const firstItemTimelineDot = itemsDotRefs.current[items[0].id];
+    const firstItemTimelineDot = itemsDotRefs.current[0];
     const lastItemTimelineDot =
-      itemsDotRefs.current[items[items.length - 1].id];
+      itemsDotRefs.current[itemsRefs.current.length - 1];
 
     if (
       lineRef.current &&
@@ -120,6 +115,8 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
         timelineActiveLineTop,
         isActiveLineVisible,
         isMounted,
+
+        highlightedMap,
 
         containerWidth,
         containerHeight,

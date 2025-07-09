@@ -1,0 +1,5 @@
+{
+  "path": "@/directives/getAria",
+  "template": "app.directive('aria', {\n  mounted(el, binding) {\n    useAriaDirectory(el, binding.value);\n  },\n  updated(el, binding) {\n    useAriaDirectory(el, binding.value);\n  },\n});\n\n// @/utils/useAria\nexport function useAriaDirectory(el, value) {\n  const aria = getAriaAttributes(value);\n  const keys = Object.keys(aria);\n\n  keys.forEach((key) => {\n    if (aria[key] === undefined) return;\n    el.setAttribute(key, aria[key]);\n  });\n}\n",
+  "lang": "js"
+}

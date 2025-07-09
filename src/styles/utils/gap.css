@@ -1,13 +1,22 @@
 @layer utilities {
-  .gapL {
-    @apply flex flex-col gap-14 max-lg:gap-10 max-sm:gap-3;
+  
+  .gapS {
+    @apply flex flex-col gap-2;
   }
-
+  
   .gapM {
     @apply flex flex-col gap-5;
   }
 
-  .gapS {
-    @apply flex flex-col gap-2;
+  .gapL {
+    @apply flex flex-col gap-14;
+  }
+
+  .pBody {
+    @apply lg:px-10 px-3;
+  }
+
+  .containerBody {
+    @apply max-w-[var(--max-width)] mx-auto;
   }
 }

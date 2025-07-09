@@ -8,6 +8,10 @@ export default function getFormats() {
         month: "short",
         year: "numeric",
       },
+      time: {
+        hour: "numeric",
+        minute: "numeric",
+      },
     } as Record<string, DateTimeFormatOptions>,
     number: {
       precise: {

@@ -1,53 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
-export function useDebounce<T>(value: T, delay: number = 100): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedValue(value), delay);
-
-    return () => clearTimeout(timeout);
-  }, [value, delay]);
-
-  return debouncedValue;
-}
-
-export function useDebouncedCallback<T extends (...args: any[]) => void>(
-  callback: T,
-  delay: number
-) {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  return useCallback(
-    (...args: Parameters<T>) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    },
-    [callback, delay]
-  );
-}
+import { WindowEventUtil } from "@/types";
+import { useDebouncedCallback } from "@/utils/useDebounce";
+import { useEffect, useState } from "react";
 
 type Size = {
   width: number;
   height: number;
 };
 
-type useResize = {
-  debounceDelay: number;
-  initResize?: boolean;
-};
-
 export function useResize(
-  { debounceDelay, initResize }: useResize = {
+  { debounceDelay, initial }: WindowEventUtil = {
     debounceDelay: 0,
-    initResize: false,
+    initial: false,
   }
 ): Size {
+  debounceDelay = debounceDelay && debounceDelay > 0 ? debounceDelay : 0;
+
   const [size, setSize] = useState<Size>({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
@@ -60,7 +27,9 @@ export function useResize(
     });
   };
 
-  const handleResizeDebounced = useDebouncedCallback(handleResize, 100);
+  const handleResizeDebounced = useDebouncedCallback({
+    callback: handleResize,
+  });
 
   useEffect(() => {
     if (debounceDelay > 0) {
@@ -69,12 +38,13 @@ export function useResize(
       window.addEventListener("resize", handleResize);
     }
 
-    if (initResize) {
+    if (initial) {
       handleResize();
     }
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResizeDebounced);
     };
   }, []);
 

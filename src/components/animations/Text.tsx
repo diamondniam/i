@@ -1,5 +1,6 @@
 import { HTMLMotionProps, motion } from "motion/react";
 import { useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 const child = {
   hidden: {
@@ -16,13 +17,21 @@ type TextProps = {
   text: string;
   className?: string;
   letterArgs?: HTMLMotionProps<"div">;
+  delay?: number;
+  duration?: number;
+  factor?: number;
 };
+
+const ANIMATION_FACTOR = 0.05;
 
 export default function Text(props: TextProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <motion.div ref={ref} className="flex overflow-hidden">
+    <motion.div
+      ref={ref}
+      className={twMerge("flex overflow-hidden flex-wrap", props.className)}
+    >
       {props.text.split("").map((char, index) => (
         <motion.div
           key={index}
@@ -30,9 +39,11 @@ export default function Text(props: TextProps) {
           variants={child}
           initial="hidden"
           transition={{
-            duration: 1,
-            delay: index * 0.05,
+            duration: props?.duration || 1,
+            delay:
+              index * (props.factor || ANIMATION_FACTOR) + (props.delay || 0),
           }}
+          animate="visible"
           {...props.letterArgs}
         >
           {char === " " ? "\u00A0" : char}

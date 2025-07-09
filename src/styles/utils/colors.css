@@ -1,0 +1,7 @@
+.gradientBackgroundSecondToTransparentTop {
+  background: linear-gradient(180deg, rgba(var(--background-secondary-rgb), 0) 0%, rgba(var(--background-secondary-rgb), 1) 95%);
+}
+
+.gradientBackgroundThirdToTransparentTop {
+  background: linear-gradient(180deg, rgba(var(--background-third-rgb), 0) 0%, rgba(var(--background-third-rgb), 1) 95%);
+}

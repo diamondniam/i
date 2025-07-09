@@ -7,6 +7,7 @@ export interface TimelineItem {
 
 export interface TimelineItemProps extends TimelineItem {
   index: number;
+  children?: React.ReactNode;
 }
 
 type TimelineItemHeader = {
@@ -45,4 +46,10 @@ export type TimelineItemHeaderProps = {
   tags: TimelineItemHeaderTags;
   url?: string;
   isCurrent?: boolean;
+};
+
+export type TimelineItemDescriptionHightlightedProps = {
+  children: React.ReactNode;
+  color: string;
+  id: string;
 };
