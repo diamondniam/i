@@ -2,6 +2,7 @@ import { ChatBubbleOvalLeftIcon, HeartIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { twMerge } from "tailwind-merge";
 
 type CardProps = {
   description: string;
@@ -9,6 +10,7 @@ type CardProps = {
   likes: number;
   type: "image" | "video";
   comments: number;
+  classNames?: { container?: string };
 };
 
 export default function Card(props: CardProps) {
@@ -34,7 +36,12 @@ export default function Card(props: CardProps) {
   }, [isLiked]);
 
   return (
-    <div className="w-full h-full flex flex-col gap-1 relative">
+    <div
+      className={twMerge(
+        "w-full h-full flex flex-col gap-1 relative",
+        props.classNames?.container
+      )}
+    >
       <Image
         src={props.image}
         width={100}

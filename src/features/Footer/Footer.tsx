@@ -1,7 +1,7 @@
 "use client";
 
 import { useFooterPhone } from "@/contexts";
-import SocialMedia from "@/features/SocialMedia";
+import SocialMedia, { SocialMediaHorizontal } from "@/features/SocialMedia";
 import { useDebouncedCallback, useResize, useScrollPosition } from "@/utils";
 import { animate } from "motion/react";
 import Image from "next/image";
@@ -91,7 +91,7 @@ export default function Footer() {
 
       setFooterSize(`${laboratoryHeight + FOOTER_HEIGHT}px`);
     } else {
-      setFooterSize("100vh");
+      setFooterSize("100%");
     }
   };
 
@@ -298,11 +298,13 @@ export default function Footer() {
         titlesRef.current,
       ] as HTMLElement[]);
     }
+
+    if (hardware.power !== "high") {
+      getFooterSize();
+    }
   }, []);
 
   useEffect(() => {
-    getFooterSizeDebounced();
-
     if (
       scrollPosition !== 0 &&
       laboratoryRef.current &&
@@ -310,6 +312,7 @@ export default function Footer() {
       laboratoryPhoneRef.current &&
       hardware.power === "high"
     ) {
+      getFooterSizeDebounced();
       animateLaboratory();
 
       const laboratoryPhoneBound =
@@ -378,29 +381,46 @@ export default function Footer() {
 
       <div
         ref={lastScreenRef}
-        className="min-h-screen w-full flex justify-center items-center md:gap-5 gap-3 flex-col relative "
+        className={twMerge(
+          "w-full flex justify-center items-center md:gap-5 gap-3 flex-col relative",
+          `${hardware.power === "high" ? "min-h-screen" : "mb-[100px] max-sm:mb-[50px]"}`
+        )}
       >
-        <div className="flex justify-center items-center md:gap-10 gap-3 max-md:flex-col">
+        <div
+          className={twMerge(
+            "flex justify-center items-center md:gap-10 gap-3 w-full",
+            hardware.power === "high" ? "max-md:flex-col" : "flex-col"
+          )}
+        >
           <div
             ref={targetPhoneRef}
-            className="relative w-[200px] h-[422px] rounded-[35px] overflow-hidden"
+            className="relative overflow-hidden"
             style={{
               opacity: hardware.power !== "high" ? 1 : 0,
+              width: hardware.power === "high" ? "200px" : "100%",
+              height: hardware.power === "high" ? "422px" : "",
+              borderRadius: hardware.power === "high" ? "35px" : "",
+              marginTop: hardware.power === "high" ? "0" : "50px",
             }}
           >
-            <Image
+            {/* <Image
               src="/images/laboratoryAppleAnimationScreenEmpty.png"
               fill
               alt="Footer Phone"
               className="object-cover pointer-events-none select-none z-[1]"
-            />
+            /> */}
 
-            {hardware.power !== "high" && <SocialMedia ref={socialMediaRef} />}
+            {hardware.power !== "high" && (
+              <SocialMediaHorizontal ref={socialMediaRef} />
+            )}
           </div>
 
           <div
             ref={titlesRef}
-            className="max-sm:mt-20 max-[321px]:hidden will-change-opacity rounded-[35px] overflow-hidden"
+            className={twMerge(
+              "max-[321px]:hidden will-change-opacity rounded-[35px] overflow-hidden",
+              `${hardware.power === "high" && "max-sm:mt-20"}`
+            )}
             style={{
               transform:
                 hardware.power !== "high"
@@ -421,7 +441,10 @@ export default function Footer() {
 
         <motion.button
           ref={cactusRef}
-          className="max-[376px]:hidden will-change-opacity"
+          className={twMerge(
+            "will-change-opacity",
+            `${hardware.power === "high" && "max-[376px]:hidden"}`
+          )}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1.05, y: -2 }}
           style={{

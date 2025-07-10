@@ -64,7 +64,7 @@ export default function SocialMedia({
       <div
         ref={containerRef}
         className={twMerge(
-          "w-[calc(100%_-_15px)] mx-auto overflow-auto relative bg-[var(--background)] socialMediaScrollbar p-1 flex flex-col gap-3 items-center removeScrollbar"
+          "w-[calc(100%_-_15px)] mx-auto overflow-auto relative bg-[var(--background)] p-1 flex flex-col gap-3 items-center removeScrollbar"
         )}
         style={{
           height: `calc(${IPHONE_HEIGHT}px - ${IPHONE_TOP_HEIGHT}px)`,
