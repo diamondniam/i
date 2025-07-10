@@ -127,7 +127,7 @@ export default function TimelineItem(props: TimelineItemProps) {
         })}
         whileInView={{
           opacity: 1,
-          backgroundColor: dotStyles[props.index].backgroundColor,
+          backgroundColor: dotStyles[props.index]?.backgroundColor,
         }}
         onAnimationComplete={() => {
           setDotAnimationDelays({
