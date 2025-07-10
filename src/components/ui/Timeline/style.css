@@ -1,26 +1,8 @@
-@supports (background-image: linear-gradient(
-    to top,
-    transparent,
-    var(--foreground),
-    transparent
-  )) {
-  .activeLineBg {
+.activeLineBg {
     background-image: linear-gradient(
     to top,
     transparent,
     var(--foreground),
     transparent
   );
-  }
-}
-
-@supports not (background-image: linear-gradient(
-    to top,
-    transparent,
-    var(--foreground),
-    transparent
-  )) {
-  .activeLineBg {
-    background: var(--foreground);
-  }
 }
