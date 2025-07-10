@@ -10,6 +10,8 @@ import { twMerge } from "tailwind-merge";
 import TimelineItemDescription from "@/components/ui/Timeline/TimelineItemDescription";
 import TimelineItemHeader from "@/components/ui/Timeline/TimelineItemHeader";
 import { useEffect, useState } from "react";
+import { useGlobal } from "@/contexts/GlobalContext";
+import { useOpimizedAnimations } from "@/utils";
 
 export default function TimelineItem(props: TimelineItemProps) {
   const {
@@ -40,6 +42,8 @@ export default function TimelineItem(props: TimelineItemProps) {
       TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
       TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
   });
+
+  const { hardware } = useGlobal();
 
   useEffect(() => {
     if (isSet) {
@@ -109,17 +113,27 @@ export default function TimelineItem(props: TimelineItemProps) {
               : "auto"
           }px`,
         }}
-        initial={{
-          opacity: 0,
-        }}
+        {...useOpimizedAnimations({
+          hardware,
+          animations: {
+            initial: {
+              opacity: 0,
+            },
+            animate: {
+              opacity: dotStyles[props.index]?.opacity
+                ? dotStyles[props.index].opacity
+                : 0.2,
+            },
+            transition: {
+              duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
+              delay: dotAnimationDelays.opacity,
+            },
+          },
+        })}
         animate={{
           opacity: dotStyles[props.index]?.opacity
             ? dotStyles[props.index].opacity
             : 0.2,
-        }}
-        transition={{
-          duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
-          delay: dotAnimationDelays.opacity,
         }}
         onAnimationComplete={() => {
           setDotAnimationDelays({
@@ -127,28 +141,30 @@ export default function TimelineItem(props: TimelineItemProps) {
             opacity: 0,
           });
         }}
-        viewport={{ once: true }}
       ></motion.div>
 
       <motion.div
         className="gapS"
-        initial={{
-          opacity: 0,
-          transform: "translateX(0px)",
-        }}
-        animate={{
-          opacity: 1,
-          transform: `translateX(${TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT}px)`,
-          transition: {
-            opacity: {
-              duration: CONTENT_INITIAL_OPACITY_ANIMATION_DURATION,
+        {...useOpimizedAnimations({
+          hardware,
+          animations: {
+            initial: {
+              transform: "translateX(0px)",
             },
-            transform: {
-              duration: TIMELINE_INITIAL_TRANSFORM_ANIMATION_DURATION,
-              delay: TIMELINE_INITIAL_TRANSFORM_ANIMATION_DELAY_DURATION,
+            animate: {
+              transform: `translateX(${TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT}px)`,
+              transition: {
+                duration: TIMELINE_INITIAL_TRANSFORM_ANIMATION_DURATION,
+                delay: TIMELINE_INITIAL_TRANSFORM_ANIMATION_DELAY_DURATION,
+              },
             },
           },
-        }}
+          elseAnimations: {
+            initial: {
+              transform: `translateX(${TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT}px)`,
+            },
+          },
+        })}
       >
         <div className="gapS">
           <TimelineItemHeader

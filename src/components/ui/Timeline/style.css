@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@supports (background-image: linear-gradient(to top, var(--foreground), transparent)) {
+  .activeLineBg {
+    @apply bg-gradient-to-t from-transparent via-[var(--foreground)] to-transparent;
+  }
+}
+
+@supports not (background-image: linear-gradient(to top, var(--foreground), transparent)) {
+  .activeLineBg {
+    background: var(--foreground);
+  }
+}

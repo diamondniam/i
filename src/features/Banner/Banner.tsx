@@ -1,14 +1,52 @@
 "use client";
 
+import { useGlobal } from "@/contexts/GlobalContext";
 import BannerCircles from "@/features/Banner/BannerCircles";
 import BannerTitle from "@/features/Banner/BannerTitle";
 import BannerLaptop from "@public/images/bannerLaptop.svg";
 import BannerPhone from "@public/images/bannerPhone.svg";
 import { motion } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 export default function Banner() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { hardware } = useGlobal();
+
+  const lowEndAnimation = {
+    initial: { opacity: 1 },
+    animate: {},
+    transition: {},
+  };
+
+  const bannerPhoneAnimation = () => {
+    if (hardware.power === "high") {
+      return {
+        initial: { opacity: 0, y: 200 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 1, delay: 2.5 },
+      };
+    } else return lowEndAnimation;
+  };
+
+  const bannerLaptopAnimation = () => {
+    if (hardware.power === "high") {
+      return {
+        initial: { opacity: 0, y: 200 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 1, delay: 2 },
+      };
+    } else return lowEndAnimation;
+  };
+
+  const descriptionAnimation = () => {
+    if (hardware.power === "high") {
+      return {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 1, delay: 2.5 },
+      };
+    } else return lowEndAnimation;
+  };
 
   return (
     <section
@@ -22,18 +60,18 @@ export default function Banner() {
         <div className="absolute h-[200px] bottom-full w-full overflow-hidden">
           <motion.div
             className="md:w-[115px] w-[100px] absolute bottom-0 right-0"
-            initial={{ opacity: 0, y: 200 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2.5 }}
+            initial={bannerPhoneAnimation().initial}
+            animate={bannerPhoneAnimation().animate}
+            transition={bannerPhoneAnimation().transition}
           >
             <BannerPhone />
           </motion.div>
 
           <motion.div
             className="md:w-[230px] w-[200px] absolute bottom-0 left-0"
-            initial={{ opacity: 0, y: 200 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2 }}
+            initial={bannerLaptopAnimation().initial}
+            animate={bannerLaptopAnimation().animate}
+            transition={bannerLaptopAnimation().transition}
           >
             <BannerLaptop />
           </motion.div>
@@ -43,9 +81,9 @@ export default function Banner() {
 
         <motion.h2
           className="text-[var(--gray)] font-light text-center"
-          initial={{ opacity: 0, y: 20, filter: "blur(5px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.5, delay: 3.5 }}
+          initial={descriptionAnimation().initial}
+          animate={descriptionAnimation().animate}
+          transition={descriptionAnimation().transition}
         >
           building next level user experience
         </motion.h2>

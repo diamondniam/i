@@ -1,6 +1,9 @@
 import { useProvider } from "@/components/ui/Timeline/Provider";
+import { useGlobal } from "@/contexts/GlobalContext";
+import { useOpimizedAnimations } from "@/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+import "./style.css";
 
 export default function Timeline() {
   const {
@@ -26,6 +29,7 @@ export default function Timeline() {
   } = useProvider();
 
   const [activePostionLineHeight, setActivePostionLineHeight] = useState(0);
+  const { hardware } = useGlobal();
 
   const getLineHeight = useMemo(() => {
     if (isSet && containerRef.current) {
@@ -57,47 +61,74 @@ export default function Timeline() {
     }
   }, [isActiveLineVisible]);
 
-  return (
-    <AnimatePresence mode="wait">
-      {isSet && (
-        <motion.div
-          ref={lineRef}
-          className="h-full w-[1px] bg-[var(--gray)]/20 absolute overflow-hidden"
-          style={{
-            height: `${getLineHeight}px`,
-            top: `${
-              isSet
-                ? Number(itemsHeaderRefs.current[0]?.offsetHeight) / 2 +
-                  TIMELINE_DOT_SIZE / 2
-                : "auto"
-            }px`,
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
-            delay:
-              TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
-              TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
-          }}
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className={`w-[1px] absolute bg-gradient-to-t from-transparent via-[var(--foreground)] to-transparent`}
-            style={{
-              height: `${activePostionLineHeight}px`,
-              top: `${timelineActiveLineTop}px`,
-              transition: "height 0.5s",
-            }}
-            animate={{ opacity: isActiveLineVisible ? 1 : 0 }}
-            transition={{
-              duration:
-                TIMELINE_ACTIVE_POSITION_INITIAL_OPACITY_ANIMATION_DURATION,
-            }}
-          ></motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+  console.log({
+    ...useOpimizedAnimations({
+      hardware,
+      animations: {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: {
+          duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
+          delay:
+            TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
+            TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
+        },
+        viewport: { once: true },
+      },
+    }),
+  });
+
+  console.log(
+    Number(itemsHeaderRefs.current[0]?.offsetHeight) / 2 + TIMELINE_DOT_SIZE / 2
   );
+
+  if (isSet) {
+    return (
+      <AnimatePresence mode="wait">
+        {isSet && (
+          <motion.div
+            ref={lineRef}
+            className="h-full w-[1px] bg-[var(--gray)]/20 absolute overflow-hidden"
+            style={{
+              height: `${getLineHeight}px`,
+              top: `${
+                Number(itemsHeaderRefs.current[0]?.offsetHeight) / 2 +
+                TIMELINE_DOT_SIZE / 2
+              }px`,
+            }}
+            {...useOpimizedAnimations({
+              hardware,
+              animations: {
+                initial: { opacity: 0 },
+                whileInView: { opacity: 1 },
+                exit: { opacity: 0 },
+                transition: {
+                  duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
+                  delay:
+                    TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
+                    TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
+                },
+                viewport: { once: true },
+              },
+            })}
+          >
+            <motion.div
+              className={`w-[1px] absolute activeLineBg`}
+              style={{
+                height: `${activePostionLineHeight}px`,
+                top: `${timelineActiveLineTop}px`,
+                transition: "height 0.5s",
+              }}
+              animate={{ opacity: isActiveLineVisible ? 1 : 0 }}
+              transition={{
+                duration:
+                  TIMELINE_ACTIVE_POSITION_INITIAL_OPACITY_ANIMATION_DURATION,
+              }}
+            ></motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
 }

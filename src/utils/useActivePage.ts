@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useActivePage(): boolean {
-  const [isActive, setIsActive] = useState<boolean>(!document.hidden);
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   useEffect(() => {
     const handleVisibilityChange = () => {

@@ -1,15 +1,13 @@
-import { Text } from "@/components/animations";
+import { useGlobal } from "@/contexts/GlobalContext";
 import { LaboratoryItemProps } from "@/features/Laboratory/types";
-import { getRandom } from "@/utils";
-import { motion, AnimatePresence, useInView } from "motion/react";
+import { useOpimizedAnimations } from "@/utils";
+import { motion } from "motion/react";
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function LaboratoryItem(props: LaboratoryItemProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(props.refs?.container || containerRef, {
-    once: true,
-  });
+  const { hardware } = useGlobal();
 
   return (
     <div
@@ -27,29 +25,44 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
     >
       <motion.div
         className={twMerge("min-h-[200px]", props.classNames?.children)}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        viewport={{ once: true }}
+        {...useOpimizedAnimations({
+          hardware,
+          animations: {
+            initial: { opacity: 0 },
+            whileInView: { opacity: 1 },
+            transition: { duration: 1, delay: 1.5 },
+            viewport: { once: true },
+          },
+        })}
       >
         {props.children}
       </motion.div>
 
       <motion.div
         className="w-full max-lg:text-center"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        viewport={{ once: true }}
+        {...useOpimizedAnimations({
+          hardware,
+          animations: {
+            initial: { opacity: 0 },
+            whileInView: { opacity: 1 },
+            transition: { duration: 1, delay: 1 },
+            viewport: { once: true },
+          },
+        })}
       >
         <h3 className="textL">{props.title}</h3>
 
         <motion.p
           className="text-[var(--gray)] overflow-hidden"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          viewport={{ once: true }}
+          {...useOpimizedAnimations({
+            hardware,
+            animations: {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              transition: { duration: 1, delay: 1 },
+              viewport: { once: true },
+            },
+          })}
         >
           {props.description}
         </motion.p>

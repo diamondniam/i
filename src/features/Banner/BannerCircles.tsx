@@ -8,6 +8,7 @@ import {
   DOMKeyframesDefinition,
   motion,
 } from "motion/react";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 3;
 const INITIAL_CIRCLE_Y = 100;
@@ -28,6 +29,7 @@ export default function BannerCircles() {
   const scrollParallaxData = useRef<number[]>([]);
   const circleRefs = useRef<HTMLDivElement[]>([]);
   const [isOut, setIsOut] = useState(false);
+  const { hardware } = useGlobal();
 
   const scrollPosition = useScrollPosition({
     debounceDelay: 100,
@@ -113,7 +115,7 @@ export default function BannerCircles() {
   }, []);
 
   useEffect(() => {
-    if (ref.current && isInitiated && !isOut) {
+    if (ref.current && isInitiated && !isOut && hardware.power === "high") {
       circleRefs.current.forEach((circle, index) => {
         const boundingRect = circle.getBoundingClientRect();
         const position = {
@@ -142,34 +144,38 @@ export default function BannerCircles() {
   }, [cursor]);
 
   useEffect(() => {
-    if (scrollPosition > window.innerHeight) {
-      setIsOut(true);
-    } else {
-      setIsOut(false);
-    }
+    if (hardware.power === "high") {
+      if (scrollPosition > window.innerHeight) {
+        setIsOut(true);
+      } else {
+        setIsOut(false);
+      }
 
-    if (ref.current && isAbleToSetY.current && !isOut) {
-      circleRefs.current.forEach((circle, index) => {
-        const nextY = -scrollPosition * scrollParallaxData.current[index];
-        const rotate = getAngleToRotate(circle as HTMLElement);
-        animateCircle(circleRefs.current[index] as HTMLElement, {
-          y: nextY,
-          rotate,
+      if (ref.current && isAbleToSetY.current && !isOut) {
+        circleRefs.current.forEach((circle, index) => {
+          const nextY = -scrollPosition * scrollParallaxData.current[index];
+          const rotate = getAngleToRotate(circle as HTMLElement);
+          animateCircle(circleRefs.current[index] as HTMLElement, {
+            y: nextY,
+            rotate,
+          });
         });
-      });
+      }
     }
   }, [scrollPosition]);
 
   useEffect(() => {
-    if (isOut) {
-      window.removeEventListener("mousemove", handleMouseMove);
-    } else {
-      window.addEventListener("mousemove", handleMouseMove);
+    if (hardware.power === "high") {
+      if (isOut) {
+        window.removeEventListener("mousemove", handleMouseMove);
+      } else {
+        window.addEventListener("mousemove", handleMouseMove);
+      }
     }
   }, [isOut]);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && hardware.power === "high") {
       const animationFactorRange = [
         INITIAL_ALL_CIRCLES_ANIMATION_DELAY + 1,
         INITIAL_ALL_CIRCLES_ANIMATION_DELAY + 3,
@@ -212,10 +218,12 @@ export default function BannerCircles() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMoveDebounce);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMoveDebounce);
-    };
+    if (hardware.power === "high") {
+      window.addEventListener("mousemove", handleMouseMoveDebounce);
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMoveDebounce);
+      };
+    }
   }, []);
 
   return (
@@ -226,8 +234,8 @@ export default function BannerCircles() {
             circleRefs.current[index] = el;
           }}
           initial={{
-            y: INITIAL_CIRCLE_Y,
-            opacity: 0,
+            y: hardware.power === "high" ? INITIAL_CIRCLE_Y : 0,
+            opacity: hardware.power === "high" ? 0 : 1,
           }}
           key={index}
           className={`absolute origin-center will-change-transform ${circlesStyles[index]}`}

@@ -81,7 +81,7 @@ export function lockScroll() {
   const mainScrollbarWidth = getComputedStyle(document.documentElement)
     .getPropertyValue("--scrollbar-main-width")
     .trim();
-  document.body.style.right = mainScrollbarWidth;
+  document.body.style.paddingRight = mainScrollbarWidth;
 }
 
 export function unlockScroll() {
@@ -95,6 +95,7 @@ export function unlockScroll() {
   document.body.style.width = "";
   document.body.style.left = "";
   document.body.style.right = "";
+  document.body.style.paddingRight = "";
 
   document.body.dataset.scrollY = "";
   window.scrollTo({

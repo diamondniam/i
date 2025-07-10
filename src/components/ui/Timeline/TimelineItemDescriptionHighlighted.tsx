@@ -1,5 +1,5 @@
 import { motion, useInView } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { CodeContent, CodeHeader } from "@/components/modals/Code";
 import { useGlobalModal } from "@/components/ui/Modal";
@@ -12,7 +12,11 @@ import {
   useCodeFormatter,
   useCodeHighlighter,
   useIsHoverDevice,
+  useOpimizedAnimations,
 } from "@/utils";
+import { useGlobal } from "@/contexts/GlobalContext";
+
+const ANIMATION_DELAY = 2;
 
 export default function TimelineItemDescriptionHighlighted({
   children,
@@ -25,6 +29,7 @@ export default function TimelineItemDescriptionHighlighted({
   const [isShown, setIsShown] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const openModalTimeout = useRef<NodeJS.Timeout | null>(null);
+  const { hardware } = useGlobal();
 
   const [code, setCode] = useState("");
 
@@ -56,7 +61,10 @@ export default function TimelineItemDescriptionHighlighted({
       color: "var(--foreground)",
       background: hexToRgba(color, 0),
       filter: "brightness(1)",
-      transition: { duration: 0.5, delay: 2 },
+      transition: {
+        duration: 0.5,
+        delay: hardware.power === "high" ? ANIMATION_DELAY : 0,
+      },
     },
     hovered: {
       y: 0,
@@ -70,7 +78,10 @@ export default function TimelineItemDescriptionHighlighted({
       color,
       background: hexToRgba(color, 0.1),
       filter: "brightness(1)",
-      transition: { duration: 0.5, delay: 2 },
+      transition: {
+        duration: 0.5,
+        delay: hardware.power === "high" ? ANIMATION_DELAY : 0,
+      },
     },
     "visible-after": {
       y: 0,
@@ -165,7 +176,12 @@ export default function TimelineItemDescriptionHighlighted({
       ref={containerRef}
       className={`rounded-sm px-0.5`}
       variants={variants}
-      initial="initial"
+      {...useOpimizedAnimations({
+        hardware,
+        animations: {
+          initial: "initial",
+        },
+      })}
       animate={getAnimation}
       onHoverStart={handleHoverStart}
       onClick={handleClick}
@@ -173,6 +189,7 @@ export default function TimelineItemDescriptionHighlighted({
       onPointerUp={handlePointerUp}
       onHoverEnd={handleHoverEnd}
       onPointerCancel={handlePointerUp}
+      onPointerLeave={handlePointerUp}
     >
       {children}
     </motion.button>

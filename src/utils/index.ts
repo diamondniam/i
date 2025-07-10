@@ -14,3 +14,5 @@ export * from "./useRouter";
 export * from "./useText";
 export * from "./useImage";
 export * from "./useActivePage";
+export * from "./useHardware";
+export * from "./useOptimizeAnimations";

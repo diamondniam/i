@@ -1,6 +1,7 @@
 import TimelineItemDescriptionHighlighted from "@/components/ui/Timeline/TimelineItemDescriptionHighlighted";
 import { TimelineItemDescriptionHightlightedProps } from "@/components/ui/Timeline/types";
-import { getBreakedText } from "@/utils";
+import { useGlobal } from "@/contexts/GlobalContext";
+import { getBreakedText, useOpimizedAnimations } from "@/utils";
 import parse, { domToReact } from "html-react-parser";
 import { motion } from "motion/react";
 import { useMemo } from "react";
@@ -14,6 +15,7 @@ export default function TimelineItemDescription({
     highlighted: ({ ...props }: TimelineItemDescriptionHightlightedProps) =>
       TimelineItemDescriptionHighlighted({ ...props }),
   };
+  const { hardware } = useGlobal();
 
   const descriptionParseOptions = {
     replace: (domNode: any) => {
@@ -35,10 +37,15 @@ export default function TimelineItemDescription({
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ delay: 0.5, duration: 1 }}
-      viewport={{ once: true }}
+      {...useOpimizedAnimations({
+        hardware,
+        animations: {
+          initial: { opacity: 0 },
+          whileInView: { opacity: 1 },
+          transition: { delay: 0.5, duration: 1 },
+          viewport: { once: true },
+        },
+      })}
     >
       {getDescription}
     </motion.div>

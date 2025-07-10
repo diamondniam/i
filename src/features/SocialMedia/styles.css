@@ -5,3 +5,9 @@
     @apply bg-gradient-to-r from-fuchsia-300 to-indigo-400 bg-clip-text text-transparent;
   }
 }
+
+@supports not (-webkit-background-clip: text) {
+  .linkText {
+    @apply text-indigo-400;
+  }
+}

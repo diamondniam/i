@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Footer from "@/features/Footer";
 import Header from "@/features/Header";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 export default function Home() {
   const {
@@ -17,6 +18,8 @@ export default function Home() {
     setNickRoomAnimating,
     setNickRoomAnimatingDir,
   } = useNavigationStore();
+
+  const { hardware } = useGlobal();
 
   useEffect(() => {
     if (previousPath?.includes("/nickroom")) {
@@ -29,16 +32,11 @@ export default function Home() {
     }
   }, [previousPath]);
 
-  useEffect(() => {
-    console.log(navigator.hardwareConcurrency);
-  }, []);
-
   return (
     <div>
       <AnimatePresence initial={true} mode="wait">
-        {nickRoom.isAnimating === false && (
+        {nickRoom.isAnimating === false && hardware.concurrency ? (
           <motion.div
-            // className="mt-[3000px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -50,7 +48,7 @@ export default function Home() {
             <Laboratory />
             <Footer />
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
 
       <NickRoomAnimation />

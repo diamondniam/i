@@ -12,9 +12,10 @@ import jobs from "@public/data/jobs.json";
 import aria from "@public/data/codes/aria.json";
 import validations from "@public/data/codes/validations.json";
 import vitest from "@public/data/codes/tests.json";
-import { hexToRgba } from "@/utils";
+import { hexToRgba, useOpimizedAnimations } from "@/utils";
 
 import RennordSkeleton from "@public/images/rennordDashboardSkeleton.svg";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 export default function Job() {
   const highlightedMap = {
@@ -22,6 +23,8 @@ export default function Job() {
     validations,
     vitest,
   };
+
+  const { hardware } = useGlobal();
 
   return (
     <section id="experience" className="pBody containerBody">
@@ -34,10 +37,15 @@ export default function Job() {
                   <div className="absolute w-full h-full max-sm:hidden">
                     <motion.div
                       className="relative h-[40%] top-[15%] right-[15%]"
-                      initial={{ opacity: 0, x: 30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 1, delay: 1.2 }}
-                      viewport={{ once: true }}
+                      {...useOpimizedAnimations({
+                        hardware,
+                        animations: {
+                          initial: { opacity: 0, x: 30 },
+                          whileInView: { opacity: 1, x: 0 },
+                          transition: { duration: 1, delay: 1.2 },
+                          viewport: { once: true },
+                        },
+                      })}
                     >
                       <Image
                         src="/images/rennordProfileSkeleton.png"
@@ -53,22 +61,32 @@ export default function Job() {
                   <div className="absolute w-full h-full">
                     <motion.div
                       className="relative sm:w-[60%] sm:top-[8%] w-[83%] -top-[20%]"
-                      initial={{
-                        opacity: 0,
-                        x: -30,
-                        color: hexToRgba("#A75C37", 0),
-                      }}
-                      whileInView={{
-                        opacity: 1,
-                        x: 0,
-                        color: hexToRgba("#A75C37", 0.3),
-                      }}
-                      transition={{
-                        duration: 1,
-                        delay: 1.5,
-                        color: { duration: 1, delay: 3 },
-                      }}
-                      viewport={{ once: true }}
+                      {...useOpimizedAnimations({
+                        hardware,
+                        animations: {
+                          initial: {
+                            opacity: 0,
+                            x: -30,
+                            color: hexToRgba("#A75C37", 0),
+                          },
+                          whileInView: {
+                            opacity: 1,
+                            x: 0,
+                            color: hexToRgba("#A75C37", 0.3),
+                          },
+                          transition: {
+                            duration: 1,
+                            delay: 1.5,
+                            color: { duration: 1, delay: 3 },
+                          },
+                          viewport: { once: true },
+                        },
+                        elseAnimations: {
+                          initial: {
+                            color: hexToRgba("#A75C37", 0.3),
+                          },
+                        },
+                      })}
                     >
                       <RennordSkeleton />
                     </motion.div>
@@ -94,10 +112,15 @@ export default function Job() {
 
                   <motion.div
                     className="relative h-full"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 1 }}
-                    viewport={{ once: true }}
+                    {...useOpimizedAnimations({
+                      hardware,
+                      animations: {
+                        initial: { opacity: 0 },
+                        whileInView: { opacity: 1 },
+                        transition: { duration: 0.5, delay: 1 },
+                        viewport: { once: true },
+                      },
+                    })}
                   >
                     <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
                       <Image
