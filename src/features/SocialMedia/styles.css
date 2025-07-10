@@ -2,12 +2,14 @@
 
 @supports (-webkit-background-clip: text) {
   .linkText {
-    @apply bg-gradient-to-r from-fuchsia-300 to-indigo-400 bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #f0abfc, #818cf8);
+    -webkit-background-clip: text;
+    color: transparent;
   }
 }
 
 @supports not (-webkit-background-clip: text) {
   .linkText {
-    @apply text-indigo-400;
+    color: #f0abfc;
   }
 }
