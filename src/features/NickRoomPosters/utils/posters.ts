@@ -33,7 +33,7 @@ export const posters = [
     src: "/images/nickRoomPosters/rodeo.png",
     alt: "Rodeo",
     className:
-      "md:w-[13%] md:h-[20%] w-[28%] h-[32%] max-md:max-w-[120px] max-md:max-h-[150px] min-w-[100px] min-h-[100px] md:left-2/16 md:top-1/10 left-5/8 top-2/16",
+      "md:w-[13%] md:h-[20%] w-[28%] h-[32%] max-md:max-w-[120px] max-md:max-h-[150px] min-w-[100px] min-h-[100px] md:left-2/16 md:top-1/10 left-4/8 top-1/16",
   },
   {
     src: "/images/nickRoomPosters/dymka.png",
