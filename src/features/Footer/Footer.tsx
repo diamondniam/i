@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { useNavigationStore } from "@/store";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 const LABORATORY_ITEMS_ANIMATION_HEIGHT = 500;
 const LABORATORY_CONTAINER_ANIMATION_HEIGHT = 200;
@@ -36,7 +37,8 @@ export default function Footer() {
   const laboratoryItemsProps = useRef<{ offset: number; speed: number }[]>([]);
   const lastScreenItemsProps = useRef<{ offset: number; speed: number }[]>([]);
   const size = useResize();
-  const [footerSize, setFooterSize] = useState(0);
+  const [footerSize, setFooterSize] = useState("0px");
+  const { hardware } = useGlobal();
 
   const { setNickRoomAnimating, setNickRoomAnimatingDir } =
     useNavigationStore();
@@ -73,7 +75,8 @@ export default function Footer() {
     if (
       containerRef.current &&
       laboratoryRef.current &&
-      laboratoryPhoneRef.current
+      laboratoryPhoneRef.current &&
+      hardware.power === "high"
     ) {
       const laboratoryBound = laboratoryRef.current.getBoundingClientRect();
       const laboratoryPhoneBound =
@@ -86,7 +89,9 @@ export default function Footer() {
       const laboratoryHeight =
         laboratoryHeightAndPositionAmount + possibleMargin;
 
-      setFooterSize(laboratoryHeight + FOOTER_HEIGHT);
+      setFooterSize(`${laboratoryHeight + FOOTER_HEIGHT}px`);
+    } else {
+      setFooterSize("100vh");
     }
   };
 
@@ -302,7 +307,8 @@ export default function Footer() {
       scrollPosition !== 0 &&
       laboratoryRef.current &&
       containerRef.current &&
-      laboratoryPhoneRef.current
+      laboratoryPhoneRef.current &&
+      hardware.power === "high"
     ) {
       animateLaboratory();
 
@@ -345,7 +351,7 @@ export default function Footer() {
       ref={containerRef}
       className={twMerge("flex items-end justify-center relative")}
       style={{
-        height: `${footerSize}px`,
+        height: `${footerSize}`,
       }}
     >
       <div
@@ -377,21 +383,30 @@ export default function Footer() {
         <div className="flex justify-center items-center md:gap-10 gap-3 max-md:flex-col">
           <div
             ref={targetPhoneRef}
-            className="relative w-[200px] h-[422px] pointer-events-none opacity-1 select-none rounded-[35px] overflow-hidden"
+            className="relative w-[200px] h-[422px] rounded-[35px] overflow-hidden"
+            style={{
+              opacity: hardware.power !== "high" ? 1 : 0,
+            }}
           >
             <Image
               src="/images/laboratoryAppleAnimationScreenEmpty.png"
               fill
               alt="Footer Phone"
-              className="object-cover"
+              className="object-cover pointer-events-none select-none z-[1]"
             />
+
+            {hardware.power !== "high" && <SocialMedia ref={socialMediaRef} />}
           </div>
 
           <div
             ref={titlesRef}
-            className="opacity-0 max-sm:mt-20 max-[321px]:hidden will-change-opacity"
+            className="max-sm:mt-20 max-[321px]:hidden will-change-opacity rounded-[35px] overflow-hidden"
             style={{
-              transform: `translateY(${LAST_SCREEN_TITLES_ANIMATION_INITIAL_Y}px)`,
+              transform:
+                hardware.power !== "high"
+                  ? "translateY(0)"
+                  : `translateY(${LAST_SCREEN_TITLES_ANIMATION_INITIAL_Y}px)`,
+              opacity: hardware.power !== "high" ? 1 : 0,
             }}
           >
             <Image
@@ -406,11 +421,15 @@ export default function Footer() {
 
         <motion.button
           ref={cactusRef}
-          className="opacity-0 max-[376px]:hidden will-change-opacity"
+          className="max-[376px]:hidden will-change-opacity"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1.05, y: -2 }}
           style={{
-            transform: `translateY(${LAST_SCREEN_CACTUS_ANIMATION_INITIAL_Y}px)`,
+            transform:
+              hardware.power !== "high"
+                ? "translateY(0)"
+                : `translateY(${LAST_SCREEN_CACTUS_ANIMATION_INITIAL_Y}px)`,
+            opacity: hardware.power !== "high" ? 1 : 0,
           }}
           onClick={() => handleCactusClick()}
         >
