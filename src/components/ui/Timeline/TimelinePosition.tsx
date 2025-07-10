@@ -61,28 +61,6 @@ export default function Timeline() {
     }
   }, [isActiveLineVisible]);
 
-  console.log({
-    ...useOpimizedAnimations({
-      hardware,
-      animations: {
-        initial: { opacity: 0 },
-        whileInView: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: {
-          duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
-          delay:
-            TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
-            TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
-        },
-        viewport: { once: true },
-      },
-    }),
-  });
-
-  console.log(
-    Number(itemsHeaderRefs.current[0]?.offsetHeight) / 2 + TIMELINE_DOT_SIZE / 2
-  );
-
   if (isSet) {
     return (
       <AnimatePresence mode="wait">

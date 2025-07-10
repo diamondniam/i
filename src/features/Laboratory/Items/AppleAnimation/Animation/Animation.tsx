@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { GeneratedGradient, GradientState, Props, Wave } from "./types";
 import { getRandomInt, lerp, lerpColor } from "./utils";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 export default function Animation(props: Props) {
   const [canvas, setCanvas] = useState<Canvas>();
+  const { hardware } = useGlobal();
 
   useEffect(() => {
     setCanvas(new Canvas());
@@ -122,6 +124,10 @@ export default function Animation(props: Props) {
       this.border = rawBorder.map((p) => ({ ...p, px: p.x, py: p.y }));
       this.blurs = [0, getRandomInt(0, this.maxBlurSize)];
       this.gradients = [this.generateGradient(), this.generateGradient()];
+
+      if (hardware.power !== "high") {
+        for (let i = 0; i < 5; i++) this.spawnWave();
+      }
 
       this.animate(0);
     }
@@ -420,16 +426,18 @@ export default function Animation(props: Props) {
       this.lastTime = time;
       this.tGlobal += dt;
 
-      this.waveSpawnTimer += dt;
-      if (this.waveSpawnTimer >= this.waveSpawnInterval) {
-        this.waveSpawnTimer = 0;
-        for (let i = 0; i < 5; i++) this.spawnWave();
-      }
+      if (hardware.power === "high") {
+        this.waveSpawnTimer += dt;
+        if (this.waveSpawnTimer >= this.waveSpawnInterval) {
+          this.waveSpawnTimer = 0;
+          for (let i = 0; i < 5; i++) this.spawnWave();
+        }
 
-      this.blurTimer += dt;
-      if (this.blurTimer >= this.blurInterval) {
-        this.blurTimer = 0;
-        this.blurs = [this.blurs[1], getRandomInt(0, this.maxBlurSize)];
+        this.blurTimer += dt;
+        if (this.blurTimer >= this.blurInterval) {
+          this.blurTimer = 0;
+          this.blurs = [this.blurs[1], getRandomInt(0, this.maxBlurSize)];
+        }
       }
 
       this.gradientTimer += dt;
@@ -438,8 +446,10 @@ export default function Animation(props: Props) {
         this.gradients = [this.gradients[1], this.generateGradient()];
       }
 
-      for (const wave of this.waves) wave.life += dt;
-      this.waves = this.waves.filter((wave) => wave.life < wave.duration);
+      if (hardware.power === "high") {
+        for (const wave of this.waves) wave.life += dt;
+        this.waves = this.waves.filter((wave) => wave.life < wave.duration);
+      }
 
       this.draw();
       requestAnimationFrame(this.animate.bind(this));

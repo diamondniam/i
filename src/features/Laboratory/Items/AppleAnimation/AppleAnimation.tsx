@@ -9,6 +9,7 @@ import { AnimatePresence, useInView } from "motion/react";
 import { motion } from "motion/react";
 import { useFooterPhone } from "@/contexts";
 import "./styles.css";
+import { useIsHoverDevice } from "@/utils";
 
 const appleAnimation = laboratory[1];
 
@@ -64,25 +65,29 @@ export default function AppleAnimation() {
   );
 
   const handlePointerEnter = () => {
-    if (pointerAnimationTimeout.current) {
-      clearTimeout(pointerAnimationTimeout.current);
-    }
+    if (useIsHoverDevice()) {
+      if (pointerAnimationTimeout.current) {
+        clearTimeout(pointerAnimationTimeout.current);
+      }
 
-    pointerAnimationTimeout.current = setTimeout(() => {
-      setWaveAmplitude(animationsBorder.active.waveAmplitude);
-      setWaveSpawnInterval(animationsBorder.active.waveSpawnInterval);
-      setGradientInterval(animationsBorder.active.gradientInterval);
-    }, 300);
+      pointerAnimationTimeout.current = setTimeout(() => {
+        setWaveAmplitude(animationsBorder.active.waveAmplitude);
+        setWaveSpawnInterval(animationsBorder.active.waveSpawnInterval);
+        setGradientInterval(animationsBorder.active.gradientInterval);
+      }, 300);
+    }
   };
   const handlePointerLeave = () => {
-    if (pointerAnimationTimeout.current) {
-      clearTimeout(pointerAnimationTimeout.current);
+    if (useIsHoverDevice()) {
+      if (pointerAnimationTimeout.current) {
+        clearTimeout(pointerAnimationTimeout.current);
+      }
+      pointerAnimationTimeout.current = setTimeout(() => {
+        setWaveAmplitude(animationsBorder.initial.waveAmplitude);
+        setWaveSpawnInterval(animationsBorder.initial.waveSpawnInterval);
+        setGradientInterval(animationsBorder.initial.gradientInterval);
+      }, 300);
     }
-    pointerAnimationTimeout.current = setTimeout(() => {
-      setWaveAmplitude(animationsBorder.initial.waveAmplitude);
-      setWaveSpawnInterval(animationsBorder.initial.waveSpawnInterval);
-      setGradientInterval(animationsBorder.initial.gradientInterval);
-    }, 300);
   };
 
   return (
@@ -130,7 +135,7 @@ export default function AppleAnimation() {
 
         <AnimatePresence>
           {isInView && (
-            <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px]">
+            <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px] will-change-transform">
               <motion.div
                 className="relative flex items-center justify-center w-full h-full will-change-opacity"
                 initial={{ opacity: 0 }}

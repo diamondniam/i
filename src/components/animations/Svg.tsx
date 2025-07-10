@@ -7,13 +7,9 @@ export default function Svg({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (ref.current) {
-      console.log(ref.current);
       const animatableElements = ref.current.querySelectorAll("#animatable");
 
-      console.log(animatableElements);
-
       animatableElements.forEach((element, index) => {
-        console.log(element, element instanceof HTMLElement);
         if (element instanceof HTMLElement) {
           element.style.transform = "scale(0.5)";
           element.style.transition = `transform ${1}s ease-in-out ${1 + index * ANIMATION_FACTOR}s`;
