@@ -1,0 +1,7 @@
+.hideGradient {
+  background-image: linear-gradient(
+    to top,
+    var(--background-secondary),
+    transparent
+  );
+}

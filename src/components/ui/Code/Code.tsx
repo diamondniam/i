@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useGlobalModal } from "@/components/ui/Modal";
 import { useCodeFormatter, useCodeHighlighter, useUID } from "@/utils";
 import { CodeContent, CodeHeader } from "@/components/modals/Code";
+import "./style.css";
 
 export default function Code(props: { code: CodeProps }) {
   const [code, setCode] = useState("");
@@ -61,7 +62,7 @@ export default function Code(props: { code: CodeProps }) {
           </AnimatePresence>
         </div>
 
-        <div className="bg-gradient-to-t from-[var(--background-secondary)] h-full w-full absolute top-0 pointer-events-none"></div>
+        <div className="hideGradient h-full w-full absolute top-0 pointer-events-none"></div>
       </div>
 
       <div className="border-t border-[var(--gray)]/20 p-3">

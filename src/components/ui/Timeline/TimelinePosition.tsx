@@ -67,7 +67,7 @@ export default function Timeline() {
         {isSet && (
           <motion.div
             ref={lineRef}
-            className="h-full w-[1px] bg-[var(--gray)]/20 absolute overflow-hidden"
+            className="h-full w-[1px] bg-[var(--gray)]/[0.2] absolute overflow-hidden"
             style={{
               height: `${getLineHeight}px`,
               top: `${
