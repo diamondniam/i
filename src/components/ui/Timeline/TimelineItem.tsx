@@ -82,7 +82,7 @@ export default function TimelineItem(props: TimelineItemProps) {
         };
       } else {
         return {
-          backgroundColor: "var(--foreground)",
+          backgroundColor: "var(--timeline-base-color)",
         };
       }
     } else {
@@ -119,21 +119,15 @@ export default function TimelineItem(props: TimelineItemProps) {
             initial: {
               opacity: 0,
             },
-            animate: {
-              opacity: dotStyles[props.index]?.opacity
-                ? dotStyles[props.index].opacity
-                : 0.2,
-            },
             transition: {
               duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
               delay: dotAnimationDelays.opacity,
             },
           },
         })}
-        animate={{
-          opacity: dotStyles[props.index]?.opacity
-            ? dotStyles[props.index].opacity
-            : 0.2,
+        whileInView={{
+          opacity: 1,
+          backgroundColor: dotStyles[props.index].backgroundColor,
         }}
         onAnimationComplete={() => {
           setDotAnimationDelays({

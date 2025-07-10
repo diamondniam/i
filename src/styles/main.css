@@ -14,9 +14,11 @@
   --scrollbar: #4b4b4b;
   --scrollbar-main-width: 7px;
   --scrollbar-main: #3a3a3a;
-
+  
   --red: #e63939;
   --header-active: #FAFAFA;
+  
+  --timeline-base-color: #4e4e4e;
 
   --max-width: 1000px;
 
