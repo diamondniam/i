@@ -4,12 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import header from "@public/data/header.json";
 
 import { motion } from "motion/react";
+import { useScrollPosition } from "@/utils";
 
 export default function Navigation() {
   const [active, setActive] = useState<string | null>(null);
   const activeBgRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<Record<string, HTMLButtonElement | null>>({});
   const activeTimeout = useRef<NodeJS.Timeout | null>(null);
+  const scrollPostion = useScrollPosition({
+    initial: true,
+    debounceDelay: 100,
+  });
 
   const handleClick = (id: string) => {
     setActive(id);
@@ -40,44 +45,27 @@ export default function Navigation() {
   }, [active]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry) {
-          const id = visibleEntry.target.id;
-
-          if (activeTimeout.current) {
-            clearTimeout(activeTimeout.current);
-          }
-
-          activeTimeout.current = setTimeout(() => {
-            console.log(id);
-            if (id === "banner") {
-              setActive(null);
-            } else {
-              setActive(id);
-            }
-          }, 500);
-        }
-      },
-      {
-        threshold: 0.8,
-      }
-    );
-
     const sections = document.querySelectorAll("section");
-    sections.forEach((el) => observer.observe(el));
 
-    return () => {
-      observer.disconnect();
-      if (activeTimeout.current) {
-        clearTimeout(activeTimeout.current);
+    sections.forEach((section) => {
+      const bound = section.getBoundingClientRect();
+      const id = section.id;
+
+      if (bound.top < window.innerHeight / 3) {
+        if (activeTimeout.current) {
+          clearTimeout(activeTimeout.current);
+        }
+
+        activeTimeout.current = setTimeout(() => {
+          if (id === "banner") {
+            setActive(null);
+          } else {
+            setActive(section.id);
+          }
+        });
       }
-    };
-  }, []);
+    });
+  }, [scrollPostion]);
 
   return (
     <nav className="w-fit relative mx-auto">

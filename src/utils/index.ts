@@ -12,3 +12,5 @@ export * from "./useParallax";
 export * from "./useHover";
 export * from "./useRouter";
 export * from "./useText";
+export * from "./useImage";
+export * from "./useActivePage";

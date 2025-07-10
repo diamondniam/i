@@ -2,10 +2,10 @@
 
 import { useFooterPhone } from "@/contexts";
 import SocialMedia from "@/features/SocialMedia";
-import { useResize, useScrollPosition } from "@/utils";
+import { useDebouncedCallback, useResize, useScrollPosition } from "@/utils";
 import { animate } from "motion/react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { useNavigationStore } from "@/store";
@@ -36,6 +36,7 @@ export default function Footer() {
   const laboratoryItemsProps = useRef<{ offset: number; speed: number }[]>([]);
   const lastScreenItemsProps = useRef<{ offset: number; speed: number }[]>([]);
   const size = useResize();
+  const [footerSize, setFooterSize] = useState(0);
 
   const { setNickRoomAnimating, setNickRoomAnimatingDir } =
     useNavigationStore();
@@ -67,6 +68,32 @@ export default function Footer() {
     setNickRoomAnimatingDir("forward");
     setNickRoomAnimating(true);
   };
+
+  const getFooterSize = () => {
+    if (
+      containerRef.current &&
+      laboratoryRef.current &&
+      laboratoryPhoneRef.current
+    ) {
+      const laboratoryBound = laboratoryRef.current.getBoundingClientRect();
+      const laboratoryPhoneBound =
+        laboratoryPhoneRef.current.getBoundingClientRect();
+      const fixedPhoneTop =
+        (laboratoryBound.top - laboratoryPhoneBound.top) * -1;
+      const laboratoryHeightAndPositionAmount =
+        fixedPhoneTop + laboratoryBound.height / 2 + window.innerHeight / 2;
+      const possibleMargin = 100;
+      const laboratoryHeight =
+        laboratoryHeightAndPositionAmount + possibleMargin;
+
+      setFooterSize(laboratoryHeight + FOOTER_HEIGHT);
+    }
+  };
+
+  const getFooterSizeDebounced = useDebouncedCallback({
+    callback: getFooterSize,
+    delay: 300,
+  });
 
   const animateLaboratory = () => {
     const laboratoryItems =
@@ -209,12 +236,12 @@ export default function Footer() {
       LABORATORY_CONTAINER_ANIMATION_HEIGHT -
       PHONE_ANIMATION_HEIGHT;
 
+    const lastScreenItems = [cactusRef.current, titlesRef.current];
+
     const lastScreenProgress = Math.min(
       Math.max(lastScreenDistanceScrolled / LAST_SCREEN_ANIMATION_HEIGHT, 0),
       1
     );
-
-    const lastScreenItems = [cactusRef.current, titlesRef.current];
 
     const lastScreenItemsProgresses = getAnimatedProgresses(
       lastScreenItemsProps.current,
@@ -269,6 +296,8 @@ export default function Footer() {
   }, []);
 
   useEffect(() => {
+    getFooterSizeDebounced();
+
     if (
       scrollPosition !== 0 &&
       laboratoryRef.current &&
@@ -316,7 +345,7 @@ export default function Footer() {
       ref={containerRef}
       className={twMerge("flex items-end justify-center relative")}
       style={{
-        height: `calc(${laboratoryRef.current?.offsetHeight}px + ${FOOTER_HEIGHT}px + 200px)`,
+        height: `${footerSize}px`,
       }}
     >
       <div
@@ -348,7 +377,7 @@ export default function Footer() {
         <div className="flex justify-center items-center md:gap-10 gap-3 max-md:flex-col">
           <div
             ref={targetPhoneRef}
-            className="relative w-[200px] h-[422px] pointer-events-none opacity-0 select-none rounded-[35px] overflow-hidden"
+            className="relative w-[200px] h-[422px] pointer-events-none opacity-1 select-none rounded-[35px] overflow-hidden"
           >
             <Image
               src="/images/laboratoryAppleAnimationScreenEmpty.png"
@@ -360,7 +389,7 @@ export default function Footer() {
 
           <div
             ref={titlesRef}
-            className="opacity-0"
+            className="opacity-0 max-sm:mt-20 max-[321px]:hidden"
             style={{
               transform: `translateY(${LAST_SCREEN_TITLES_ANIMATION_INITIAL_Y}px)`,
             }}
@@ -370,14 +399,14 @@ export default function Footer() {
               width={300}
               height={50}
               alt="Footer Titles"
-              className="max-sm:w-[280px]"
+              className="max-sm:w-[220px]"
             />
           </div>
         </div>
 
         <motion.button
           ref={cactusRef}
-          className="opacity-0"
+          className="opacity-0 max-[376px]:hidden"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1.05, y: -2 }}
           style={{

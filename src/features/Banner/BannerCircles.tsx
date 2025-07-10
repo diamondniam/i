@@ -9,7 +9,7 @@ import {
   motion,
 } from "motion/react";
 
-const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 1;
+const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 3;
 const INITIAL_CIRCLE_Y = 100;
 const INITIAL_DURATION = 1000;
 

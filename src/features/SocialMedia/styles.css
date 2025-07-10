@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@supports (-webkit-background-clip: text) {
+  .linkText {
+    @apply bg-gradient-to-r from-fuchsia-300 to-indigo-400 bg-clip-text text-transparent;
+  }
+}

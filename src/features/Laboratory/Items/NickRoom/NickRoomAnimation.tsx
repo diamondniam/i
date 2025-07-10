@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils/animation";
+import { preloadImages, useActivePage } from "@/utils";
 
 type Props = {
   isPointerOn: boolean;
@@ -8,6 +9,7 @@ type Props = {
 export default function NickRoomAnimation(props: Props) {
   const [frameIndex, setFrameIndex] = useState(0);
   const interval = useRef<NodeJS.Timeout | null>(null);
+  const isPageActive = useActivePage();
 
   const playAnimation = () => {
     interval.current = setInterval(() => {
@@ -56,6 +58,12 @@ export default function NickRoomAnimation(props: Props) {
       }
     };
   }, [props.isPointerOn]);
+
+  useEffect(() => {
+    if (isPageActive) {
+      preloadImages(frames);
+    }
+  }, [isPageActive]);
 
   return (
     <div className="absolute inset-0 pointer-events-none select-none">

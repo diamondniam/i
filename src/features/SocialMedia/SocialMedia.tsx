@@ -3,6 +3,7 @@ import Card from "@/features/SocialMedia/Card";
 import PhoneTop from "@/features/SocialMedia/PhoneTop";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
+import "./styles.css";
 
 import { motion } from "motion/react";
 
@@ -78,7 +79,7 @@ export default function SocialMedia({
           className="sticky top-0 bg-[var(--background-secondary)]/50 backdrop-blur-sm px-2 py-[2px] rounded-full border border-[var(--gray)]/[.05] z-[1]"
           whileHover={{ scale: 1.05 }}
         >
-          <p className="text-[10px] font-medium bg-gradient-to-r from-fuchsia-300 to-indigo-400 bg-clip-text text-transparent">
+          <p className="text-[10px] font-medium text-indigo-400 linkText">
             {NICKNAME}
             <LinkIcon
               className="inline-block w-[9px] h-[9px] text-indigo-400 ml-1"

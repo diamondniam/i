@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, useInView } from "motion/react";
 import { motion } from "motion/react";
 import { useFooterPhone } from "@/contexts";
+import "./styles.css";
 
 const appleAnimation = laboratory[1];
 
@@ -129,24 +130,26 @@ export default function AppleAnimation() {
 
         <AnimatePresence>
           {isInView && (
-            <motion.div
-              className="relative flex items-center justify-center w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-            >
-              <Animation
-                width={190}
-                height={410}
-                radius={25}
-                pointsPerMaxEdge={60}
-                waveAmplitude={waveAmplitude}
-                waveLength={{ min: 10, max: 20 }}
-                waveSpawnInterval={waveSpawnInterval}
-                gradientInterval={gradientInterval}
-              />
-            </motion.div>
+            <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px]">
+              <motion.div
+                className="relative flex items-center justify-center w-full h-full will-change-opacity"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+              >
+                <Animation
+                  width={190}
+                  height={410}
+                  radius={25}
+                  pointsPerMaxEdge={60}
+                  waveAmplitude={waveAmplitude}
+                  waveLength={{ min: 10, max: 20 }}
+                  waveSpawnInterval={waveSpawnInterval}
+                  gradientInterval={gradientInterval}
+                />
+              </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </motion.button>

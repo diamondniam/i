@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils";
 import { useRouter } from "next/navigation";
 import { useNavigationStore } from "@/store";
+import { preloadImages, useActivePage } from "@/utils";
 
 const ANIMATION_FRAME_RATE = 100;
 
@@ -14,6 +15,7 @@ export default function NickRoomAnimation() {
   const interval = useRef<NodeJS.Timeout | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const isPageActive = useActivePage();
 
   const animateForward = () => {
     if (interval.current) {
@@ -77,6 +79,12 @@ export default function NickRoomAnimation() {
       }
     };
   }, [nickRoom.isAnimating]);
+
+  useEffect(() => {
+    if (isPageActive) {
+      preloadImages(frames);
+    }
+  }, [isPageActive]);
 
   if (isAnimating) {
     return (
