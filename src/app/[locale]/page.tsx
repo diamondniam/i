@@ -29,6 +29,10 @@ export default function Home() {
     }
   }, [previousPath]);
 
+  useEffect(() => {
+    console.log(navigator.hardwareConcurrency);
+  }, []);
+
   return (
     <div>
       <AnimatePresence initial={true} mode="wait">

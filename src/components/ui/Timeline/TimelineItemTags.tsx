@@ -155,6 +155,7 @@ export default function TimelineItemTags({
                 src="/images/add.svg"
                 width={SHOW_ALL_BUTTON_WIDTH}
                 height={28}
+                priority
                 alt="More icon"
               />
             </motion.button>
