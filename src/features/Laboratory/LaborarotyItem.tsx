@@ -19,7 +19,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
         }
       }}
       className={twMerge(
-        `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center`,
+        `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center will-change-opacity`,
         props.classNames?.container
       )}
     >

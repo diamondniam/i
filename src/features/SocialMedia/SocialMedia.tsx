@@ -79,7 +79,7 @@ export default function SocialMedia({
           className="sticky top-0 bg-[var(--background-secondary)]/50 backdrop-blur-sm px-2 py-[2px] rounded-full border border-[var(--gray)]/[.05] z-[1]"
           whileHover={{ scale: 1.05 }}
         >
-          <p className="text-[10px] font-medium text-indigo-400 linkText">
+          <p className="text-[10px] font-medium linkText text-indigo-400">
             {NICKNAME}
             <LinkIcon
               className="inline-block w-[9px] h-[9px] text-indigo-400 ml-1"

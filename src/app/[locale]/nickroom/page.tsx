@@ -49,7 +49,7 @@ export default function NickRoom() {
         <Image src="/images/nickRoomClose.png" fill alt="Close" sizes="100%" />
       </motion.button>
 
-      <div className="relative flex justify-center items-center flex-col gap-3">
+      <div className="relative flex justify-center items-center flex-col gap-3 z-[2]">
         <Image
           src="/images/nickRoomTitle.png"
           alt="Nick Room Title"

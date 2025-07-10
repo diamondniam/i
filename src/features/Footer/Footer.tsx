@@ -350,7 +350,7 @@ export default function Footer() {
     >
       <div
         ref={phoneRef}
-        className="fixed w-[200px] h-[422px] left-0 top-0 opacity-0 pointer-events-none select-none z-[1] rounded-[35px] overflow-hidden bg-black/50"
+        className="fixed w-[200px] h-[422px] left-0 top-0 opacity-0 pointer-events-none select-none z-[1] rounded-[35px] overflow-hidden bg-black/50 will-change-transform"
       >
         <Image
           src="/images/logoStone.png"
@@ -372,7 +372,7 @@ export default function Footer() {
 
       <div
         ref={lastScreenRef}
-        className="min-h-screen w-full flex justify-center items-center md:gap-5 gap-3 flex-col relative"
+        className="min-h-screen w-full flex justify-center items-center md:gap-5 gap-3 flex-col relative "
       >
         <div className="flex justify-center items-center md:gap-10 gap-3 max-md:flex-col">
           <div
@@ -389,7 +389,7 @@ export default function Footer() {
 
           <div
             ref={titlesRef}
-            className="opacity-0 max-sm:mt-20 max-[321px]:hidden"
+            className="opacity-0 max-sm:mt-20 max-[321px]:hidden will-change-opacity"
             style={{
               transform: `translateY(${LAST_SCREEN_TITLES_ANIMATION_INITIAL_Y}px)`,
             }}
@@ -406,7 +406,7 @@ export default function Footer() {
 
         <motion.button
           ref={cactusRef}
-          className="opacity-0 max-[376px]:hidden"
+          className="opacity-0 max-[376px]:hidden will-change-opacity"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1.05, y: -2 }}
           style={{
