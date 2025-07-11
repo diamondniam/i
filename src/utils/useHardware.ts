@@ -93,6 +93,8 @@ async function getDevicePowerLevel(): Promise<Power> {
 
   const score = threads * 10 + (60 - Math.min(cpuTime, 300)) + fps;
 
+  console.log(score);
+
   if (score > 140) return "high";
   if (score > 90) return "medium";
   return "low";
