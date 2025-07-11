@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { frames } from "@/features/RennordAnimation/utils";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";

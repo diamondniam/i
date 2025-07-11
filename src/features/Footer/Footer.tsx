@@ -362,9 +362,9 @@ export default function Footer() {
         className="fixed w-[200px] h-[422px] left-0 top-0 opacity-0 pointer-events-none select-none z-[1] rounded-[35px] overflow-hidden bg-black/50 will-change-transform"
       >
         <Image
-          src="/images/logoStone.png"
-          width={60}
-          height={50}
+          src="/images/appleLogo.png"
+          width={40}
+          height={40}
           alt="Logo Phone"
           className="object-cover absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 pointer-events-none select-none"
         />

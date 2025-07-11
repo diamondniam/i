@@ -34,6 +34,8 @@ export default function Home() {
 
   return (
     <div>
+      <div className="grainOverlay"></div>
+
       <AnimatePresence initial={true} mode="wait">
         {nickRoom.isAnimating === false && hardware.concurrency ? (
           <motion.div

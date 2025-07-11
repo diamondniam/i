@@ -5,3 +5,16 @@
 .gradientBackgroundThirdToTransparentTop {
   background: linear-gradient(180deg, rgba(var(--background-third-rgb), 0) 0%, rgba(var(--background-third-rgb), 1) 95%);
 }
+
+.grainOverlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+  background-image: url('/images/noise.png');
+  background-size: 50px 50px;
+  background-repeat: repeat;
+  opacity: 0.15;
+  mix-blend-mode: screen; /* or overlay, soft-light, etc. */
+}
