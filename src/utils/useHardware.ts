@@ -11,7 +11,7 @@ export type Hardware = {
 
 export const useHardware = () => {
   // const [concurrency, setConcurrency] = useState<Concurrency>(undefined);
-  const [power, setPower] = useState<Power>("low");
+  const [power, setPower] = useState<Power>("high");
   const [isSet, setIsSet] = useState(false);
 
   useEffect(() => {
@@ -24,11 +24,11 @@ export const useHardware = () => {
     // }
 
     // console.log();
-    getDevicePowerLevel().then((value) => {
-      console.log(value);
-      setPower(value);
-      setIsSet(true);
-    });
+    // getDevicePowerLevel().then((value) => {
+    // console.log(value);
+    // setPower(value);
+    setIsSet(true);
+    // });
     // FPSCheck().then((value) => {
     //   console.log(value);
     //   setPower(value as Power);
@@ -87,6 +87,8 @@ function cpuBenchmark(iterations = 1e6) {
 
 async function getDevicePowerLevel(): Promise<Power> {
   const threads = navigator.hardwareConcurrency || 1;
+
+  console.log(threads);
 
   const cpuTime = cpuBenchmark();
   const fps = await FPSCheck();

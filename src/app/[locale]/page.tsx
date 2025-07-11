@@ -48,7 +48,7 @@ export default function Home() {
             <Banner />
             <Job />
             <Laboratory />
-            <Footer />
+            {/* <Footer /> */}
           </motion.div>
         ) : null}
       </AnimatePresence>
