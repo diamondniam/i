@@ -56,7 +56,7 @@ export default function Banner() {
       ref={containerRef}
       className="h-screen flex justify-center items-center relative will-change-transform pBody containerBody"
     >
-      <BannerCircles />
+      {/* <BannerCircles /> */}
 
       <div className="gapS relative top-5 flex items-center">
         <div className="absolute h-[200px] bottom-full md:w-[300px] w-[250px] overflow-hidden">
