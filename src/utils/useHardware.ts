@@ -15,11 +15,11 @@ export const useHardware = () => {
   useEffect(() => {
     const currentConcurrency = navigator.hardwareConcurrency || 2;
 
-    if (currentConcurrency >= 8) {
-      setPower("high");
-    } else if (currentConcurrency > 4) {
-      setPower("medium");
-    }
+    // if (currentConcurrency >= 8) {
+    //   setPower("high");
+    // } else if (currentConcurrency > 4) {
+    //   setPower("medium");
+    // }
 
     setConcurrency(currentConcurrency);
   }, []);
