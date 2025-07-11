@@ -2,12 +2,14 @@ import { useGlobal } from "@/contexts/GlobalContext";
 import { LaboratoryItemProps } from "@/features/Laboratory/types";
 import { useOpimizedAnimations } from "@/utils";
 import { motion } from "motion/react";
+import { useLocale } from "next-intl";
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function LaboratoryItem(props: LaboratoryItemProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { hardware } = useGlobal();
+  const locale = useLocale();
 
   return (
     <div
@@ -64,7 +66,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
             },
           })}
         >
-          {props.description}
+          {props.description[locale]}
         </motion.p>
       </motion.div>
     </div>

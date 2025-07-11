@@ -2,19 +2,28 @@
   {
     "id": "nick-room",
     "title": "Nick's Room",
-    "description": "Nick's Room Nick's Room Nick's Room",
+    "description": {
+      "en": "A web landing page for a music album \"Nick's Room\" with diving into lore.",
+      "ru": "Веб-лендинг для музыкального альбома «Nick's Room» с погружением в лор."
+    },
     "link": null
   },
   {
     "id": "apple-siri-animation",
     "title": "Apple Siri border animation",
-    "description": "Apple Siri border animation Apple Siri border animation Apple Siri border animation",
+    "description": {
+      "en": "Inspired by apple ai flows and @trpfsu (on twitter) and created border waves animation.",
+      "ru": "Вдохновившись AI-анимациями Apple и @trpfsu (в Twitter), создал анимацию волнистых границ."
+    },
     "link": "https://github.com/diamondniam/apple-ai-animation"
   },
   {
     "id": "nick-room",
     "title": "Scheduled Tab Muter",
-    "description": "Scheduled Tab Muter Scheduled Tab Muter Scheduled Tab Muter",
+    "description": {
+      "en": "Mute tabs on a schedule in Google Chrome.",
+      "ru": "Планируй отключение звука вкладок по расписанию в Google Chrome."
+    },
     "link": "https://github.com/diamondniam/scheduled-tab-muter"
   }
 ]

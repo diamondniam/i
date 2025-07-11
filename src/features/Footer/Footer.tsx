@@ -411,7 +411,7 @@ export default function Footer() {
           <div
             ref={titlesRef}
             className={twMerge(
-              "max-[321px]:hidden will-change-opacity",
+              "will-change-opacity",
               `${hardware.power === "high" && "max-sm:mt-20"}`
             )}
             style={{
