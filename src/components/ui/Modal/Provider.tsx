@@ -86,6 +86,12 @@ export default function ModalProvider({
     setIsFull(true);
     lockScroll();
 
+    const navigation = document.querySelector("nav");
+
+    if (navigation) {
+      animate(navigation, { opacity: 0 }, { duration: 0.5 });
+    }
+
     animateContainerY(fullYValue);
   };
 
@@ -154,6 +160,12 @@ export default function ModalProvider({
       setIsShown(false);
       unlockScroll();
       nonModalClosingElements.current = [];
+
+      const navigation = document.querySelector("nav");
+
+      if (navigation) {
+        animate(navigation, { opacity: 1 }, { duration: 0.5 });
+      }
     }, MODAL_USUAL_ANIMATION_DURATION * 1000);
   };
 

@@ -5,7 +5,7 @@
       "title": "Rennord",
       "url": "https://www.rennord.com/",
       "position": "Lead Frontend Developer",
-      "dateRange": ["2025-06-28T23:34:54.304Z", "2025-06-28T23:34:54.304Z"],
+      "dateRange": ["2024-01-01", "present"],
       "isCurrent": true,
       "tags": {
         "main": [
@@ -55,24 +55,24 @@
             "id": "vuex",
             "title": "Vuex",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#2C4935",
+              "background": "#52884F"
             }
           },
           {
             "id": "less",
             "title": "Less",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#3A2D2A",
+              "background": "#715B52"
             }
           },
           {
             "id": "router",
             "title": "Router",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#34351A",
+              "background": "#77803E"
             }
           },
 
@@ -80,64 +80,64 @@
             "id": "gitlab",
             "title": "GitLab",
             "styles": {
-              "color": "#FC6D26",
-              "background": "#FC6D26"
+              "color": "#2C2C19",
+              "background": "#77751C"
             }
           },
           {
             "id": "docker",
             "title": "Docker",
             "styles": {
-              "color": "#FC6D26",
-              "background": "#FC6D26"
+              "color": "#283158",
+              "background": "#4F6582"
             }
           },
           {
             "id": "vitest",
             "title": "Vitest",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#214137",
+              "background": "#4F8277"
             }
           },
           {
             "id": "cypress",
             "title": "Cypress",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#33390A",
+              "background": "#828618"
             }
           },
           {
             "id": "javascript",
             "title": "Javascript",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#3F3A14",
+              "background": "#88851C"
             }
           },
           {
             "id": "aria",
             "title": "ARIA",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#402016",
+              "background": "#86502E"
             }
           },
           {
             "id": "persisted-state",
             "title": "Persisted State",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#13333D",
+              "background": "#2E866A"
             }
           },
           {
             "id": "indexed-db",
             "title": "IndexedDB",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#382641",
+              "background": "#6D5F76"
             }
           }
         ]
@@ -145,7 +145,8 @@
     },
     "body": {
       "description": {
-        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted id='aria' color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted id='vitest' color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted id='validations' color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code."
+        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted id='aria' color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted id='vitest' color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted id='validations' color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code.",
+        "ru": "Шведская компания, предоставляющая B2B-решения. Годовой доход: ~450 тыс. €.\n\nЗдесь я создавал кастомный UI, который использовался в 4 проектах. Было разработано более 40 переиспользуемых, статeless, хорошо организованных и структурированных компонентов с использованием Tailwind. Обеспечена доступность <Highlighted id='aria' color='#FFE187'>a11y</Highlighted>, адаптивность, написаны модульные и интеграционные <Highlighted id='vitest' color='#89FF87'>тесты</Highlighted>.\n\nКаждое из 4 приложений, в создании которых я участвовал, имело свои особенности — от насыщенных формами и <Highlighted id='validations' color='#FF87EB'>валидациями</Highlighted> админ-панелей до пользовательских продуктовых страниц с динамической фильтрацией, корзинами, конструкторами и вводом данных.\n\nДоставлял пиксель-перфект, поддерживаемый и качественный код."
       }
     }
   },
@@ -154,7 +155,7 @@
     "header": {
       "title": "Freelance",
       "position": "Frontend Developer",
-      "dateRange": ["2025-06-28T23:34:54.304Z", "2025-06-28T23:34:54.304Z"],
+      "dateRange": ["2023-09-01", "2024-01-01"],
       "isCurrent": false,
       "tags": {
         "main": [
@@ -204,40 +205,40 @@
             "id": "scss",
             "title": "SCSS",
             "styles": {
-              "color": "#F7DF1E",
-              "background": "#F7DF1E"
+              "color": "#4B2C1E",
+              "background": "#85533E"
             }
           },
           {
             "id": "tailwind",
             "title": "Tailwind",
             "styles": {
-              "color": "#F7DF1E",
-              "background": "#F7DF1E"
+              "color": "#1E404B",
+              "background": "#3E6985"
             }
           },
           {
             "id": "Redux",
             "title": "Redux",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#253057",
+              "background": "#566686"
             }
           },
           {
             "id": "router",
             "title": "Router",
             "styles": {
-              "color": "#61DAFB",
-              "background": "#61DAFB"
+              "color": "#361C56",
+              "background": "#655686"
             }
           },
           {
             "id": "git",
             "title": "Git",
             "styles": {
-              "color": "#FC6D26",
-              "background": "#FC6D26"
+              "color": "#34322A",
+              "background": "#837851"
             }
           }
         ]
@@ -245,7 +246,8 @@
     },
     "body": {
       "description": {
-        "en": "Created e-commerce webs and landings.\n\nInitiated projects, ensured stability, fixed current app state, ensured best practices and best user experience, integrated API."
+        "en": "Created e-commerce webs and landings.\n\nInitiated projects, ensured stability, fixed current app state, ensured best practices and best user experience, integrated API.",
+        "ru": "Создавал e-commerce сайты и лендинги. \n\nИнициировал проекты, обеспечивал стабильность, исправлял текущее состояние приложений, придерживался лучших практик и обеспечивал наилучший пользовательский опыт, интегрировал API."
       }
     }
   }

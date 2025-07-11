@@ -12,7 +12,7 @@ type GlobalProviderProps = {
 type ContectProps = {
   hardware: {
     power: "low" | "medium" | "high";
-    concurrency: number | undefined;
+    isSet: boolean;
   };
 };
 

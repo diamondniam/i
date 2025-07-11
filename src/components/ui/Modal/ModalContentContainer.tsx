@@ -93,7 +93,7 @@ export default function ModalContentContainer() {
         {isFull ? (
           <motion.div
             key="modal-backdrop"
-            className="fixed inset-0 bg-[var(--background)]/50"
+            className="fixed inset-0 bg-[var(--backdrop-color)]"
             onClick={handleModalClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -106,7 +106,7 @@ export default function ModalContentContainer() {
       <motion.div
         ref={modalContentRef}
         className={twMerge(
-          `w-[70%] max-md:w-[80%] max-w-[calc(var(--max-width)_-_200px)] max-sm:w-[90%] fixed left-1/2 bg-[var(--background-third)]/80 backdrop-blur-lg flex flex-col gap-3 translate-x-[-50%] max-h-[${MODAL_INITIAL_HEIGHT_IN_PERCENT * 100}%] min-h-[${MODAL_INITIAL_HEIGHT_IN_PERCENT * 100}%] overflow-hidden shadow-md`
+          `w-[70%] max-md:w-[80%] max-w-[calc(var(--max-width)_-_200px)] max-sm:w-[90%] fixed left-1/2 bg-[var(--background-third)] flex flex-col gap-3 translate-x-[-50%] max-h-[${MODAL_INITIAL_HEIGHT_IN_PERCENT * 100}%] min-h-[${MODAL_INITIAL_HEIGHT_IN_PERCENT * 100}%] overflow-hidden shadow-md`
         )}
         initial={{
           bottom: options?.mode === "full" ? undefined : 0,

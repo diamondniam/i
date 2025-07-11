@@ -2,13 +2,15 @@
   {
     "id": "experience",
     "title": {
-      "en": "Experience"
+      "en": "Experience",
+      "ru": "Опыт"
     }
   },
   {
     "id": "laboratory",
     "title": {
-      "en": "My lab"
+      "en": "My lab",
+      "ru": "Лаба"
     }
   }
 ]

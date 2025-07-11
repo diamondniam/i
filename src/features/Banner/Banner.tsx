@@ -6,10 +6,12 @@ import BannerTitle from "@/features/Banner/BannerTitle";
 import BannerLaptop from "@public/images/bannerLaptop.svg";
 import BannerPhone from "@public/images/bannerPhone.svg";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 
 export default function Banner() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations();
   const { hardware } = useGlobal();
 
   const lowEndAnimation = {
@@ -56,8 +58,8 @@ export default function Banner() {
     >
       <BannerCircles />
 
-      <div className="gapS relative top-5">
-        <div className="absolute h-[200px] bottom-full w-full overflow-hidden">
+      <div className="gapS relative top-5 flex items-center">
+        <div className="absolute h-[200px] bottom-full md:w-[300px] w-[250px] overflow-hidden">
           <motion.div
             className="md:w-[115px] w-[100px] absolute bottom-0 right-0"
             initial={bannerPhoneAnimation().initial}
@@ -85,7 +87,7 @@ export default function Banner() {
           animate={descriptionAnimation().animate}
           transition={descriptionAnimation().transition}
         >
-          building next level user experience
+          {t("components.banner.description")}
         </motion.h2>
       </div>
     </section>

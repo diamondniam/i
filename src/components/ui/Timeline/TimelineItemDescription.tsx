@@ -4,6 +4,7 @@ import { useGlobal } from "@/contexts/GlobalContext";
 import { getBreakedText, useOpimizedAnimations } from "@/utils";
 import parse, { domToReact } from "html-react-parser";
 import { motion } from "motion/react";
+import { useLocale } from "next-intl";
 import { useMemo } from "react";
 
 export default function TimelineItemDescription({
@@ -16,6 +17,7 @@ export default function TimelineItemDescription({
       TimelineItemDescriptionHighlighted({ ...props }),
   };
   const { hardware } = useGlobal();
+  const locale = useLocale();
 
   const descriptionParseOptions = {
     replace: (domNode: any) => {
@@ -32,7 +34,7 @@ export default function TimelineItemDescription({
   };
 
   const getDescription = useMemo(() => {
-    return parse(getBreakedText(description.en), descriptionParseOptions);
+    return parse(getBreakedText(description[locale]), descriptionParseOptions);
   }, [description.en]);
 
   return (

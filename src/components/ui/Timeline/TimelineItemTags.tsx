@@ -139,7 +139,7 @@ export default function TimelineItemTags({
                 setShowAll(true);
                 setIsOverflowing(true);
               }}
-              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all"
+              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[1]"
               initial={{
                 y: 100,
               }}

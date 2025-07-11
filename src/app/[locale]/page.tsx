@@ -37,7 +37,7 @@ export default function Home() {
       <div className="grainOverlay"></div>
 
       <AnimatePresence initial={true} mode="wait">
-        {nickRoom.isAnimating === false && hardware.concurrency ? (
+        {nickRoom.isAnimating === false && hardware.isSet ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

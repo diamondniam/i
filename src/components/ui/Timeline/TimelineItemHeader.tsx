@@ -9,7 +9,7 @@ import { motion, useInView } from "motion/react";
 
 import { useProvider } from "@/components/ui/Timeline/Provider";
 import { useRef, useState } from "react";
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useGlobal } from "@/contexts/GlobalContext";
 import { useOpimizedAnimations } from "@/utils";
 
@@ -27,6 +27,7 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
   const titleRef = useRef<HTMLDivElement>(null);
   const jobPositionRef = useRef<HTMLDivElement>(null);
   const format = useFormatter();
+  const t = useTranslations();
 
   const { hardware } = useGlobal();
 
@@ -57,7 +58,9 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
         })}
       >
         {format.dateTime(new Date(props.dateRange[0]), "short")} -{" "}
-        {format.dateTime(new Date(props.dateRange[1]), "short")}
+        {props.dateRange[1] === "present"
+          ? t("components.timeline.item.header.present")
+          : format.dateTime(new Date(props.dateRange[1]), "short")}
       </motion.div>
 
       <div className="flex gap-1 items-center">
