@@ -5,12 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { preloadImages, useActivePage } from "@/utils";
 
+interface RennordAnimationProps {
+  containerRef: React.RefObject<HTMLElement | null>;
+}
+
 const LAPTOP_OPENS_END_FRAME = 32;
 const BODY_ANIMATION_FRAMES = 118;
 
-export default function RennordAnimation() {
-  const imageRef = useRef<HTMLImageElement>(null);
-  const isInView = useInView(imageRef, { amount: 0.8 });
+export default function RennordAnimation(props: RennordAnimationProps) {
+  const isInView = useInView(props.containerRef, { amount: 0.8 });
   const targetFPS = 30;
   const frameDuration = 1000 / targetFPS;
   const [currentFrame, setCurrentFrame] = useState(0);
@@ -62,10 +65,7 @@ export default function RennordAnimation() {
   }, [isInView]);
 
   return (
-    <div
-      ref={imageRef}
-      className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]"
-    >
+    <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
       <Image
         src={frames[currentFrame]}
         fill

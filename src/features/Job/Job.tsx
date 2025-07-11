@@ -17,6 +17,7 @@ import { hexToRgba, useOpimizedAnimations } from "@/utils";
 import RennordSkeleton from "@public/images/rennordDashboardSkeleton.svg";
 import { useGlobal } from "@/contexts/GlobalContext";
 import RennordAnimation from "@/features/RennordAnimation";
+import { useRef } from "react";
 
 export default function Job() {
   const highlightedMap = {
@@ -26,6 +27,7 @@ export default function Job() {
   };
 
   const { hardware } = useGlobal();
+  const rennordLaptopRef = useRef<HTMLDivElement>(null);
 
   return (
     <section id="experience" className="pBody containerBody">
@@ -112,6 +114,7 @@ export default function Job() {
                 </div> */}
 
                   <motion.div
+                    ref={rennordLaptopRef}
                     className="relative h-full"
                     {...useOpimizedAnimations({
                       hardware,
@@ -123,7 +126,7 @@ export default function Job() {
                       },
                     })}
                   >
-                    <RennordAnimation />
+                    <RennordAnimation containerRef={rennordLaptopRef} />
                   </motion.div>
                 </div>
 
