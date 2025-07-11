@@ -73,14 +73,10 @@ export default function RennordAnimation(props: RennordAnimationProps) {
 
   return (
     <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
-      <Image
+      <img
         src={frames[currentFrame]}
-        fill
         alt="Rennord Animation"
-        sizes="100%"
-        className="object-contain"
-        priority
-        quality={80}
+        className="absolute w-full h-full object-contain"
       />
     </div>
   );

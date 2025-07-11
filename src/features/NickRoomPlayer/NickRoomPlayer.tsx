@@ -92,7 +92,6 @@ export default function NickRoomPlayer({
         width={60}
         height={60}
         className="z-1 max-sm:w-[55px]"
-        priority
       />
     </motion.button>
   );

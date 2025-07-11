@@ -119,7 +119,6 @@ export default function AppleAnimation() {
           src="/images/laboratoryAppleAnimationScreenEmpty.png"
           alt="apple animation"
           fill
-          priority
           className="object-cover"
           sizes="100%"
         ></Image>
@@ -128,7 +127,6 @@ export default function AppleAnimation() {
           src="/images/laboratoryAppleAnimationScreen.png"
           alt="apple animation"
           fill
-          priority
           className="object-cover"
           sizes="100%"
         ></Image>

@@ -52,7 +52,6 @@ export default function ScheduledMuter() {
         <Image
           src="/images/laboratoryScheduledMuter.png"
           fill
-          priority
           alt="Scheduled Muter"
           className="object-cover object-[center_19%] rounded-lg"
           sizes="100%"

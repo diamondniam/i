@@ -55,7 +55,6 @@ export default function Job() {
                         fill
                         alt="Rennord Dashboard"
                         className="object-contain object-right"
-                        priority
                         sizes="100%"
                       />
                     </motion.div>
