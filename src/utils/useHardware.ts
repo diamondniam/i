@@ -25,6 +25,7 @@ export const useHardware = () => {
 
     // console.log();
     getDevicePowerLevel().then((value) => {
+      console.log(value);
       setPower(value);
       setIsSet(true);
     });
