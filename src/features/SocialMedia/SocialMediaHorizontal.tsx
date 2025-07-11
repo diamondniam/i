@@ -57,7 +57,7 @@ export default function SocialMediaHorizontal({
       <div
         ref={containerRef}
         className={twMerge(
-          "flex overflow-auto w-full rounded-lg relative gap-3 removeScrollbar"
+          "flex overflow-auto w-auto rounded-lg relative gap-3 removeScrollbar"
         )}
         style={{
           scrollSnapType: `${isScrolled ? "x mandatory" : "none"}`,

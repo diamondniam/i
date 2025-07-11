@@ -16,6 +16,7 @@ import { hexToRgba, useOpimizedAnimations } from "@/utils";
 
 import RennordSkeleton from "@public/images/rennordDashboardSkeleton.svg";
 import { useGlobal } from "@/contexts/GlobalContext";
+import RennordAnimation from "@/features/RennordAnimation";
 
 export default function Job() {
   const highlightedMap = {
@@ -122,16 +123,7 @@ export default function Job() {
                       },
                     })}
                   >
-                    <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
-                      <Image
-                        src={"/images/rennord.png"}
-                        fill
-                        priority
-                        alt="Rennord"
-                        className="object-contain"
-                        sizes="100%"
-                      />
-                    </div>
+                    <RennordAnimation />
                   </motion.div>
                 </div>
 

@@ -403,13 +403,6 @@ export default function Footer() {
               marginTop: hardware.power === "high" ? "0" : "50px",
             }}
           >
-            {/* <Image
-              src="/images/laboratoryAppleAnimationScreenEmpty.png"
-              fill
-              alt="Footer Phone"
-              className="object-cover pointer-events-none select-none z-[1]"
-            /> */}
-
             {hardware.power !== "high" && (
               <SocialMediaHorizontal ref={socialMediaRef} />
             )}
@@ -418,7 +411,7 @@ export default function Footer() {
           <div
             ref={titlesRef}
             className={twMerge(
-              "max-[321px]:hidden will-change-opacity rounded-[35px] overflow-hidden",
+              "max-[321px]:hidden will-change-opacity",
               `${hardware.power === "high" && "max-sm:mt-20"}`
             )}
             style={{

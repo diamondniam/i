@@ -6,64 +6,70 @@ type Props = {
   isPointerOn: boolean;
 };
 
+const FRAME_DURATION = 100;
+
 export default function NickRoomAnimation(props: Props) {
   const [frameIndex, setFrameIndex] = useState(0);
-  const interval = useRef<NodeJS.Timeout | null>(null);
   const isPageActive = useActivePage();
+  const direction = useRef<"forward" | "backward">("forward");
+  const animationFrameId = useRef<number | null>(null);
+  const lastFrameTime = useRef(0);
+  const isMounted = useRef(false);
 
-  const playAnimation = () => {
-    interval.current = setInterval(() => {
+  const animate = (time: number) => {
+    animationFrameId.current = requestAnimationFrame(animate);
+
+    const delta = time - lastFrameTime.current;
+
+    if (delta >= FRAME_DURATION) {
+      lastFrameTime.current = time;
+
       setFrameIndex((prev) => {
-        if (prev === frames.length - 1) {
-          if (interval.current) {
-            clearInterval(interval.current);
+        if (direction.current === "forward") {
+          if (prev === frames.length - 1) {
+            cancelAnimationFrame(animationFrameId.current!);
+            return prev;
           }
-          return prev;
+          return prev + 1;
         } else {
-          return (prev + 1) % frames.length;
+          if (prev === 1) {
+            cancelAnimationFrame(animationFrameId.current!);
+            return prev - 1;
+          }
+          return (prev - 1 + frames.length) % frames.length;
         }
       });
-    }, 100);
-  };
-
-  const stopAnimation = () => {
-    if (interval.current) {
-      clearInterval(interval.current);
-
-      interval.current = setInterval(() => {
-        setFrameIndex((prev) => {
-          if (prev === 1) {
-            if (interval.current) {
-              clearInterval(interval.current);
-            }
-            return prev - 1;
-          } else {
-            return (prev - 1 + frames.length) % frames.length;
-          }
-        });
-      }, 100);
     }
   };
 
   useEffect(() => {
-    if (props.isPointerOn) {
-      playAnimation();
-    } else {
-      stopAnimation();
+    if (isMounted.current) {
+      cancelAnimationFrame(animationFrameId.current!);
+
+      lastFrameTime.current = performance.now();
+      direction.current = props.isPointerOn ? "forward" : "backward";
+
+      animationFrameId.current = requestAnimationFrame(animate);
     }
 
     return () => {
-      if (interval.current) {
-        clearInterval(interval.current);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [props.isPointerOn]);
+  }, [props.isPointerOn, isMounted]);
 
   useEffect(() => {
     if (isPageActive) {
       preloadImages(frames);
     }
   }, [isPageActive]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      isMounted.current = true;
+    });
+  }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none select-none">

@@ -107,7 +107,7 @@ export default function AppleAnimation() {
         className="relative w-[200px] h-[420px] cursor-pointer flex justify-center items-center"
         variants={animationsContainer}
         whileTap={"clicked"}
-        whileHover={"active"}
+        whileHover={useIsHoverDevice() ? "active" : undefined}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerLeave}

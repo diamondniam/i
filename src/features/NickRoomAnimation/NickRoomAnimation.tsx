@@ -6,76 +6,63 @@ import { useRouter } from "next/navigation";
 import { useNavigationStore } from "@/store";
 import { preloadImages, useActivePage } from "@/utils";
 
-const ANIMATION_FRAME_RATE = 100;
+const FRAME_DURATION = 100;
 
 export default function NickRoomAnimation() {
   const { nickRoom, setNickRoomAnimating } = useNavigationStore();
 
   const router = useRouter();
-  const interval = useRef<NodeJS.Timeout | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const isPageActive = useActivePage();
+  const animationFrameId = useRef<number | null>(null);
+  const lastFrameTime = useRef<number>(0);
 
-  const animateForward = () => {
-    if (interval.current) {
-      clearInterval(interval.current);
-    }
+  const direction = useRef<"forward" | "backwards" | undefined>("forward");
 
-    interval.current = setInterval(() => {
+  const animate = (time: number) => {
+    animationFrameId.current = requestAnimationFrame(animate);
+    const delta = time - lastFrameTime.current;
+
+    if (delta >= FRAME_DURATION) {
+      lastFrameTime.current = time;
+
       setFrameIndex((prev) => {
-        if (prev === frames.length - 1) {
-          if (interval.current) {
-            clearInterval(interval.current);
+        if (direction.current === "forward") {
+          if (prev === frames.length - 1) {
+            cancelAnimationFrame(animationFrameId.current!);
+            document.body.style.background = "var(--nick-room-bg)";
+            router.push("/nickroom");
+            return prev;
           }
-          document.body.style.background = "var(--nick-room-bg)";
-          router.push("/nickroom");
-          return prev;
+          return prev + 1;
         } else {
-          return (prev + 1) % frames.length;
-        }
-      });
-    }, ANIMATION_FRAME_RATE);
-  };
-
-  const animateBackwards = () => {
-    if (interval.current) {
-      clearInterval(interval.current);
-    }
-
-    interval.current = setInterval(() => {
-      setFrameIndex((prev) => {
-        if (prev === 1) {
-          if (interval.current) {
-            clearInterval(interval.current);
+          if (prev === 1) {
+            cancelAnimationFrame(animationFrameId.current!);
+            setTimeout(() => {
+              setNickRoomAnimating(false);
+              setIsAnimating(false);
+            }, FRAME_DURATION);
+            return prev - 1;
           }
-
-          setTimeout(() => {
-            setNickRoomAnimating(false);
-            setIsAnimating(false);
-          }, ANIMATION_FRAME_RATE);
-          return prev - 1;
-        } else {
           return (prev - 1 + frames.length) % frames.length;
         }
       });
-    }, ANIMATION_FRAME_RATE);
+    }
   };
 
   useEffect(() => {
     if (nickRoom.isAnimating) {
       setIsAnimating(true);
+      direction.current = nickRoom.dir;
 
-      if (nickRoom.dir === "forward") {
-        animateForward();
-      } else if (nickRoom.dir === "backwards") {
-        animateBackwards();
-      }
+      lastFrameTime.current = performance.now();
+      animationFrameId.current = requestAnimationFrame(animate);
     }
 
     return () => {
-      if (interval.current) {
-        clearInterval(interval.current);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
       }
     };
   }, [nickRoom.isAnimating]);
