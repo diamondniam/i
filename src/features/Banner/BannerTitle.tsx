@@ -25,7 +25,7 @@ export default function BannerTitle() {
       </h1>
 
       <motion.h1
-        className="[text-shadow:_7px_5px_16px_black] text-transparent absolute bottom-6 w-full z-[1] select-none pointer-events-none"
+        className="[text-shadow:_7px_5px_14px_var(--background)] text-transparent absolute bottom-6 w-full z-[1] select-none pointer-events-none"
         {...useOpimizedAnimations({
           hardware,
           animations: {

@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Diamond Niam",
+  title: "Diamond Niam | Frontend Developer",
   description: "Let's create something together!",
 };
 
@@ -32,6 +32,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="icon" href="/images/favicon.jpg" />
+      </head>
+
       <body
         className={twMerge(`
         ${inter.variable} antialiased
