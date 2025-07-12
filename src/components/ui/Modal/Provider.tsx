@@ -232,11 +232,16 @@ export default function ModalProvider({
   }, [scrollPosition]);
 
   useEffect(() => {
+    if (isFull) {
+      animateContainerY(fullYValue);
+    }
+  }, [fullYValue]);
+
+  useEffect(() => {
     const windowHeight = window.innerHeight;
     const fullModePercent = 0.5;
     const fullModeTarget = -windowHeight * fullModePercent;
     setFullYValue(fullModeTarget);
-    console.log("fullModeTarget", fullModeTarget);
 
     const initialPercent = MODAL_INITIAL_HEIGHT_IN_PERCENT;
     const initialTarget = windowHeight * initialPercent;
