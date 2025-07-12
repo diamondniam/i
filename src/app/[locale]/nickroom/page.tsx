@@ -38,6 +38,7 @@ export default function NickRoom() {
         alt="Nick Room Background"
         className="object-cover"
         sizes="100%"
+        priority
       />
 
       <motion.button

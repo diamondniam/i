@@ -2,6 +2,7 @@ import { frames } from "@/features/RennordAnimation/utils";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { loadSpriteFrames, useActivePage } from "@/utils";
+import Image from "next/image";
 
 interface RennordAnimationProps {
   containerRef: React.RefObject<HTMLElement | null>;
@@ -23,6 +24,7 @@ export default function RennordAnimation(props: RennordAnimationProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
   const lastFrameTime = useRef(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -59,6 +61,7 @@ export default function RennordAnimation(props: RennordAnimationProps) {
           canvasRef.current!.width = w;
           canvasRef.current!.height = h;
           ctx.current.drawImage(image, x, y, w, h, 0, 0, w, h);
+          setIsLoaded(true);
         }
 
         if (prevIncrement >= BODY_ANIMATION_FRAMES + LAPTOP_OPENS_END_FRAME) {
@@ -101,7 +104,18 @@ export default function RennordAnimation(props: RennordAnimationProps) {
       <canvas
         ref={canvasRef}
         className="absolute w-full h-full object-contain"
+        style={{ display: isLoaded ? "block" : "none" }}
       ></canvas>
+
+      {!isLoaded && (
+        <Image
+          src="/images/rennordAnimationMock.png"
+          fill
+          alt="Rennord"
+          className="absolute w-full h-full object-contain"
+          sizes="100%"
+        />
+      )}
     </div>
   );
 }

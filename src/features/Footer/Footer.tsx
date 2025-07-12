@@ -374,6 +374,7 @@ export default function Footer() {
           fill
           alt="Footer Phone"
           className="object-cover pointer-events-none select-none z-[1]"
+          sizes="100%"
         />
 
         <SocialMedia ref={socialMediaRef} className="opacity-0" />

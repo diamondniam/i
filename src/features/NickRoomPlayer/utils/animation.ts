@@ -1,6 +1,4 @@
-export const frames = [
-  "/images/nickRoomPlayerAnimation/frame-1.png",
-  "/images/nickRoomPlayerAnimation/frame-2.png",
-  "/images/nickRoomPlayerAnimation/frame-3.png",
-  "/images/nickRoomPlayerAnimation/frame-4.png",
-];
+import { getSpriteFrames } from "@/utils";
+import nickRoomAnimationSprite from "@public/data/spritesSheets/nickRoomPlayerAnimationSprite.json";
+
+export const frames = getSpriteFrames([nickRoomAnimationSprite]);
