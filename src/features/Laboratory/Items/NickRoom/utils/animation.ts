@@ -1,23 +1,4 @@
-export const frames = [
-  "/images/nickRoomAnimation/frame-1.png",
-  "/images/nickRoomAnimation/frame-2.png",
-  "/images/nickRoomAnimation/frame-3.png",
-  "/images/nickRoomAnimation/frame-4.png",
-  "/images/nickRoomAnimation/frame-5.png",
-  "/images/nickRoomAnimation/frame-6.png",
-  "/images/nickRoomAnimation/frame-7.png",
-  "/images/nickRoomAnimation/frame-8.png",
-  "/images/nickRoomAnimation/frame-9.png",
-  "/images/nickRoomAnimation/frame-10.png",
-  "/images/nickRoomAnimation/frame-11.png",
-  "/images/nickRoomAnimation/frame-12.png",
-  "/images/nickRoomAnimation/frame-13.png",
-  "/images/nickRoomAnimation/frame-14.png",
-  "/images/nickRoomAnimation/frame-15.png",
-  "/images/nickRoomAnimation/frame-16.png",
-  "/images/nickRoomAnimation/frame-17.png",
-  "/images/nickRoomAnimation/frame-18.png",
-  "/images/nickRoomAnimation/frame-19.png",
-  "/images/nickRoomAnimation/frame-20.png",
-  "/images/nickRoomAnimation/frame-21.png",
-];
+import { getSpriteFrames } from "@/utils";
+import nickRoomAnimationSprite from "@public/data/spritesSheets/nickRoomSprite.json";
+
+export const frames = getSpriteFrames([nickRoomAnimationSprite]);

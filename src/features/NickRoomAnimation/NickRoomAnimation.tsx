@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils";
 import { useRouter } from "next/navigation";
 import { useNavigationStore } from "@/store";
-import { preloadImages, useActivePage } from "@/utils";
+import { loadSpriteFrames, preloadImages, useActivePage } from "@/utils";
 
 const FRAME_DURATION = 100;
 
@@ -13,8 +13,8 @@ export default function NickRoomAnimation() {
 
   const router = useRouter();
   const [frameIndex, setFrameIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const isPageActive = useActivePage();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctx = useRef<CanvasRenderingContext2D | null>(null);
   const animationFrameId = useRef<number | null>(null);
   const lastFrameTime = useRef<number>(0);
 
@@ -28,36 +28,88 @@ export default function NickRoomAnimation() {
       lastFrameTime.current = time;
 
       setFrameIndex((prev) => {
+        let nextFrame;
         if (direction.current === "forward") {
           if (prev === frames.length - 1) {
             cancelAnimationFrame(animationFrameId.current!);
             document.body.style.background = "var(--nick-room-bg)";
             router.push("/nickroom");
-            return prev;
+            nextFrame = prev;
+          } else {
+            nextFrame = prev + 1;
           }
-          return prev + 1;
         } else {
           if (prev === 1) {
             cancelAnimationFrame(animationFrameId.current!);
             setTimeout(() => {
               setNickRoomAnimating(false);
-              setIsAnimating(false);
             }, FRAME_DURATION);
-            return prev - 1;
+            nextFrame = prev - 1;
+            if (ctx.current) {
+              ctx.current.clearRect(
+                0,
+                0,
+                canvasRef.current!.width,
+                canvasRef.current!.height
+              );
+            }
+
+            return nextFrame;
+          } else {
+            nextFrame = (prev - 1 + frames.length) % frames.length;
           }
-          return (prev - 1 + frames.length) % frames.length;
         }
+
+        const { image, x, y, w, h } = frames[nextFrame];
+
+        if (!image || !image.complete) {
+          return prev;
+        }
+
+        if (ctx.current) {
+          ctx.current.clearRect(
+            0,
+            0,
+            canvasRef.current!.width,
+            canvasRef.current!.height
+          );
+          canvasRef.current!.width = w;
+          canvasRef.current!.height = h;
+          ctx.current.drawImage(
+            image,
+            x,
+            y,
+            w,
+            h,
+            0,
+            0,
+            canvasRef.current!.width,
+            canvasRef.current!.height
+          );
+        }
+
+        return nextFrame;
       });
     }
   };
 
   useEffect(() => {
+    if (canvasRef.current) {
+      ctx.current = canvasRef.current.getContext("2d");
+    }
+  }, [canvasRef.current]);
+
+  useEffect(() => {
     if (nickRoom.isAnimating) {
-      setIsAnimating(true);
       direction.current = nickRoom.dir;
 
       lastFrameTime.current = performance.now();
-      animationFrameId.current = requestAnimationFrame(animate);
+
+      if (ctx.current) {
+        loadSpriteFrames(frames).then(() => {
+          animationFrameId.current = requestAnimationFrame(animate);
+        });
+      }
     }
 
     return () => {
@@ -65,23 +117,11 @@ export default function NickRoomAnimation() {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [nickRoom.isAnimating]);
+  }, [nickRoom.isAnimating, ctx.current]);
 
-  useEffect(() => {
-    if (isPageActive) {
-      preloadImages(frames);
-    }
-  }, [isPageActive]);
-
-  if (isAnimating) {
-    return (
-      <div className="fixed inset-0 w-screen h-screen z-[1] pointer-events-none select-none">
-        <img
-          src={frames[frameIndex]}
-          alt="Nick Room Page Animation"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="fixed inset-0 w-screen h-screen z-[1] pointer-events-none select-none">
+      <canvas ref={canvasRef} className="w-full h-full object-cover"></canvas>
+    </div>
+  );
 }

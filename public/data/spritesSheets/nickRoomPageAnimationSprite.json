@@ -1,0 +1,83 @@
+{
+  "frames": {
+    "frame-1.png": {
+      "frame": { "x": 0, "y": 0, "w": 683, "h": 385 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 683, "h": 385 },
+      "sourceSize": { "w": 683, "h": 385 }
+    },
+    "frame-2.png": {
+      "frame": { "x": 683, "y": 0, "w": 684, "h": 385 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 684, "h": 385 },
+      "sourceSize": { "w": 684, "h": 385 }
+    },
+    "frame-3.png": {
+      "frame": { "x": 0, "y": 385, "w": 684, "h": 385 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 684, "h": 385 },
+      "sourceSize": { "w": 684, "h": 385 }
+    },
+    "frame-4.png": {
+      "frame": { "x": 684, "y": 385, "w": 683, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 683, "h": 386 },
+      "sourceSize": { "w": 683, "h": 386 }
+    },
+    "frame-5.png": {
+      "frame": { "x": 0, "y": 771, "w": 684, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 684, "h": 386 },
+      "sourceSize": { "w": 684, "h": 386 }
+    },
+    "frame-6.png": {
+      "frame": { "x": 684, "y": 771, "w": 684, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 684, "h": 386 },
+      "sourceSize": { "w": 684, "h": 386 }
+    },
+    "frame-7.png": {
+      "frame": { "x": 0, "y": 1157, "w": 683, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 683, "h": 386 },
+      "sourceSize": { "w": 683, "h": 386 }
+    },
+    "frame-8.png": {
+      "frame": { "x": 683, "y": 1157, "w": 684, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 684, "h": 386 },
+      "sourceSize": { "w": 684, "h": 386 }
+    },
+    "frame-9.png": {
+      "frame": { "x": 0, "y": 1543, "w": 683, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 683, "h": 386 },
+      "sourceSize": { "w": 683, "h": 386 }
+    },
+    "frame-10.png": {
+      "frame": { "x": 683, "y": 1543, "w": 683, "h": 386 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 683, "h": 386 },
+      "sourceSize": { "w": 683, "h": 386 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "/images/nickRoomPageAnimationSprite.png",
+    "format": "RGBA8888",
+    "size": { "w": 1368, "h": 1929 },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:f379b4f82fc8c53ac44013cb28ea2fb2:b790aa1c1e5b052869da4d4bd3454a11:98cb6bb7cce06ab3b76f6c561d509adc$"
+  }
+}

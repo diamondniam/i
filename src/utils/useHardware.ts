@@ -18,11 +18,11 @@ export const useHardware = () => {
     const currentConcurrency = navigator.hardwareConcurrency || 2;
     const windowWidth = window.innerWidth;
 
-    // if (windowWidth < 768 || currentConcurrency <= 4) {
-    //   setPower("low");
-    // } else if (currentConcurrency >= 8) {
-    //   setPower("high");
-    // }
+    if (windowWidth < 768 || currentConcurrency <= 4) {
+      setPower("low");
+    } else if (currentConcurrency >= 8) {
+      setPower("high");
+    }
 
     setIsSet(true);
   }, []);

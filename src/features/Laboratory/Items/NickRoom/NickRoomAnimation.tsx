@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils/animation";
-import { preloadImages, useActivePage } from "@/utils";
+import { loadSpriteFrames, preloadImages, useActivePage } from "@/utils";
 
 type Props = {
   isPointerOn: boolean;
@@ -10,7 +10,8 @@ const FRAME_DURATION = 100;
 
 export default function NickRoomAnimation(props: Props) {
   const [frameIndex, setFrameIndex] = useState(0);
-  const isPageActive = useActivePage();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctx = useRef<CanvasRenderingContext2D | null>(null);
   const direction = useRef<"forward" | "backward">("forward");
   const animationFrameId = useRef<number | null>(null);
   const lastFrameTime = useRef(0);
@@ -26,30 +27,73 @@ export default function NickRoomAnimation(props: Props) {
 
       setFrameIndex((prev) => {
         if (direction.current === "forward") {
+          let nextFrame;
+
           if (prev === frames.length - 1) {
             cancelAnimationFrame(animationFrameId.current!);
+            nextFrame = prev;
+          } else {
+            nextFrame = prev + 1;
+          }
+
+          const { image, x, y, w, h } = frames[nextFrame];
+
+          if (!image || !image.complete) {
             return prev;
           }
-          return prev + 1;
+
+          if (ctx.current) {
+            ctx.current.clearRect(0, 0, w, h);
+            canvasRef.current!.width = w;
+            canvasRef.current!.height = h;
+            ctx.current.drawImage(image, x, y, w, h, 0, 0, w, h);
+          }
+
+          return nextFrame;
         } else {
+          let nextFrame;
+
           if (prev === 1) {
             cancelAnimationFrame(animationFrameId.current!);
-            return prev - 1;
+            nextFrame = prev - 1;
           }
-          return (prev - 1 + frames.length) % frames.length;
+          nextFrame = (prev - 1 + frames.length) % frames.length;
+
+          const { image, x, y, w, h } = frames[nextFrame];
+
+          if (!image || !image.complete) {
+            return prev;
+          }
+
+          if (ctx.current) {
+            ctx.current.clearRect(0, 0, w, h);
+            canvasRef.current!.width = w;
+            canvasRef.current!.height = h;
+            ctx.current.drawImage(image, x, y, w, h, 0, 0, w, h);
+          }
+
+          return nextFrame;
         }
       });
     }
   };
 
   useEffect(() => {
-    if (isMounted.current) {
+    if (canvasRef.current) {
+      ctx.current = canvasRef.current.getContext("2d");
+    }
+  }, [canvasRef]);
+
+  useEffect(() => {
+    if (isMounted.current && ctx.current) {
       cancelAnimationFrame(animationFrameId.current!);
 
       lastFrameTime.current = performance.now();
       direction.current = props.isPointerOn ? "forward" : "backward";
 
-      animationFrameId.current = requestAnimationFrame(animate);
+      loadSpriteFrames(frames).then(() => {
+        animationFrameId.current = requestAnimationFrame(animate);
+      });
     }
 
     return () => {
@@ -57,13 +101,7 @@ export default function NickRoomAnimation(props: Props) {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [props.isPointerOn, isMounted]);
-
-  useEffect(() => {
-    if (isPageActive) {
-      preloadImages(frames);
-    }
-  }, [isPageActive]);
+  }, [props.isPointerOn]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -73,12 +111,8 @@ export default function NickRoomAnimation(props: Props) {
 
   return (
     <div className="absolute inset-0 pointer-events-none select-none">
-      <div className="absolute w-[206%] left-[46%] -top-[9.5%] -translate-x-1/2 pointer-events-none select-none max-w-none">
-        <img
-          src={frames[frameIndex]}
-          alt="Animation frame"
-          className="absolute"
-        />
+      <div className="absolute w-[209%] left-[45.5%] -top-[10.5%] -translate-x-1/2 pointer-events-none select-none max-w-none">
+        <canvas ref={canvasRef} className="absolute w-full"></canvas>
       </div>
     </div>
   );
