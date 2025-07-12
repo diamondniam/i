@@ -11,18 +11,18 @@ export type Hardware = {
 
 export const useHardware = () => {
   // const [concurrency, setConcurrency] = useState<Concurrency>(undefined);
-  const [power, setPower] = useState<Power>("high");
+  const [power, setPower] = useState<Power>("low");
   const [isSet, setIsSet] = useState(false);
 
   useEffect(() => {
     const currentConcurrency = navigator.hardwareConcurrency || 2;
     const windowWidth = window.innerWidth;
 
-    // if (windowWidth < 768 || currentConcurrency <= 4) {
-    //   setPower("low");
-    // } else if (currentConcurrency >= 8) {
-    //   setPower("high");
-    // }
+    if (windowWidth < 768 || currentConcurrency <= 4) {
+      setPower("low");
+    } else if (currentConcurrency >= 8) {
+      setPower("high");
+    }
 
     setIsSet(true);
   }, []);
