@@ -49,7 +49,7 @@ const animationsBorder = {
 
 export default function AppleAnimation() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(containerRef);
+  const isInView = useInView(containerRef, { amount: 0.8 });
 
   const { laboratoryPhoneRef } = useFooterPhone();
 

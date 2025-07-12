@@ -94,7 +94,7 @@ export default function ModalProvider({
 
     setTimeout(() => {
       animateContainerY(fullYValue);
-    });
+    }, 100);
   };
 
   const handleFullModeClose = () => {
