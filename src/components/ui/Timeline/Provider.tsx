@@ -4,7 +4,7 @@ import {
   Context as ContextProps,
   Provider as ProviderProps,
 } from "@/components/ui/Timeline/types";
-import { useResizeObserver } from "@/utils";
+import { useDebounce, useResizeObserver } from "@/utils";
 import {
   createContext,
   useRef,
@@ -44,8 +44,13 @@ export const Provider = ({ children, highlightedMap }: ProviderProps) => {
   const [isActiveLineVisible, setIsActiveLineVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const { width: containerWidth, height: containerHeight } =
-    useResizeObserver<HTMLDivElement | null>({ ref: containerRef });
+  const containerSizes = useResizeObserver<HTMLDivElement | null>({
+    ref: containerRef,
+  });
+  const { width: containerWidth, height: containerHeight } = useDebounce(
+    containerSizes,
+    1
+  );
 
   const isSet = useMemo(() => {
     return !!(isMounted && containerRef.current);

@@ -131,12 +131,13 @@ export default function TimelineItemDescriptionHighlighted({
       setIsModalFull(true);
       setIsHovered(true);
     }
-  };
 
-  const handlePointerDown = () => {
     if (!useIsHoverDevice()) {
       handleOpenModal();
     }
+  };
+
+  const handlePointerDown = () => {
     setIsClicked(true);
   };
 

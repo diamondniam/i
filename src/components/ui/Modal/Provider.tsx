@@ -92,7 +92,9 @@ export default function ModalProvider({
       animate(navigation, { opacity: 0 }, { duration: 0.5 });
     }
 
-    animateContainerY(fullYValue);
+    setTimeout(() => {
+      animateContainerY(fullYValue);
+    });
   };
 
   const handleFullModeClose = () => {

@@ -131,7 +131,7 @@ export default function AppleAnimation() {
           sizes="100%"
         ></Image>
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isInView && (
             <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px] will-change-transform">
               <motion.div

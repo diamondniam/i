@@ -42,17 +42,16 @@ export default function Timeline() {
         ]?.getBoundingClientRect().y;
 
       if (lastItemY && firstItemDot && lastItemDot) {
-        return (
-          lastItemY -
-          containerY +
-          lastItemDot.offsetTop -
-          firstItemDot.offsetTop -
-          TIMELINE_DOT_SIZE
-        );
-      }
-    }
+        const lastItemDotFixedY =
+          lastItemDot.getBoundingClientRect().y - containerY;
+        const firstItemDotFixedY =
+          firstItemDot.getBoundingClientRect().y - containerY;
 
-    return 0;
+        return lastItemDotFixedY - firstItemDotFixedY;
+      }
+    } else {
+      return 0;
+    }
   }, [isSet, containerHeight, containerWidth]);
 
   useEffect(() => {

@@ -67,6 +67,21 @@ export function handleIsScrollingFn(
   };
 }
 
+function getScrollbarWidth() {
+  const scrollDiv = document.createElement("div");
+  scrollDiv.style.width = "100px";
+  scrollDiv.style.height = "100px";
+  scrollDiv.style.overflow = "scroll";
+  scrollDiv.style.position = "absolute";
+  scrollDiv.style.top = "-9999px";
+  document.body.appendChild(scrollDiv);
+
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+
+  return scrollbarWidth;
+}
+
 export function lockScroll() {
   const isLocked = document.body.style.position === "fixed";
   if (isLocked) {
@@ -78,10 +93,12 @@ export function lockScroll() {
   document.body.style.width = "100%";
   document.body.style.left = "0";
   document.body.dataset.scrollY = `${scrollY}`;
-  const mainScrollbarWidth = getComputedStyle(document.documentElement)
-    .getPropertyValue("--scrollbar-main-width")
-    .trim();
-  document.body.style.paddingRight = mainScrollbarWidth;
+  if (getScrollbarWidth() > 0) {
+    const mainScrollbarWidth = getComputedStyle(document.documentElement)
+      .getPropertyValue("--scrollbar-main-width")
+      .trim();
+    document.body.style.paddingRight = mainScrollbarWidth;
+  }
 }
 
 export function unlockScroll() {
