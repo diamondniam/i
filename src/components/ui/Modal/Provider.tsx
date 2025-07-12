@@ -92,9 +92,7 @@ export default function ModalProvider({
       animate(navigation, { opacity: 0 }, { duration: 0.5 });
     }
 
-    setTimeout(() => {
-      animateContainerY(fullYValue);
-    }, 100);
+    animateContainerY(fullYValue);
   };
 
   const handleFullModeClose = () => {
@@ -238,6 +236,7 @@ export default function ModalProvider({
     const fullModePercent = 0.5;
     const fullModeTarget = -windowHeight * fullModePercent;
     setFullYValue(fullModeTarget);
+    console.log("fullModeTarget", fullModeTarget);
 
     const initialPercent = MODAL_INITIAL_HEIGHT_IN_PERCENT;
     const initialTarget = windowHeight * initialPercent;
