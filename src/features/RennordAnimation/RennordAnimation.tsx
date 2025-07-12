@@ -17,7 +17,7 @@ export default function RennordAnimation(props: RennordAnimationProps) {
   const [currentFrame, setCurrentFrame] = useState(0);
   const animationFrameId = useRef<number | null>(null);
   const pageActive = useActivePage();
-  const isLoaded = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   let lastFrameTime = useRef(0);
 
@@ -42,16 +42,17 @@ export default function RennordAnimation(props: RennordAnimationProps) {
 
   useEffect(() => {
     if (pageActive) {
-      preloadImages(frames).then(() => {
+      preloadImages(frames).then((isLoaded) => {
+        console.log("isLoaded", isLoaded);
         if (isLoaded) {
-          isLoaded.current = true;
+          setIsLoaded(true);
         }
       });
     }
   }, [pageActive]);
 
   useEffect(() => {
-    if (isLoaded.current) {
+    if (isLoaded) {
       if (isInView) {
         lastFrameTime.current = performance.now();
         animationFrameId.current = requestAnimationFrame(animate);
@@ -67,7 +68,7 @@ export default function RennordAnimation(props: RennordAnimationProps) {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [isInView, isLoaded.current]);
+  }, [isInView, isLoaded]);
 
   return (
     <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
