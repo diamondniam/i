@@ -2,7 +2,7 @@ import { WindowEventUtil } from "@/types";
 import { useDebouncedCallback } from "@/utils/useDebounce";
 import { useEffect, useState } from "react";
 
-type Size = {
+export type Size = {
   width: number;
   height: number;
 };

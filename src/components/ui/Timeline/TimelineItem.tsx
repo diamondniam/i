@@ -155,8 +155,11 @@ export default function TimelineItem(props: TimelineItemProps) {
           },
           elseAnimations: {
             initial: {
+              opacity: 0,
               transform: `translateX(${TIMELINE_INITIAL_TRANSFORM_ANIMATION_AMOUNT}px)`,
             },
+            whileInView: { opacity: 1 },
+            viewport: { once: true },
           },
         })}
       >

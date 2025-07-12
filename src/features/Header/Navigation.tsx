@@ -5,6 +5,8 @@ import header from "@public/data/header.json";
 
 import { motion } from "motion/react";
 import { useScrollPosition } from "@/utils";
+import { useLocale } from "next-intl";
+import { Locale } from "@/i18n/routing";
 
 export default function Navigation() {
   const [active, setActive] = useState<string | null>(null);
@@ -15,6 +17,7 @@ export default function Navigation() {
     initial: true,
     debounceDelay: 100,
   });
+  const locale = useLocale() as Locale;
 
   const handleClick = (id: string) => {
     setActive(id);
@@ -81,7 +84,7 @@ export default function Navigation() {
               }
             }}
           >
-            <p>{item.title.en}</p>
+            <p>{item.title[locale]}</p>
           </motion.button>
         ))}
 

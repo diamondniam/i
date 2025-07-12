@@ -12,7 +12,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
   const locale = useLocale();
 
   return (
-    <div
+    <motion.div
       ref={(el: HTMLDivElement | null) => {
         if (el && props.refs && props.refs.container) {
           props.refs["container"].current = el;
@@ -24,6 +24,15 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
         `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center will-change-opacity`,
         props.classNames?.container
       )}
+      {...useOpimizedAnimations({
+        hardware,
+        elseAnimations: {
+          initial: { opacity: 0 },
+          whileInView: { opacity: 1 },
+          transition: { duration: 0.5 },
+          viewport: { once: true },
+        },
+      })}
     >
       <motion.div
         className={twMerge("min-h-[200px]", props.classNames?.children)}
@@ -69,6 +78,6 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
           {props.description[locale]}
         </motion.p>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

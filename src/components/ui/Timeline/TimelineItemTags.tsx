@@ -8,7 +8,8 @@ import {
   Transition,
   useInView,
 } from "motion/react";
-import { useResize } from "@/utils";
+import { Size, useOpimizedAnimations, useResize } from "@/utils";
+import { useGlobal } from "@/contexts/GlobalContext";
 
 const TAG_ANIMATION_SCALE_INITIAL_AMOUNT = 0.3;
 const TAG_ANIMATION_DELAY = 1;
@@ -24,9 +25,12 @@ export default function TimelineItemTags({
   const containerRef = useRef<HTMLDivElement>(null);
   const ghostContainerRef = useRef<HTMLDivElement>(null);
 
-  const [isOverflowing, setIsOverflowing] = useState(true);
+  const { hardware } = useGlobal();
+  const [isOverflowing, setIsOverflowing] = useState(
+    hardware.power === "high" ? true : false
+  );
   const [maxContainerHeight, setMaxContainerHeight] = useState<number | "auto">(
-    0
+    hardware.power === "high" ? 0 : "auto"
   );
   const isInView = useInView(containerRef, { once: true });
   const [isShowAll, setShowAll] = useState(false);
@@ -37,7 +41,7 @@ export default function TimelineItemTags({
     Record<string, { animation: TargetAndTransition; transition: Transition }>
   >({});
 
-  const windowSize = useResize({ debounceDelay: 200 });
+  let windowSize: Size;
 
   const activeTags = useMemo(() => {
     if (isShowAll) {
@@ -47,59 +51,63 @@ export default function TimelineItemTags({
     }
   }, [tags, isShowAll]);
 
+  if (hardware.power === "high") {
+    windowSize = useResize({ debounceDelay: 200 });
+
+    useEffect(() => {
+      setContainerHeight();
+    }, [windowSize]);
+
+    useEffect(() => {
+      let newButtonAnimations: Record<
+        string,
+        { animation: TargetAndTransition; transition: Transition }
+      > = {};
+
+      activeTags.forEach((tag) => {
+        const delay = isShowAll
+          ? tags.other.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
+          : (allTags.indexOf(tag) + 1) * TAG_ANIMATION_DELAY_FACTOR +
+            TAG_ANIMATION_DELAY;
+
+        newButtonAnimations[tag.id] = {
+          animation: {
+            scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
+            y: isInView ? 0 : 100,
+            display: "block",
+          },
+          transition: {
+            duration: 0.5,
+            delay,
+          },
+        };
+      });
+
+      const showAllDelay = isShowAll
+        ? (tags.other.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
+          TAG_ANIMATION_DELAY
+        : activeTags.length * TAG_ANIMATION_DELAY_FACTOR + TAG_ANIMATION_DELAY;
+
+      newButtonAnimations["show-all"] = {
+        animation: {
+          scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
+          y: isInView ? 0 : 100,
+        },
+        transition: {
+          duration: 0.5,
+          delay: showAllDelay,
+        },
+      };
+
+      setButtonsAnimations(newButtonAnimations);
+    }, [activeTags, isInView, isShowAll]);
+  }
+
   const setContainerHeight = () => {
     if (ghostContainerRef.current) {
       setMaxContainerHeight(ghostContainerRef.current.offsetHeight);
     }
   };
-
-  useEffect(() => {
-    let newButtonAnimations: Record<
-      string,
-      { animation: TargetAndTransition; transition: Transition }
-    > = {};
-
-    activeTags.forEach((tag) => {
-      const delay = isShowAll
-        ? tags.other.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
-        : (allTags.indexOf(tag) + 1) * TAG_ANIMATION_DELAY_FACTOR +
-          TAG_ANIMATION_DELAY;
-
-      newButtonAnimations[tag.id] = {
-        animation: {
-          scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
-          y: isInView ? 0 : 100,
-          display: "block",
-        },
-        transition: {
-          duration: 0.5,
-          delay,
-        },
-      };
-    });
-
-    const showAllDelay = isShowAll
-      ? (tags.other.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
-        TAG_ANIMATION_DELAY
-      : activeTags.length * TAG_ANIMATION_DELAY_FACTOR + TAG_ANIMATION_DELAY;
-
-    newButtonAnimations["show-all"] = {
-      animation: {
-        scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
-        y: isInView ? 0 : 100,
-      },
-      transition: {
-        duration: 0.5,
-        delay: showAllDelay,
-      },
-    };
-
-    setButtonsAnimations(newButtonAnimations);
-  }, [activeTags, isInView, isShowAll]);
-
-  useEffect(() => {
-    setContainerHeight();
-  }, [windowSize]);
 
   return (
     <div className="relative">
@@ -120,13 +128,29 @@ export default function TimelineItemTags({
               color: tag.styles.color,
               backgroundColor: `${tag.styles.background}`,
             }}
-            initial={{
-              scale: TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
-              y: 100,
-              display: !isShowAll ? "block" : "none",
-            }}
-            animate={buttonsAnimations[tag.id]?.animation}
-            transition={buttonsAnimations[tag.id]?.transition}
+            {...useOpimizedAnimations({
+              hardware,
+              animations: {
+                initial: {
+                  scale: TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
+                  y: 100,
+                  display: !isShowAll ? "block" : "none",
+                },
+                animate: buttonsAnimations[tag.id]?.animation,
+                transition: buttonsAnimations[tag.id]?.transition,
+              },
+              elseAnimations: {
+                initial: {
+                  opacity: 0,
+                },
+                animate: {
+                  opacity: 1,
+                },
+                transition: {
+                  duration: 0.5,
+                },
+              },
+            })}
           >
             {tag.title}
           </motion.button>
@@ -140,15 +164,34 @@ export default function TimelineItemTags({
                 setIsOverflowing(true);
               }}
               className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[1]"
-              initial={{
-                y: 100,
-              }}
-              animate={buttonsAnimations["show-all"]?.animation}
-              transition={buttonsAnimations["show-all"]?.transition}
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.5, delay: 0 },
-              }}
+              {...useOpimizedAnimations({
+                hardware,
+                animations: {
+                  initial: {
+                    y: 100,
+                  },
+                  animate: buttonsAnimations["show-all"]?.animation,
+                  transition: buttonsAnimations["show-all"]?.transition,
+                  exit: {
+                    opacity: 0,
+                    transition: { duration: 0.5, delay: 0 },
+                  },
+                },
+                elseAnimations: {
+                  initial: {
+                    opacity: 0,
+                  },
+                  animate: {
+                    opacity: 1,
+                  },
+                  exit: {
+                    opacity: 0,
+                  },
+                  transition: {
+                    duration: 0.5,
+                  },
+                },
+              })}
               onHoverStart={() => setIsOverflowing(false)}
             >
               <Image

@@ -4,10 +4,10 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
 import "./styles.css";
 
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 
 import posts from "@public/data/socialMediaPosts.json";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const NICKNAME = "@diamondniam";
 const LINK = "https://instagram.com/diamondniam";
@@ -21,33 +21,6 @@ export default function SocialMediaHorizontal({
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const isInView = useInView(ref, { amount: 0.8 });
-  const animationFrameId = useRef<number | null>(null);
-
-  const scrollStep = () => {
-    if (containerRef.current && !isScrolled) {
-      containerRef.current.scrollLeft += 1;
-      animationFrameId.current = requestAnimationFrame(scrollStep);
-    }
-  };
-
-  useEffect(() => {
-    if (containerRef.current) {
-      if (!isScrolled && isInView) {
-        scrollStep();
-      } else {
-        if (animationFrameId.current) {
-          cancelAnimationFrame(animationFrameId.current);
-        }
-      }
-    }
-
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-  }, [isScrolled, isInView]);
 
   return (
     <div

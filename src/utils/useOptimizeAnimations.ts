@@ -13,7 +13,7 @@ export const noAnimations = {
 
 type OptimizedAnimations = {
   hardware: Hardware;
-  animations: any;
+  animations?: any;
   elseAnimations?: any;
   options?: { powerEnter?: Power };
 };

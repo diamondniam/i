@@ -11,31 +11,20 @@ export type Hardware = {
 
 export const useHardware = () => {
   // const [concurrency, setConcurrency] = useState<Concurrency>(undefined);
-  const [power, setPower] = useState<Power>("high");
+  const [power, setPower] = useState<Power>("low");
   const [isSet, setIsSet] = useState(false);
 
   useEffect(() => {
-    // const currentConcurrency = navigator.hardwareConcurrency || 2;
+    const currentConcurrency = navigator.hardwareConcurrency || 2;
+    const windowWidth = window.innerWidth;
 
-    // if (currentConcurrency >= 8) {
+    // if (windowWidth < 768 || currentConcurrency <= 4) {
+    //   setPower("low");
+    // } else if (currentConcurrency >= 8) {
     //   setPower("high");
-    // } else if (currentConcurrency > 4) {
-    //   setPower("medium");
     // }
 
-    // console.log();
-    // getDevicePowerLevel().then((value) => {
-    // console.log(value);
-    // setPower(value);
     setIsSet(true);
-    // });
-    // FPSCheck().then((value) => {
-    //   console.log(value);
-    //   setPower(value as Power);
-    //   setIsSet(true);
-    // });
-
-    // setConcurrency(currentConcurrency);
   }, []);
 
   return {

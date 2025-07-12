@@ -35,7 +35,7 @@ export default function TimelineItemDescription({
 
   const getDescription = useMemo(() => {
     return parse(getBreakedText(description[locale]), descriptionParseOptions);
-  }, [description.en]);
+  }, [locale]);
 
   return (
     <motion.div
