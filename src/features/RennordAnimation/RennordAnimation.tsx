@@ -1,4 +1,4 @@
-import { frames } from "@/features/RennordAnimation/utils";
+import { frames, framesToLoad } from "@/features/RennordAnimation/utils";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { preloadImages, useActivePage } from "@/utils";
@@ -42,7 +42,7 @@ export default function RennordAnimation(props: RennordAnimationProps) {
 
   useEffect(() => {
     if (pageActive) {
-      preloadImages(frames).then((isLoaded) => {
+      preloadImages(framesToLoad).then((isLoaded) => {
         console.log("isLoaded", isLoaded);
         if (isLoaded) {
           setIsLoaded(true);
