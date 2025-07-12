@@ -12,7 +12,7 @@ const BODY_ANIMATION_FRAMES = 118;
 
 export default function RennordAnimation(props: RennordAnimationProps) {
   const isInView = useInView(props.containerRef, { amount: 0.8 });
-  const targetFPS = 30;
+  const targetFPS = 15;
   const frameDuration = 1000 / targetFPS;
   const [currentFrame, setCurrentFrame] = useState(0);
   const animationFrameId = useRef<number | null>(null);
