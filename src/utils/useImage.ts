@@ -1,7 +1,11 @@
-export function preloadImages(srcArray: string[]): Promise<boolean> {
+export function preloadImages(
+  srcArray: string[]
+): Promise<{ isLoaded: boolean; images: Map<string, HTMLImageElement> }> {
+  const images = new Map<string, HTMLImageElement>();
+
   return new Promise((resolve) => {
     if (srcArray.length === 0) {
-      resolve(true);
+      resolve({ isLoaded: true, images });
       return;
     }
 
@@ -9,12 +13,13 @@ export function preloadImages(srcArray: string[]): Promise<boolean> {
     let hasError = false;
 
     srcArray.forEach((src) => {
-      const img = new Image();
+      images.set(src, new Image());
+      const img = images.get(src)!;
 
       img.onload = () => {
         loadedCount++;
         if (loadedCount === srcArray.length) {
-          resolve(!hasError);
+          resolve({ isLoaded: !hasError, images });
         }
       };
 
@@ -22,7 +27,7 @@ export function preloadImages(srcArray: string[]): Promise<boolean> {
         loadedCount++;
         hasError = true;
         if (loadedCount === srcArray.length) {
-          resolve(false);
+          resolve({ isLoaded: !hasError, images });
         }
       };
 

@@ -18,11 +18,11 @@ export const useHardware = () => {
     const currentConcurrency = navigator.hardwareConcurrency || 2;
     const windowWidth = window.innerWidth;
 
-    if (windowWidth < 768 || currentConcurrency <= 4) {
-      setPower("low");
-    } else if (currentConcurrency >= 8) {
-      setPower("high");
-    }
+    // if (windowWidth < 768 || currentConcurrency <= 4) {
+    //   setPower("low");
+    // } else if (currentConcurrency >= 8) {
+    //   setPower("high");
+    // }
 
     setIsSet(true);
   }, []);
@@ -77,14 +77,10 @@ function cpuBenchmark(iterations = 1e6) {
 async function getDevicePowerLevel(): Promise<Power> {
   const threads = navigator.hardwareConcurrency || 1;
 
-  console.log(threads);
-
   const cpuTime = cpuBenchmark();
   const fps = await FPSCheck();
 
   const score = threads * 10 + (60 - Math.min(cpuTime, 300)) + fps;
-
-  console.log(score);
 
   if (score > 140) return "high";
   if (score > 90) return "medium";

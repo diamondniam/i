@@ -1,25 +1,34 @@
-import { frames, framesToLoad } from "@/features/RennordAnimation/utils";
+import { frames } from "@/features/RennordAnimation/utils";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
-import { preloadImages, useActivePage } from "@/utils";
+import { loadSpriteFrames, useActivePage } from "@/utils";
 
 interface RennordAnimationProps {
   containerRef: React.RefObject<HTMLElement | null>;
 }
 
 const LAPTOP_OPENS_END_FRAME = 32;
-const BODY_ANIMATION_FRAMES = 118;
+const SCREEN_PAUSE_FOR_FRAMES = 40;
+const SCREEN_QUANTITY = 2;
+const BODY_ANIMATION_FRAMES =
+  31 + (SCREEN_PAUSE_FOR_FRAMES - 1) * SCREEN_QUANTITY;
 
 export default function RennordAnimation(props: RennordAnimationProps) {
   const isInView = useInView(props.containerRef, { amount: 0.8 });
-  const targetFPS = 15;
+  const targetFPS = 24;
   const frameDuration = 1000 / targetFPS;
   const [currentFrame, setCurrentFrame] = useState(0);
   const animationFrameId = useRef<number | null>(null);
   const pageActive = useActivePage();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctx = useRef<CanvasRenderingContext2D | null>(null);
+  const lastFrameTime = useRef(0);
 
-  let lastFrameTime = useRef(0);
+  useEffect(() => {
+    if (canvasRef.current) {
+      ctx.current = canvasRef.current.getContext("2d");
+    }
+  }, [canvasRef]);
 
   const animate = (currentTime: number) => {
     animationFrameId.current = requestAnimationFrame(animate);
@@ -28,34 +37,51 @@ export default function RennordAnimation(props: RennordAnimationProps) {
 
     if (delta >= frameDuration) {
       lastFrameTime.current = currentTime;
-      setCurrentFrame((prev) => {
-        const frameIndex = prev + 1;
 
-        if (frameIndex >= BODY_ANIMATION_FRAMES + LAPTOP_OPENS_END_FRAME) {
-          return LAPTOP_OPENS_END_FRAME;
-        } else {
-          return frameIndex;
+      setCurrentFrame((prev) => {
+        const frameIndex = prev;
+        const prevIncrement = frameIndex + 1;
+        let nextFrame;
+
+        const { image, x, y, w, h } = frames[frameIndex];
+
+        if (!image) {
+          throw new Error("Image not loaded");
         }
+
+        if (!image.complete) {
+          animationFrameId.current = requestAnimationFrame(animate);
+          return prev;
+        }
+
+        if (ctx.current) {
+          ctx.current.clearRect(0, 0, w, h);
+          canvasRef.current!.width = w;
+          canvasRef.current!.height = h;
+          ctx.current.drawImage(image, x, y, w, h, 0, 0, w, h);
+        }
+
+        if (prevIncrement >= BODY_ANIMATION_FRAMES + LAPTOP_OPENS_END_FRAME) {
+          nextFrame = LAPTOP_OPENS_END_FRAME;
+        } else {
+          nextFrame = prevIncrement;
+        }
+
+        return nextFrame;
       });
     }
   };
 
   useEffect(() => {
-    if (pageActive) {
-      preloadImages(framesToLoad).then((isLoaded) => {
-        console.log("isLoaded", isLoaded);
-        if (isLoaded) {
-          setIsLoaded(true);
-        }
-      });
-    }
-  }, [pageActive]);
-
-  useEffect(() => {
-    if (isLoaded) {
+    if (ctx.current) {
       if (isInView) {
-        lastFrameTime.current = performance.now();
-        animationFrameId.current = requestAnimationFrame(animate);
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
+
+        loadSpriteFrames(frames).then(() => {
+          animationFrameId.current = requestAnimationFrame(animate);
+        });
       } else {
         if (animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
@@ -68,15 +94,14 @@ export default function RennordAnimation(props: RennordAnimationProps) {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [isInView, isLoaded]);
+  }, [isInView, ctx.current]);
 
   return (
-    <div className="absolute h-full sm:w-[90%] w-[140%] max-sm:-right-[12%]">
-      <img
-        src={frames[currentFrame]}
-        alt="Rennord Animation"
+    <div className="absolute h-full sm:w-[60%] w-[90%] right-[calc(50%_+_20px)] translate-x-1/2">
+      <canvas
+        ref={canvasRef}
         className="absolute w-full h-full object-contain"
-      />
+      ></canvas>
     </div>
   );
 }

@@ -16,3 +16,4 @@ export * from "./useImage";
 export * from "./useActivePage";
 export * from "./useHardware";
 export * from "./useOptimizeAnimations";
+export * from "./useSprite";
