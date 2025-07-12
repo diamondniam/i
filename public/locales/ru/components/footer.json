@@ -1,0 +1,16 @@
+{
+  "socialMedia": {
+    "tooltips": {
+      "email": {
+        "text": "Скопировать e-mail",
+        "clickText": "E-mail скопирован!"
+      },
+      "instagram": {
+        "text": "Мой Instagram"
+      },
+      "telegram": {
+        "text": "Мой Telegram"
+      }
+    }
+  }
+}

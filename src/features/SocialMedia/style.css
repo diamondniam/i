@@ -13,3 +13,7 @@
     color: #f0abfc;
   }
 }
+
+.contactButton {
+  @apply flex-none flex items-center w-[35px] h-[35px] justify-center bg-[var(--background-secondary)]/50 backdrop-blur-sm p-1.5 rounded-full border border-[var(--gray)]/[.05] z-[1];
+}

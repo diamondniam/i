@@ -11,7 +11,7 @@ export type Hardware = {
 
 export const useHardware = () => {
   // const [concurrency, setConcurrency] = useState<Concurrency>(undefined);
-  const [power, setPower] = useState<Power>("low");
+  const [power, setPower] = useState<Power>("high");
   const [isSet, setIsSet] = useState(false);
 
   useEffect(() => {

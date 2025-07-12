@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
       use: [
         {
           loader: "@svgr/webpack",
-          options: {
-            svgo: false,
-          },
         },
       ],
     });
@@ -24,9 +21,6 @@ const nextConfig: NextConfig = {
         "*.svg": {
           loaders: ["@svgr/webpack"],
           as: "*.js",
-          options: {
-            svgo: false,
-          },
         },
       },
     },

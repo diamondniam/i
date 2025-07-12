@@ -3,12 +3,15 @@ import Card from "@/features/SocialMedia/Card";
 import PhoneTop from "@/features/SocialMedia/PhoneTop";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
-import "./styles.css";
+import "./style.css";
 
 import { motion } from "motion/react";
 
 import posts from "@public/data/socialMediaPosts.json";
 import { useEffect, useRef, useState } from "react";
+import InstagramContact from "@/features/SocialMedia/InstagramContact";
+import TelegramContact from "@/features/SocialMedia/TelegramContact";
+import EmailContact from "@/features/SocialMedia/EmailContact";
 
 const IPHONE_TOP_HEIGHT = 30;
 const IPHONE_BOTTOM_HEIGHT = 30;
@@ -74,21 +77,13 @@ export default function SocialMedia({
           isScrolled.current = true;
         }}
       >
-        <motion.a
-          href={LINK}
-          className="sticky top-0 bg-[var(--background-secondary)]/50 backdrop-blur-sm px-2 py-[2px] rounded-full border border-[var(--gray)]/[.05] z-[1]"
-          whileHover={{ scale: 1.05 }}
-        >
-          <p className="text-[10px] font-medium linkText text-indigo-400">
-            {NICKNAME}
-            <LinkIcon
-              className="inline-block w-[9px] h-[9px] text-indigo-400 ml-1"
-              strokeWidth={2}
-            />
-          </p>
-        </motion.a>
-
         <Avatar />
+
+        <div className="sticky top-0 flex gap-1 z-[1]">
+          <InstagramContact className="!w-[30px] !h-[30px]" />
+          <EmailContact className="!w-[30px] !h-[30px]" />
+          <TelegramContact className="!w-[30px] !h-[30px]" />
+        </div>
 
         <div className="flex flex-col w-full gap-3">
           {posts.map((item) => (
