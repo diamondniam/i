@@ -33,10 +33,11 @@ export default function NickRoom() {
       ></audio>
 
       <Image
-        src="/images/nickRoomPageAnimation/frame-10.png"
+        src="/images/nickRoomPageBackground.png"
         fill
         alt="Nick Room Background"
         className="object-cover"
+        quality={100}
         sizes="100%"
         priority
       />

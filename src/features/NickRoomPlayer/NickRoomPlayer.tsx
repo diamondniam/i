@@ -145,7 +145,7 @@ export default function NickRoomPlayer({
           alt="Nick Room Player"
           width={60}
           height={60}
-          className="z-0"
+          className="z-0 max-sm:w-[55px]"
         />
       )}
     </motion.button>
