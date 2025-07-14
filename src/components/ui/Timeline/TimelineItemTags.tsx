@@ -136,7 +136,7 @@ export default function TimelineItemTags({
                 transition: buttonsAnimations[tag.id]?.transition,
               },
               elseAnimations: {
-                initial: !tags.main.includes(tag)
+                initial: !tags.main.some((mainTag) => mainTag.id === tag.id)
                   ? {
                       scale: TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
                       y: 100,
