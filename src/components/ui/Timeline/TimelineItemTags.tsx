@@ -30,7 +30,7 @@ export default function TimelineItemTags({
   const [maxContainerHeight, setMaxContainerHeight] = useState<number | "auto">(
     hardware.power === "high" ? 0 : "auto"
   );
-  const isInView = useInView(containerRef, { once: true });
+  let isInView: boolean;
   const [isShowAll, setShowAll] = useState(false);
 
   const allTags = useMemo(() => [...tags.main, ...tags.other], [tags]);
@@ -40,6 +40,12 @@ export default function TimelineItemTags({
   >({});
 
   let windowSize: Size;
+
+  if (hardware.power === "high") {
+    isInView = useInView(containerRef, { once: true });
+  } else {
+    isInView = true;
+  }
 
   const activeTags = useMemo(() => {
     if (isShowAll) {
