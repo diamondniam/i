@@ -49,7 +49,6 @@ export default function TimelineItemTags({
     }
   }, [tags, isShowAll]);
 
-  // if (hardware.power === "high") {
   windowSize = useResize({ debounceDelay: 200 });
 
   useEffect(() => {
@@ -99,7 +98,6 @@ export default function TimelineItemTags({
 
     setButtonsAnimations(newButtonAnimations);
   }, [activeTags, isInView, isShowAll]);
-  // }
 
   const setContainerHeight = () => {
     if (ghostContainerRef.current) {
@@ -121,7 +119,7 @@ export default function TimelineItemTags({
         {activeTags.map((tag) => (
           <motion.button
             key={tag.id}
-            className="px-1.5 py-0.5 rounded-sm !cursor-default"
+            className="px-1.5 py-0.5 rounded-sm !cursor-default will-change-transform"
             style={{
               color: tag.styles.color,
               backgroundColor: `${tag.styles.background}`,
@@ -144,7 +142,11 @@ export default function TimelineItemTags({
                       y: 100,
                       display: !isShowAll ? "block" : "none",
                     }
-                  : undefined,
+                  : {
+                      scale: 1,
+                      y: 0,
+                      display: "block",
+                    },
                 animate: buttonsAnimations[tag.id]?.animation,
                 transition: buttonsAnimations[tag.id]?.transition,
               },
@@ -161,7 +163,7 @@ export default function TimelineItemTags({
                 setShowAll(true);
                 setIsOverflowing(true);
               }}
-              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2]"
+              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2] will-change-transform"
               {...useOpimizedAnimations({
                 hardware,
                 animations: {
