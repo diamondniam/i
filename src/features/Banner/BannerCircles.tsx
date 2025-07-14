@@ -115,7 +115,7 @@ export default function BannerCircles() {
   }, []);
 
   useEffect(() => {
-    if (ref.current && isInitiated && !isOut && hardware.power === "high") {
+    if (ref.current && isInitiated && !isOut) {
       circleRefs.current.forEach((circle, index) => {
         const boundingRect = circle.getBoundingClientRect();
         const position = {
@@ -144,38 +144,34 @@ export default function BannerCircles() {
   }, [cursor]);
 
   useEffect(() => {
-    if (hardware.power === "high") {
-      if (scrollPosition > window.innerHeight) {
-        setIsOut(true);
-      } else {
-        setIsOut(false);
-      }
+    if (scrollPosition > window.innerHeight) {
+      setIsOut(true);
+    } else {
+      setIsOut(false);
+    }
 
-      if (ref.current && isAbleToSetY.current && !isOut) {
-        circleRefs.current.forEach((circle, index) => {
-          const nextY = -scrollPosition * scrollParallaxData.current[index];
-          const rotate = getAngleToRotate(circle as HTMLElement);
-          animateCircle(circleRefs.current[index] as HTMLElement, {
-            y: nextY,
-            rotate,
-          });
+    if (ref.current && isAbleToSetY.current && !isOut) {
+      circleRefs.current.forEach((circle, index) => {
+        const nextY = -scrollPosition * scrollParallaxData.current[index];
+        const rotate = getAngleToRotate(circle as HTMLElement);
+        animateCircle(circleRefs.current[index] as HTMLElement, {
+          y: nextY,
+          rotate,
         });
-      }
+      });
     }
   }, [scrollPosition]);
 
   useEffect(() => {
-    if (hardware.power === "high") {
-      if (isOut) {
-        window.removeEventListener("mousemove", handleMouseMove);
-      } else {
-        window.addEventListener("mousemove", handleMouseMove);
-      }
+    if (isOut) {
+      window.removeEventListener("mousemove", handleMouseMove);
+    } else {
+      window.addEventListener("mousemove", handleMouseMove);
     }
   }, [isOut]);
 
   useEffect(() => {
-    if (ref.current && hardware.power === "high") {
+    if (ref.current) {
       const animationFactorRange = [
         INITIAL_ALL_CIRCLES_ANIMATION_DELAY + 1,
         INITIAL_ALL_CIRCLES_ANIMATION_DELAY + 3,
@@ -218,12 +214,10 @@ export default function BannerCircles() {
   }, []);
 
   useEffect(() => {
-    if (hardware.power === "high") {
-      window.addEventListener("mousemove", handleMouseMoveDebounce);
-      return () => {
-        window.removeEventListener("mousemove", handleMouseMoveDebounce);
-      };
-    }
+    window.addEventListener("mousemove", handleMouseMoveDebounce);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMoveDebounce);
+    };
   }, []);
 
   return (
@@ -234,8 +228,8 @@ export default function BannerCircles() {
             circleRefs.current[index] = el;
           }}
           initial={{
-            y: hardware.power === "high" ? INITIAL_CIRCLE_Y : 0,
-            opacity: hardware.power === "high" ? 0 : 1,
+            y: INITIAL_CIRCLE_Y,
+            opacity: 0,
           }}
           key={index}
           className={`absolute origin-center will-change-transform ${circlesStyles[index]}`}
