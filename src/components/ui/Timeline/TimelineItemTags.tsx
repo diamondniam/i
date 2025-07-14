@@ -26,9 +26,7 @@ export default function TimelineItemTags({
   const ghostContainerRef = useRef<HTMLDivElement>(null);
 
   const { hardware } = useGlobal();
-  const [isOverflowing, setIsOverflowing] = useState(
-    hardware.power === "high" ? true : false
-  );
+  const [isOverflowing, setIsOverflowing] = useState(true);
   const [maxContainerHeight, setMaxContainerHeight] = useState<number | "auto">(
     hardware.power === "high" ? 0 : "auto"
   );
@@ -51,57 +49,57 @@ export default function TimelineItemTags({
     }
   }, [tags, isShowAll]);
 
-  if (hardware.power === "high") {
-    windowSize = useResize({ debounceDelay: 200 });
+  // if (hardware.power === "high") {
+  windowSize = useResize({ debounceDelay: 200 });
 
-    useEffect(() => {
-      setContainerHeight();
-    }, [windowSize]);
+  useEffect(() => {
+    setContainerHeight();
+  }, [windowSize]);
 
-    useEffect(() => {
-      let newButtonAnimations: Record<
-        string,
-        { animation: TargetAndTransition; transition: Transition }
-      > = {};
+  useEffect(() => {
+    let newButtonAnimations: Record<
+      string,
+      { animation: TargetAndTransition; transition: Transition }
+    > = {};
 
-      activeTags.forEach((tag) => {
-        const delay = isShowAll
-          ? tags.other.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
-          : (allTags.indexOf(tag) + 1) * TAG_ANIMATION_DELAY_FACTOR +
-            TAG_ANIMATION_DELAY;
+    activeTags.forEach((tag) => {
+      const delay = isShowAll
+        ? tags.other.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
+        : (allTags.indexOf(tag) + 1) * TAG_ANIMATION_DELAY_FACTOR +
+          TAG_ANIMATION_DELAY;
 
-        newButtonAnimations[tag.id] = {
-          animation: {
-            scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
-            y: isInView ? 0 : 100,
-            display: "block",
-          },
-          transition: {
-            duration: 0.5,
-            delay,
-          },
-        };
-      });
-
-      const showAllDelay = isShowAll
-        ? (tags.other.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
-          TAG_ANIMATION_DELAY
-        : activeTags.length * TAG_ANIMATION_DELAY_FACTOR + TAG_ANIMATION_DELAY;
-
-      newButtonAnimations["show-all"] = {
+      newButtonAnimations[tag.id] = {
         animation: {
           scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
           y: isInView ? 0 : 100,
+          display: "block",
         },
         transition: {
           duration: 0.5,
-          delay: showAllDelay,
+          delay,
         },
       };
+    });
 
-      setButtonsAnimations(newButtonAnimations);
-    }, [activeTags, isInView, isShowAll]);
-  }
+    const showAllDelay = isShowAll
+      ? (tags.other.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
+        TAG_ANIMATION_DELAY
+      : activeTags.length * TAG_ANIMATION_DELAY_FACTOR + TAG_ANIMATION_DELAY;
+
+    newButtonAnimations["show-all"] = {
+      animation: {
+        scale: isInView ? 1 : TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
+        y: isInView ? 0 : 100,
+      },
+      transition: {
+        duration: 0.5,
+        delay: showAllDelay,
+      },
+    };
+
+    setButtonsAnimations(newButtonAnimations);
+  }, [activeTags, isInView, isShowAll]);
+  // }
 
   const setContainerHeight = () => {
     if (ghostContainerRef.current) {
@@ -140,15 +138,15 @@ export default function TimelineItemTags({
                 transition: buttonsAnimations[tag.id]?.transition,
               },
               elseAnimations: {
-                initial: {
-                  opacity: 0,
-                },
-                animate: {
-                  opacity: 1,
-                },
-                transition: {
-                  duration: 0.5,
-                },
+                initial: !tags.main.includes(tag)
+                  ? {
+                      scale: TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
+                      y: 100,
+                      display: !isShowAll ? "block" : "none",
+                    }
+                  : undefined,
+                animate: buttonsAnimations[tag.id]?.animation,
+                transition: buttonsAnimations[tag.id]?.transition,
               },
             })}
           >
@@ -163,7 +161,7 @@ export default function TimelineItemTags({
                 setShowAll(true);
                 setIsOverflowing(true);
               }}
-              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[1]"
+              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2]"
               {...useOpimizedAnimations({
                 hardware,
                 animations: {

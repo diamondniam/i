@@ -8,12 +8,12 @@ type PhoneTopProps = {
 };
 
 export default function PhoneTop(props: PhoneTopProps) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(Date.now());
   const format = useFormatter();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDate(new Date());
+      setDate(Date.now());
     }, 1000);
     return () => clearInterval(interval);
   }, []);
