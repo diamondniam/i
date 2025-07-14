@@ -1,14 +1,11 @@
 import Avatar from "@/features/SocialMedia/Avatar";
 import Card from "@/features/SocialMedia/Card";
 import PhoneTop from "@/features/SocialMedia/PhoneTop";
-import { LinkIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
 import "./style.css";
 
-import { motion } from "motion/react";
-
 import posts from "@public/data/socialMediaPosts.json";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import InstagramContact from "@/features/SocialMedia/InstagramContact";
 import TelegramContact from "@/features/SocialMedia/TelegramContact";
 import EmailContact from "@/features/SocialMedia/EmailContact";

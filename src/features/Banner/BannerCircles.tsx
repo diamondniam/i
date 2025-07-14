@@ -8,7 +8,6 @@ import {
   DOMKeyframesDefinition,
   motion,
 } from "motion/react";
-import { useGlobal } from "@/contexts/GlobalContext";
 
 const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 3;
 const INITIAL_CIRCLE_Y = 100;
@@ -29,7 +28,6 @@ export default function BannerCircles() {
   const scrollParallaxData = useRef<number[]>([]);
   const circleRefs = useRef<HTMLDivElement[]>([]);
   const [isOut, setIsOut] = useState(false);
-  const { hardware } = useGlobal();
 
   const scrollPosition = useScrollPosition({
     debounceDelay: 100,
@@ -164,9 +162,9 @@ export default function BannerCircles() {
 
   useEffect(() => {
     if (isOut) {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMoveDebounce);
     } else {
-      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mousemove", handleMouseMoveDebounce);
     }
   }, [isOut]);
 
@@ -211,13 +209,6 @@ export default function BannerCircles() {
         setIsInitiated(true);
       }, maxTimeoutDelay + INITIAL_DURATION);
     }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMoveDebounce);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMoveDebounce);
-    };
   }, []);
 
   return (
