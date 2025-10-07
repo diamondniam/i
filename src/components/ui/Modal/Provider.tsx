@@ -263,7 +263,6 @@ export default function ModalProvider({
 
   useEffect(() => {
     if (isFull) {
-      console.log(fullYValue);
       animateContainerY(fullYValue);
     }
   }, [fullYValue]);

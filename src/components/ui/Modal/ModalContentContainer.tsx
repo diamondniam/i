@@ -32,6 +32,7 @@ export default function ModalContentContainer() {
 
     setIsFull,
     setActualIsFull,
+    setIsAnimating,
     setIsDragging,
     setIsDragButtonHovered,
 
@@ -67,7 +68,8 @@ export default function ModalContentContainer() {
     setIsDragButtonHovered(true);
 
     if (!isAnimating && !isDragging) {
-      animateContainerY(
+      animate(
+        containerY,
         actualIsFull
           ? fullYValue + HOVER_Y_ANIMATION_VALUE
           : 0 - HOVER_Y_ANIMATION_VALUE
@@ -84,7 +86,7 @@ export default function ModalContentContainer() {
     setIsDragButtonHovered(false);
 
     if (!isAnimating && !isDragging) {
-      animateContainerY(actualIsFull ? fullYValue : 0);
+      animate(containerY, actualIsFull ? fullYValue : 0);
     }
   };
 
