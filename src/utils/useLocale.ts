@@ -8,10 +8,13 @@ export function setLocale() {
   const userLocale = navigator.language.split("-")[0] as Locale;
 
   if (!savedLocale) {
-    if (userLocale && locales.includes(userLocale) && userLocale !== locale) {
-      document.documentElement.lang = userLocale;
-      localStorage.setItem(LOCALE_NAME, userLocale);
-      window.location.replace(`/${userLocale}`);
+    if (userLocale && locales.includes(userLocale)) {
+      if (userLocale !== locale) {
+        window.location.replace(`/${userLocale}`);
+      }
+
+      document.documentElement.lang = locale;
+      localStorage.setItem(LOCALE_NAME, locale);
     }
   }
 
