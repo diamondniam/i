@@ -111,6 +111,15 @@ export function unlockScroll({
     return;
   }
 
+  function preventEvents(e: Event) {
+    e.preventDefault();
+  }
+
+  document.addEventListener("touchmove", preventEvents, {
+    passive: false,
+  });
+  document.addEventListener("wheel", preventEvents, { passive: false });
+
   lenisRef.current?.lenis?.stop();
 
   document.body.style.position = "";
@@ -128,5 +137,8 @@ export function unlockScroll({
 
   setTimeout(() => {
     lenisRef.current?.lenis?.start();
+
+    document.removeEventListener("touchmove", preventEvents);
+    document.removeEventListener("wheel", preventEvents);
   }, 500);
 }
