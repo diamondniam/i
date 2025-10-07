@@ -37,10 +37,6 @@ body {
   transition: background-color 0.2s ease-in-out;
 }
 
-html, body {
-  scroll-behavior: smooth;
-}
-
 button {
   cursor: pointer;
 }

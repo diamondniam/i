@@ -23,11 +23,15 @@ export default function Navigation() {
     setActive(id);
 
     const sections = document.querySelectorAll("section");
+    console.log(sections);
 
     sections.forEach((section) => {
       if (section.id === id) {
         window.scrollTo({
-          top: section.offsetTop - 100,
+          top:
+            section.getBoundingClientRect().top +
+            document.documentElement.scrollTop -
+            100,
           behavior: "smooth",
         });
       }
