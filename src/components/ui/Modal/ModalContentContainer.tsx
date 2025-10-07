@@ -51,7 +51,6 @@ export default function ModalContentContainer() {
 
     if (info.offset.y < -DRAG_THRESHOLD) {
       setIsFull(true);
-      setActualIsFull(true);
     } else if (info.offset.y > DRAG_THRESHOLD) {
       handleFullModeClose();
     }

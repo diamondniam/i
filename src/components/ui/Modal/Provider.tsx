@@ -96,7 +96,13 @@ export default function ModalProvider({
   };
 
   const handleFullMode = () => {
-    if (!isAnimating && !isClosing && isShown && !actualIsFull) {
+    if (
+      !isAnimating &&
+      !isClosing &&
+      isShown &&
+      !actualIsFull &&
+      !isModalContentTransitioningBetween.current
+    ) {
       setIsFull(true);
       setActualIsFull(true);
       lockScroll();
@@ -114,12 +120,14 @@ export default function ModalProvider({
   };
 
   const handleFullModeClose = () => {
-    if (isFull) {
+    if (actualIsFull) {
       setIsFull(false);
+      setActualIsFull(false);
       animateContainerY(0);
       unlockScroll({ lenisRef });
     } else {
       setIsFull(false);
+      setActualIsFull(false);
       handleModalClose();
     }
   };
