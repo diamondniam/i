@@ -74,29 +74,29 @@ export function getScrollbarWidth() {
   const div = document.createElement("div");
   div.style.cssText =
     "width:100px;height:100px;overflow:scroll;position:absolute;top:-9999px;";
-  document.body.appendChild(div);
+  document.documentElement.appendChild(div);
   const width = div.offsetWidth - div.clientWidth;
-  document.body.removeChild(div);
+  document.documentElement.removeChild(div);
   return width || 0;
 }
 
 export function lockScroll() {
-  const isLocked = document.body.style.position === "fixed";
+  const isLocked = document.documentElement.style.position === "fixed";
   if (isLocked) {
     return;
   }
   const scrollY = window.scrollY;
-  document.body.style.position = "fixed";
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = "100%";
-  document.body.style.left = "0";
-  document.body.dataset.scrollY = `${scrollY}`;
+  document.documentElement.style.position = "fixed";
+  document.documentElement.style.top = `-${scrollY}px`;
+  document.documentElement.style.width = "100%";
+  document.documentElement.style.left = "0";
+  document.documentElement.dataset.scrollY = `${scrollY}`;
 
   if (getScrollbarWidth() > 0) {
     const mainScrollbarWidth = getComputedStyle(document.documentElement)
       .getPropertyValue("--scrollbar-main-width")
       .trim();
-    document.body.style.paddingRight = mainScrollbarWidth;
+    document.documentElement.style.paddingRight = mainScrollbarWidth;
   }
 }
 
@@ -105,7 +105,7 @@ export function unlockScroll({
 }: {
   lenisRef: React.RefObject<LenisRef | null>;
 }) {
-  const scrollY = document.body.dataset.scrollY;
+  const scrollY = document.documentElement.dataset.scrollY;
 
   if (!scrollY) {
     return;
@@ -115,21 +115,17 @@ export function unlockScroll({
     lenisRef.current.lenis?.stop();
   }
 
-  document.body.style.position = "";
-  document.body.style.top = "";
-  document.body.style.width = "";
-  document.body.style.left = "";
-  document.body.style.right = "";
-  document.body.style.paddingRight = "";
+  document.documentElement.style.position = "";
+  document.documentElement.style.top = "";
+  document.documentElement.style.width = "";
+  document.documentElement.style.left = "";
+  document.documentElement.style.right = "";
+  document.documentElement.style.paddingRight = "";
 
-  document.body.dataset.scrollY = "";
+  document.documentElement.dataset.scrollY = "";
 
   requestAnimationFrame(() => {
-    if (scrollY) {
-      document.documentElement.scrollTo({
-        top: parseInt(scrollY),
-      });
-    }
+    document.documentElement.scrollTo(0, parseInt(scrollY));
   });
 
   setTimeout(() => {
