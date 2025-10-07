@@ -18,6 +18,7 @@ export type ModalContextProps = {
   isAnimating: boolean;
   isDragging: boolean;
   isFull: boolean;
+  actualIsFull: boolean;
   fullYValue: number;
   containerY: MotionValue<number>;
   dragButtonScale: MotionValue<number>;
@@ -38,6 +39,7 @@ export type ModalContextProps = {
   setIsAnimating: (isAnimating: boolean) => void;
   setIsDragging: (isDragging: boolean) => void;
   setIsFull: (isFull: boolean) => void;
+  setActualIsFull: (isFull: boolean) => void;
   setFullYValue: (y: number) => void;
   animateContainerY: (y: number) => void;
   setIsDragButtonHovered: (isHovered: boolean) => void;

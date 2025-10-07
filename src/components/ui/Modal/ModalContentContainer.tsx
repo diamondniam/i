@@ -18,7 +18,7 @@ export default function ModalContentContainer() {
     isAnimating,
     containerY,
     isDragging,
-    isFull,
+    actualIsFull,
     fullYValue,
     dragButtonScale,
     isDragButtonHovered,
@@ -31,6 +31,7 @@ export default function ModalContentContainer() {
     HIDDEN_MODAL_Y,
 
     setIsFull,
+    setActualIsFull,
     setIsDragging,
     setIsDragButtonHovered,
 
@@ -50,6 +51,7 @@ export default function ModalContentContainer() {
 
     if (info.offset.y < -DRAG_THRESHOLD) {
       setIsFull(true);
+      setActualIsFull(true);
     } else if (info.offset.y > DRAG_THRESHOLD) {
       handleFullModeClose();
     }
@@ -67,7 +69,7 @@ export default function ModalContentContainer() {
 
     if (!isAnimating && !isDragging) {
       animateContainerY(
-        isFull
+        actualIsFull
           ? fullYValue + HOVER_Y_ANIMATION_VALUE
           : 0 - HOVER_Y_ANIMATION_VALUE
       );
@@ -83,14 +85,14 @@ export default function ModalContentContainer() {
     setIsDragButtonHovered(false);
 
     if (!isAnimating && !isDragging) {
-      animateContainerY(isFull ? fullYValue : 0);
+      animateContainerY(actualIsFull ? fullYValue : 0);
     }
   };
 
   return (
     <div className="fixed z-50">
       <AnimatePresence mode="wait">
-        {isFull ? (
+        {actualIsFull ? (
           <motion.div
             key="modal-backdrop"
             className="fixed inset-0 bg-[var(--backdrop-color)]"
@@ -119,20 +121,24 @@ export default function ModalContentContainer() {
           bottom: options?.mode === "full" ? "-50%" : "0%",
         }}
         animate={{
-          bottom: isFull ? "-50%" : "0%",
-          paddingBottom: isFull ? "15px" : "0px",
+          bottom: actualIsFull ? "-50%" : "0%",
+          paddingBottom: actualIsFull ? "15px" : "0px",
           borderBottomRightRadius:
-            isDragging || (isDragButtonHovered && !isFull) ? "15px" : "0px",
+            isDragging || (isDragButtonHovered && !actualIsFull)
+              ? "15px"
+              : "0px",
           borderBottomLeftRadius:
-            isDragging || (isDragButtonHovered && !isFull) ? "15px" : "0px",
-          minHeight: isFull
+            isDragging || (isDragButtonHovered && !actualIsFull)
+              ? "15px"
+              : "0px",
+          minHeight: actualIsFull
             ? `${MODAL_FULL_HEIGHT_IN_PERCENT * 100}%`
             : `${MODAL_INITIAL_HEIGHT_IN_PERCENT * 100}%`,
         }}
         drag="y"
         dragConstraints={{
           top: containerY.get(),
-          bottom: isFull ? fullYValue : 0,
+          bottom: actualIsFull ? fullYValue : 0,
         }}
         dragListener={false}
         dragControls={dragControls}

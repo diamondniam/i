@@ -45,6 +45,7 @@ export default function ModalProvider({
   const [isAnimating, setIsAnimating] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isFull, setIsFull] = useState(false);
+  const [actualIsFull, setActualIsFull] = useState(false);
   const [fullYValue, setFullYValue] = useState(0);
   const [initialYValue, setInitialYValue] = useState(0);
   const [isDragButtonHovered, setIsDragButtonHovered] = useState(false);
@@ -66,7 +67,13 @@ export default function ModalProvider({
       (el) => !el.contains(e.target as Node)
     );
 
-    if (!isFull && isClickOutside) {
+    if (
+      !isFull &&
+      isClickOutside &&
+      !isAnimating &&
+      !isClosing &&
+      !isModalContentTransitioningBetween.current
+    ) {
       handleModalClose();
     }
   });
@@ -89,16 +96,21 @@ export default function ModalProvider({
   };
 
   const handleFullMode = () => {
-    setIsFull(true);
-    lockScroll();
+    if (!isAnimating && !isClosing && isShown && !actualIsFull) {
+      setIsFull(true);
+      setActualIsFull(true);
+      lockScroll();
 
-    const navigation = document.querySelector("nav");
+      const navigation = document.querySelector("nav");
 
-    if (navigation) {
-      animate(navigation, { opacity: 0 }, { duration: 0.5 });
+      if (navigation) {
+        animate(navigation, { opacity: 0 }, { duration: 0.5 });
+      }
+
+      animateContainerY(fullYValue);
+    } else if (isFull) {
+      setIsFull(false);
     }
-
-    animateContainerY(fullYValue);
   };
 
   const handleFullModeClose = () => {
@@ -123,6 +135,7 @@ export default function ModalProvider({
     openTimeout.current = setTimeout(() => {
       setIsShown(true);
       setIsFull(false);
+      setActualIsFull(false);
       setIsClosing(false);
       animateContainerY(0);
       setCurrentModalContent({
@@ -154,6 +167,7 @@ export default function ModalProvider({
   const handleModalClose = () => {
     animateContainerY(initialYValue);
     setIsFull(false);
+    setActualIsFull(false);
     setIsClosing(true);
 
     if (closeTimeout.current) {
@@ -222,9 +236,11 @@ export default function ModalProvider({
 
         if (options?.mode === "full") {
           setIsFull(true);
+          setActualIsFull(true);
           handleFullMode();
         } else {
           setIsFull(false);
+          setActualIsFull(false);
           animateContainerY(0);
         }
       }
@@ -239,6 +255,7 @@ export default function ModalProvider({
 
   useEffect(() => {
     if (isFull) {
+      console.log(fullYValue);
       animateContainerY(fullYValue);
     }
   }, [fullYValue]);
@@ -271,6 +288,7 @@ export default function ModalProvider({
         isAnimating,
         isDragging,
         isFull,
+        actualIsFull,
         fullYValue,
         containerY,
         dragButtonScale,
@@ -291,6 +309,7 @@ export default function ModalProvider({
         setIsAnimating,
         setIsDragging,
         setIsFull,
+        setActualIsFull,
         setFullYValue,
         setIsDragButtonHovered,
         animateContainerY,
