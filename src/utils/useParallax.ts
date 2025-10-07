@@ -22,11 +22,11 @@ export function useScrollParallax<T extends HTMLElement | null>(
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll);
     animate();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(animationRef.current);
     };
   }, [ref]);

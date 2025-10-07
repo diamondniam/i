@@ -73,6 +73,9 @@ export default function ModalProvider({
 
   const scrollPosition = useScrollPosition({
     debounceDelay: 100,
+    options: {
+      notTrailing: true,
+    },
   });
 
   const animateContainerY = (y: number) => {

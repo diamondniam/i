@@ -33,9 +33,9 @@ export function useScrollPosition(
 
   useEffect(() => {
     if (debounceDelay > 0) {
-      window.addEventListener("scroll", handleScrollDebounced);
+      document.addEventListener("scroll", handleScrollDebounced);
     } else {
-      window.addEventListener("scroll", handleScroll);
+      document.addEventListener("scroll", handleScroll);
     }
 
     if (initial) {
@@ -43,8 +43,8 @@ export function useScrollPosition(
     }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", handleScrollDebounced);
+      document.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScrollDebounced);
     };
   }, []);
 

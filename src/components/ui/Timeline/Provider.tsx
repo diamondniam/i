@@ -85,10 +85,10 @@ export const Provider = ({ children, highlightedMap }: ProviderProps) => {
       setIsActiveLineVisible(true);
     }, CONTENT_INITIAL_OPACITY_ANIMATION_DURATION * 1000);
 
-    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
     };
   }, [isSet]);
 
