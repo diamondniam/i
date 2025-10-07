@@ -78,7 +78,7 @@ export default function Timeline() {
               hardware,
               animations: {
                 initial: { opacity: 0 },
-                whileInView: { opacity: 1 },
+                animate: { opacity: 1 },
                 exit: { opacity: 0 },
                 transition: {
                   duration: TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION,
@@ -86,7 +86,6 @@ export default function Timeline() {
                     TIMELINE_INITIAL_OPACITY_ANIMATION_DURATION +
                     TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
                 },
-                viewport: { once: true },
               },
             })}
           >

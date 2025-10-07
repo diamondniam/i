@@ -1,6 +1,7 @@
 "use client";
 
 import { ModalContextProps, Options } from "@/components/ui/Modal/types ";
+import { useGlobal } from "@/contexts/GlobalContext";
 import {
   lockScroll,
   unlockScroll,
@@ -55,6 +56,8 @@ export default function ModalProvider({
 
   const windowSize = useResize({ debounceDelay: 100 });
 
+  const { lenisRef } = useGlobal();
+
   const containerY = useMotionValue(HIDDEN_MODAL_Y);
   const dragButtonScale = useMotionValue(1);
 
@@ -99,7 +102,7 @@ export default function ModalProvider({
     if (isFull) {
       setIsFull(false);
       animateContainerY(0);
-      unlockScroll();
+      unlockScroll({ lenisRef });
     } else {
       setIsFull(false);
       handleModalClose();
@@ -158,7 +161,7 @@ export default function ModalProvider({
       setOptions(null);
       setIsClosing(false);
       setIsShown(false);
-      unlockScroll();
+      unlockScroll({ lenisRef });
       nonModalClosingElements.current = [];
 
       const navigation = document.querySelector("nav");

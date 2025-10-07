@@ -1,5 +1,7 @@
+import { useGlobal } from "@/contexts/GlobalContext";
 import { WindowEventUtil } from "@/types";
 import { useDebouncedCallback } from "@/utils/useDebounce";
+import { LenisRef } from "lenis/react";
 import { useEffect, useState } from "react";
 
 export function useScrollPosition(
@@ -98,12 +100,19 @@ export function lockScroll() {
   }
 }
 
-export function unlockScroll() {
+export function unlockScroll({
+  lenisRef,
+}: {
+  lenisRef: React.RefObject<LenisRef | null>;
+}) {
   const scrollY = document.body.dataset.scrollY;
 
   if (!scrollY) {
     return;
   }
+
+  lenisRef.current?.lenis?.stop();
+
   document.body.style.position = "";
   document.body.style.top = "";
   document.body.style.width = "";
@@ -116,4 +125,8 @@ export function unlockScroll() {
     top: parseInt(scrollY),
     behavior: "instant",
   });
+
+  setTimeout(() => {
+    lenisRef.current?.lenis?.start();
+  }, 500);
 }
