@@ -81,6 +81,7 @@ export default function NickRoom() {
 
   return (
     <LaboratoryItem
+      id="nick-room"
       refs={{ container: containerRef }}
       title={laboratory[0].title}
       description={laboratory[0].description}
@@ -90,7 +91,7 @@ export default function NickRoom() {
       }}
     >
       <motion.div
-        className="relative cursor-pointer will-change-transform preserve-3d min-w-[200px] h-[200px]"
+        className="relative cursor-pointer preserve-3d min-w-[200px] h-[200px]"
         onPointerEnter={handlePointerOn}
         onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerLeave}

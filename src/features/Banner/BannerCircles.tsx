@@ -223,7 +223,7 @@ export default function BannerCircles() {
             opacity: 0,
           }}
           key={index}
-          className={`absolute origin-center will-change-transform ${circlesStyles[index]}`}
+          className={`absolute origin-center ${circlesStyles[index]}`}
         >
           <HeaderCircle />
         </motion.div>

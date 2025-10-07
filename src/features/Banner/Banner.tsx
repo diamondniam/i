@@ -19,7 +19,7 @@ export default function Banner() {
     <section
       id="banner"
       ref={containerRef}
-      className="h-screen flex justify-center items-center relative will-change-transform pBody containerBody"
+      className="h-screen flex justify-center items-center relative pBody containerBody"
     >
       <BannerCircles />
 

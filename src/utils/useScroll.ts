@@ -67,19 +67,15 @@ export function handleIsScrollingFn(
   };
 }
 
-function getScrollbarWidth() {
-  const scrollDiv = document.createElement("div");
-  scrollDiv.style.width = "100px";
-  scrollDiv.style.height = "100px";
-  scrollDiv.style.overflow = "scroll";
-  scrollDiv.style.position = "absolute";
-  scrollDiv.style.top = "-9999px";
-  document.body.appendChild(scrollDiv);
-
-  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-
-  return scrollbarWidth;
+export function getScrollbarWidth() {
+  if (typeof window === "undefined") return 0;
+  const div = document.createElement("div");
+  div.style.cssText =
+    "width:100px;height:100px;overflow:scroll;position:absolute;top:-9999px;";
+  document.body.appendChild(div);
+  const width = div.offsetWidth - div.clientWidth;
+  document.body.removeChild(div);
+  return width || 0;
 }
 
 export function lockScroll() {
@@ -93,6 +89,7 @@ export function lockScroll() {
   document.body.style.width = "100%";
   document.body.style.left = "0";
   document.body.dataset.scrollY = `${scrollY}`;
+
   if (getScrollbarWidth() > 0) {
     const mainScrollbarWidth = getComputedStyle(document.documentElement)
       .getPropertyValue("--scrollbar-main-width")

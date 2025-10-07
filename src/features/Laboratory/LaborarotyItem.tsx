@@ -13,6 +13,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
 
   return (
     <motion.div
+      {...props}
       ref={(el: HTMLDivElement | null) => {
         if (el && props.refs && props.refs.container) {
           props.refs["container"].current = el;
@@ -21,7 +22,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
         }
       }}
       className={twMerge(
-        `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center will-change-opacity`,
+        `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center`,
         props.classNames?.container
       )}
       {...useOpimizedAnimations({

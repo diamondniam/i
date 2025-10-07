@@ -32,6 +32,7 @@ const animationsContainer = {
 export default function ScheduledMuter() {
   return (
     <LaboratoryItem
+      id="scheduled-muter"
       title={scheduledMuter.title}
       description={scheduledMuter.description}
       classNames={{

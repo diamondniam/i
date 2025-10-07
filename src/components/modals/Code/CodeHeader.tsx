@@ -4,7 +4,9 @@ export default function CodeHeader({ path }: { path: string }) {
   return (
     <div className="flex gap-3 text-[var(--gray)] border-b border-[var(--gray)]/20 p-3">
       <CodeBracketIcon className="w-5 flex-none" />
-      <p className="truncate">{path}</p>
+      <p className="truncate">
+        {path} <span className="text-[var(--secondary)]">{`(me)`}</span>
+      </p>
     </div>
   );
 }

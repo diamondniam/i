@@ -6,4 +6,4 @@ export type LaboratoryItemProps = {
   description: Record<string, string>;
   children: React.ReactNode;
   classNames?: Record<string, string>;
-};
+} & React.HTMLAttributes<HTMLDivElement>;

@@ -71,12 +71,12 @@ export default function Navigation() {
   }, [scrollPostion]);
 
   return (
-    <nav className="w-fit relative mx-auto">
-      <div className="h-[55px] w-fit flex px-2 rounded-xl border border-white/10 bg-[var(--background)]/50 backdrop-blur-lg items-center relative">
+    <nav className="w-fit absolute top-5 left-1/2 -translate-x-1/2">
+      <div className="h-[55px] w-fit flex px-2 rounded-xl border border-white/10 bg-[var(--background)]/50 backdrop-blur-lg items-center">
         {header.map((item) => (
           <motion.button
             key={item.id}
-            className="flex items-center py-2 px-3 rounded-lg relative z-10"
+            className="flex items-center py-2 px-3 rounded-lg relative z-10 whitespace-nowrap"
             onClick={() => handleClick(item.id)}
             ref={(el) => {
               if (el) {

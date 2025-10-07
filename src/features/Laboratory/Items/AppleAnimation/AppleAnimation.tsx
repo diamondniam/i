@@ -92,6 +92,7 @@ export default function AppleAnimation() {
 
   return (
     <LaboratoryItem
+      id="apple-animation"
       refs={{
         container: containerRef,
       }}
@@ -133,9 +134,9 @@ export default function AppleAnimation() {
 
         <AnimatePresence mode="wait">
           {isInView && (
-            <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px] will-change-transform">
+            <div className="w-[185px] ml-[1px] h-[402px] overflow-hidden rounded-[28px]">
               <motion.div
-                className="relative flex items-center justify-center w-full h-full will-change-opacity"
+                className="relative flex items-center justify-center w-full h-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

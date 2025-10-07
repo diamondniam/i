@@ -70,7 +70,7 @@ export function useResizeObserver<T extends HTMLElement | null>({
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, []);
+  }, [ref.current]);
 
   return { ref, ...size };
 }

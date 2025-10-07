@@ -125,7 +125,7 @@ export default function TimelineItemTags({
         {activeTags.map((tag) => (
           <motion.button
             key={tag.id}
-            className="px-1.5 py-0.5 rounded-sm !cursor-default will-change-transform"
+            className="px-1.5 py-0.5 rounded-sm !cursor-default"
             style={{
               color: tag.styles.color,
               backgroundColor: `${tag.styles.background}`,
@@ -169,7 +169,7 @@ export default function TimelineItemTags({
                 setShowAll(true);
                 setIsOverflowing(true);
               }}
-              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2] will-change-transform"
+              className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2]"
               {...useOpimizedAnimations({
                 hardware,
                 animations: {

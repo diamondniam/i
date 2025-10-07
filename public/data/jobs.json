@@ -4,7 +4,7 @@
     "header": {
       "title": "Rennord",
       "url": "https://www.rennord.com/",
-      "position": "Lead Frontend Developer",
+      "position": "Frontend Developer",
       "dateRange": ["2024-01-01", "2025-07-01"],
       "isCurrent": true,
       "tags": {
@@ -145,8 +145,8 @@
     },
     "body": {
       "description": {
-        "en": "Swedish B2B solutions company. Annual revenue: ~450K €.\n\nHere I was creating a custom UI which we used in 4 projects there. More than 40 reusable, stateless well organized and structured components were created using Tailwind. All <Highlighted id='aria' color='#FFE187'>a11y</Highlighted> and responsibility provided and unit, integration <Highlighted id='vitest' color='#89FF87'>tested</Highlighted>.\n\nEach of the 4 apps I helped bring to life had distinct challenges — from form-heavy <Highlighted id='validations' color='#FF87EB'>validation-heavy</Highlighted> admin panels to public-facing product pages with dynamic filtering, carts, constructors and user input.\n\nDelivered pixel-perfect, maintainable, quality code.",
-        "ru": "Шведская компания, предоставляющая B2B-решения. Годовой доход: ~450 тыс. €.\n\nЗдесь я создавал кастомный UI, который использовался в 4 проектах. Было разработано более 40 переиспользуемых, статeless, хорошо организованных и структурированных компонентов с использованием Tailwind. Обеспечена доступность <Highlighted id='aria' color='#FFE187'>a11y</Highlighted>, адаптивность, написаны модульные и интеграционные <Highlighted id='vitest' color='#89FF87'>тесты</Highlighted>.\n\nКаждое из 4 приложений, в создании которых я участвовал, имело свои особенности — от насыщенных формами и <Highlighted id='validations' color='#FF87EB'>валидациями</Highlighted> админ-панелей до пользовательских продуктовых страниц с динамической фильтрацией, корзинами, конструкторами и вводом данных.\n\nДоставлял пиксель-перфект, поддерживаемый и качественный код."
+        "en": "Rennord - a Swedish company in the IT and digital business solutions sector. Annual revenue: ~350K €.\n\nI was given a project with the following problems:\n• Poor frontend architecture and messy code.\n• Heavy bundle: use of unnecessary/heavy libraries, lack of formatting, no lazy-loading.\n• Weak components and components not matching the design.\n• Unoptimized UI library: insufficient <Highlighted id='aria' color='#FFE187'>a11y</Highlighted>, no FSD compliance, poor management of design tokens, unoptimized component API design.\n• No <Highlighted id='vitest' color='#89FF87'>tests</Highlighted> for components and utilities.\n\nI managed to identify and fix all of this, and also:\n• Integrated WebSockets.\n• Optimized CI/CD (tests, deployment, formatting).\n• Interacted with browser storage (indexedDB, sessionStorage, localStorage) to optimize requests and improve UX.\n• Implemented animations where needed, proposed and developed \"smart\" components that make the user's life easier and reduce the number of buttons on screen.\n\nMain project tech stack: Vue3, Vuex, Vite, motion, Persisted State, Tailwind, i18n, Router, Vitest, <Highlighted id='validations' color='#FF87EB'>*validations</Highlighted>.",
+        "ru": "Rennord - шведская компания в сфере IT и цифровых бизнес-решений. Годовой доход: ~350K €.\n\nМне был дан проект со следующими проблемами:\n• Плохая архитектура фронтенда и бардак в коде.\n• Тяжелый бандл: использование не нужных / тяжелых библиотек, отсутствие форматирования, отсутствие lazy-load.\n• Слабые компоненты и компоненты не соответствующие дизайну.\n• Не оптимизированная UI библиотека: нет достаточной <Highlighted id='aria' color='#FFE187'>a11y</Highlighted>, нет соблюдения FSD, плохое ведение design tokens, не оптимизированный API-дизайн компонентов.\n• Нет <Highlighted id='vitest' color='#89FF87'>тестов</Highlighted> компонентов и утилит.\n\nМне удалось все это увидеть и исправить, а так же:\n• Я интегрировал WebSockets.\n• Оптимизировал CI/CD (тесты, деплой, форматирование).\n• Взаимодействовал с браузерными сторами (indexedDB, sessionStorage, localStorage) для оптимизации запросов и лучше UX.\n• Внедрил по необходимости анимации, предлагал и внедрял \"умные\" компоненты, которые делают жизнь юзеру проще, а кнопок на экране меньше.\n\nОсновной стэк проектов: Vue3, Vuex, Vite, motion, Persisted State, Tailwind, i18n, Router, Vitest, <Highlighted id='validations' color='#FF87EB'>*валидации</Highlighted>."
       }
     }
   },
@@ -246,8 +246,8 @@
     },
     "body": {
       "description": {
-        "en": "Created e-commerce webs and landings.\n\nInitiated projects, ensured stability, fixed current app state, ensured best practices and best user experience, integrated API.",
-        "ru": "Создавал e-commerce сайты и лендинги. \n\nИнициировал проекты, обеспечивал стабильность, исправлял текущее состояние приложений, придерживался лучших практик и обеспечивал наилучший пользовательский опыт, интегрировал API."
+        "en": "I helped develop websites for small businesses: grocery stores, landing pages, business cards.\n\nI was able to:\n• Assist in designing website interfaces that match the designs, using UI libraries or from scratch.\n• Integrate APIs.\n• Integrate animations into projects.\n\nTechnologies used: Vue, React, Redux, Vuex, Next, TypeScript, Vite, Tailwind.",
+        "ru": "Я помогал разрабатывать веб-сайты для малого бизнеса: магазины продуктов, лендинги, визитки.\n\nМне удалось:\n• Помочь разрабатывать интерфейсы для сайтов, соответствующие дизайнам, используя UI-библиотеки либо же с нуля.\n• Интегрировать API.\n• Интегрировать анимации в проекты.\n\nИспользованные технологии: Vue, React, Redux, Vuex, Next, TypeScript, Vite, Tailwind."
       }
     }
   }

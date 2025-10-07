@@ -15,7 +15,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Diamond Niam | Frontend Developer",
-  description: "Let's create next level user experience together!",
+  description: "Let's create the next level user experience - together!",
 };
 
 export default async function RootLayout({
@@ -39,7 +39,6 @@ export default async function RootLayout({
       <body
         className={twMerge(`
         ${inter.variable} antialiased
-        mainScrollbar
         `)}
       >
         <ClientBootstrap />
