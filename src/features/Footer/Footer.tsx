@@ -56,7 +56,12 @@ export default function Footer() {
     });
 
     if (!isMobile) {
-      if (socialMediaRef.current && laboratoryRef.current) {
+      if (
+        socialMediaRef.current &&
+        laboratoryRef.current &&
+        laboratoryPhoneRef.current &&
+        laboratoryRef.current
+      ) {
         ScrollTrigger.refresh();
 
         const laboratoryItems = Array.from(

@@ -111,7 +111,9 @@ export function unlockScroll({
     return;
   }
 
-  lenisRef.current?.lenis?.stop();
+  if (lenisRef.current) {
+    lenisRef.current.lenis?.stop();
+  }
 
   document.body.style.position = "";
   document.body.style.top = "";
@@ -122,12 +124,17 @@ export function unlockScroll({
 
   document.body.dataset.scrollY = "";
 
-  window.scrollTo({
-    top: parseInt(scrollY),
-    behavior: "instant",
+  requestAnimationFrame(() => {
+    if (scrollY) {
+      document.documentElement.scrollTo({
+        top: parseInt(scrollY),
+      });
+    }
   });
 
   setTimeout(() => {
-    lenisRef.current?.lenis?.start();
+    if (lenisRef.current) {
+      lenisRef.current?.lenis?.start();
+    }
   }, 500);
 }
