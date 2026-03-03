@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils";
 import { useRouter } from "next/navigation";
 import { useNavigationStore } from "@/store";
-import { loadSpriteFrames, preloadImages, useActivePage } from "@/utils";
+import { loadSpriteFrames } from "@/utils";
 
 const FRAME_DURATION = 100;
 

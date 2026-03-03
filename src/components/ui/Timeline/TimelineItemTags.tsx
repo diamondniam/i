@@ -8,8 +8,8 @@ import {
   Transition,
   useInView,
 } from "motion/react";
-import { Size, useOpimizedAnimations, useResize } from "@/utils";
-import { useGlobal } from "@/contexts/GlobalContext";
+import { Size, useOpimizedAnimations, useResize } from "@/hooks";
+import { useGlobal } from "@/contexts";
 
 const TAG_ANIMATION_SCALE_INITIAL_AMOUNT = 0.3;
 const TAG_ANIMATION_DELAY = 1;
@@ -33,7 +33,7 @@ export default function TimelineItemTags({
   let isInView: boolean;
   const [isShowAll, setShowAll] = useState(false);
 
-  const allTags = useMemo(() => [...tags.main, ...tags.other], [tags]);
+  const allTags = useMemo(() => [...tags.main, ...tags.others], [tags]);
 
   const [buttonsAnimations, setButtonsAnimations] = useState<
     Record<string, { animation: TargetAndTransition; transition: Transition }>
@@ -57,6 +57,8 @@ export default function TimelineItemTags({
 
   windowSize = useResize({ debounceDelay: 200 });
 
+  const optimizeAnimations = useOpimizedAnimations();
+
   useEffect(() => {
     setContainerHeight();
   }, [windowSize]);
@@ -69,7 +71,7 @@ export default function TimelineItemTags({
 
     activeTags.forEach((tag) => {
       const delay = isShowAll
-        ? tags.other.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
+        ? tags.others.indexOf(tag) * TAG_ANIMATION_DELAY_FACTOR
         : (allTags.indexOf(tag) + 1) * TAG_ANIMATION_DELAY_FACTOR +
           TAG_ANIMATION_DELAY;
 
@@ -87,7 +89,7 @@ export default function TimelineItemTags({
     });
 
     const showAllDelay = isShowAll
-      ? (tags.other.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
+      ? (tags.others.length + 1) * TAG_ANIMATION_DELAY_FACTOR +
         TAG_ANIMATION_DELAY
       : activeTags.length * TAG_ANIMATION_DELAY_FACTOR + TAG_ANIMATION_DELAY;
 
@@ -130,8 +132,7 @@ export default function TimelineItemTags({
               color: tag.styles.color,
               backgroundColor: `${tag.styles.background}`,
             }}
-            {...useOpimizedAnimations({
-              hardware,
+            {...optimizeAnimations({
               animations: {
                 initial: {
                   scale: TAG_ANIMATION_SCALE_INITIAL_AMOUNT,
@@ -170,8 +171,7 @@ export default function TimelineItemTags({
                 setIsOverflowing(true);
               }}
               className="md:hover:-translate-y-0.5 max-md:active:-translate-y-0.5 active:brightness-90 transition-all z-[2]"
-              {...useOpimizedAnimations({
-                hardware,
+              {...optimizeAnimations({
                 animations: {
                   initial: {
                     y: 100,

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import header from "@public/data/header.json";
 
 import { motion } from "motion/react";
-import { useScrollPosition } from "@/utils";
+import { useScrollPosition } from "@/hooks";
 import { useLocale } from "next-intl";
 import { Locale } from "@/i18n/routing";
 

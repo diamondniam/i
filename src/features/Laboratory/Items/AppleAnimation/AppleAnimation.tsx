@@ -9,7 +9,7 @@ import { AnimatePresence, useInView } from "motion/react";
 import { motion } from "motion/react";
 import { useFooterPhone } from "@/contexts";
 import "./styles.css";
-import { useIsHoverDevice } from "@/utils";
+import { getIsHoverDevice } from "@/utils";
 
 const appleAnimation = laboratory[1];
 
@@ -65,7 +65,7 @@ export default function AppleAnimation() {
   );
 
   const handlePointerEnter = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       if (pointerAnimationTimeout.current) {
         clearTimeout(pointerAnimationTimeout.current);
       }
@@ -78,7 +78,7 @@ export default function AppleAnimation() {
     }
   };
   const handlePointerLeave = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       if (pointerAnimationTimeout.current) {
         clearTimeout(pointerAnimationTimeout.current);
       }
@@ -108,7 +108,7 @@ export default function AppleAnimation() {
         className="relative w-[200px] h-[420px] cursor-pointer flex justify-center items-center"
         variants={animationsContainer}
         whileTap={"clicked"}
-        whileHover={useIsHoverDevice() ? "active" : undefined}
+        whileHover={getIsHoverDevice() ? "active" : undefined}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerLeave}

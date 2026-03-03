@@ -1,3 +1,3 @@
-export function useIsHoverDevice() {
+export function getIsHoverDevice() {
   return window.matchMedia("(hover: hover)").matches;
 }

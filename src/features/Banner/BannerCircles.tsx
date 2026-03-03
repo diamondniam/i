@@ -1,4 +1,4 @@
-import { getRandom, useDebouncedCallback, useScrollPosition } from "@/utils";
+import { useDebouncedCallback, useScrollPosition } from "@/hooks";
 import HeaderCircle from "@public/images/bannerCircle.svg";
 import { useEffect, useRef, useState } from "react";
 
@@ -8,8 +8,9 @@ import {
   DOMKeyframesDefinition,
   motion,
 } from "motion/react";
+import { getRandom } from "@/utils";
 
-const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 3;
+const INITIAL_ALL_CIRCLES_ANIMATION_DELAY = 1;
 const INITIAL_CIRCLE_Y = 100;
 const INITIAL_DURATION = 1000;
 

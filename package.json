@@ -6,11 +6,13 @@
     "dev": "next dev --turbopack -p 4040",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare-db-types": "export $(cat .env | xargs) && npx supabase gen types typescript --project-id $NEXT_PUBLIC_SUPABASE_API_DOMAIN > src/types/database.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@heroicons/react": "^2.2.0",
+    "@supabase/supabase-js": "^2.98.0",
     "clsx": "^2.1.1",
     "gsap": "^3.13.0",
     "html-react-parser": "^5.2.5",
@@ -34,6 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "shiki": "^3.7.0",
+    "supabase": "^2.76.16",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

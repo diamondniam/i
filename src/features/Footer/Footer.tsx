@@ -3,16 +3,15 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 
-import { useFooterPhone } from "@/contexts";
+import { useFooterPhone, useGlobal } from "@/contexts";
 import SocialMedia, { SocialMediaHorizontal } from "@/features/SocialMedia";
 import { useNavigationStore } from "@/store";
-import { useGlobal } from "@/contexts/GlobalContext";
 
 const PHONE_ANIMATION_HEIGHT = 2000;
 const LAST_SCREEN_TITLES_ANIMATION_INITIAL_Y = 150;
@@ -20,6 +19,7 @@ const LAST_SCREEN_CACTUS_ANIMATION_INITIAL_Y = 20;
 
 export default function Footer() {
   const { laboratoryRef, laboratoryPhoneRef } = useFooterPhone();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLImageElement>(null);
   const targetPhoneRef = useRef<HTMLImageElement>(null);
@@ -27,9 +27,14 @@ export default function Footer() {
   const cactusRef = useRef<HTMLButtonElement>(null);
   const titlesRef = useRef<HTMLDivElement>(null);
   const socialMediaRef = useRef<HTMLDivElement>(null);
+
   const { hardware } = useGlobal();
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+
   const laboratoryTimeline = useRef<gsap.core.Timeline | null>(null);
+  const [socialMediaScrollTrigger, setSocialMediaScrollTrigger] =
+    useState(false);
+
   const isSimpleView = useMemo(() => {
     return isMobile || hardware.power !== "high";
   }, [isMobile, hardware.power]);
@@ -163,6 +168,12 @@ export default function Footer() {
           socialMediaRef.current,
           {
             opacity: 1,
+            onComplete: () => {
+              setSocialMediaScrollTrigger(true);
+            },
+            onReverseComplete: () => {
+              setSocialMediaScrollTrigger(false);
+            },
           },
           "<"
         );
@@ -226,7 +237,11 @@ export default function Footer() {
         />
 
         {!isSimpleView && (
-          <SocialMedia ref={socialMediaRef} className="opacity-0" />
+          <SocialMedia
+            ref={socialMediaRef}
+            scrollTrigger={socialMediaScrollTrigger}
+            className="opacity-0"
+          />
         )}
       </div>
 
@@ -279,7 +294,9 @@ export default function Footer() {
 
         <motion.button
           ref={cactusRef}
-          className={twMerge(`${!isSimpleView ? "max-[376px]:hidden" : ""}`)}
+          className={twMerge(
+            `${!isSimpleView ? "max-[376px]:hidden" : ""} !cursor-help`
+          )}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1.05, y: -2 }}
           style={{

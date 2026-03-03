@@ -1,14 +1,9 @@
 "use client";
 
 import { ModalContextProps, Options } from "@/components/ui/Modal/types ";
-import { useGlobal } from "@/contexts/GlobalContext";
-import {
-  lockScroll,
-  unlockScroll,
-  useClickOutside,
-  useResize,
-  useScrollPosition,
-} from "@/utils";
+import { useGlobal } from "@/contexts";
+import { useClickOutside, useResize, useScrollPosition } from "@/hooks";
+import { lockScroll, unlockScroll } from "@/utils";
 import { animate, useMotionValue } from "motion/react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 

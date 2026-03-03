@@ -1,16 +1,18 @@
 import { Text } from "@/components/animations";
-import { useGlobal } from "@/contexts/GlobalContext";
-import { useOpimizedAnimations } from "@/utils";
+import { useGlobal } from "@/contexts";
+import { useOpimizedAnimations } from "@/hooks";
 import { motion } from "motion/react";
 
 export default function BannerTitle() {
   const { hardware } = useGlobal();
 
+  const optimizeAnimations = useOpimizedAnimations();
+
   return (
     <div className="flex flex-col text-center font-bold md:text-7xl text-6xl relative md:h-[120px] h-[100px]">
       <h1 className="z-1">
         {hardware.power === "high" ? (
-          <Text text="diamond" delay={2} />
+          <Text text="diamond" delay={1} />
         ) : (
           "diamond"
         )}
@@ -18,7 +20,7 @@ export default function BannerTitle() {
 
       <h1 className="z-2 relative md:bottom-5 bottom-4">
         {hardware.power === "high" ? (
-          <Text text="niam" factor={0.1} delay={2} className="justify-center" />
+          <Text text="niam" factor={0.1} delay={1} className="justify-center" />
         ) : (
           "niam"
         )}
@@ -26,12 +28,11 @@ export default function BannerTitle() {
 
       <motion.h1
         className="[text-shadow:_7px_5px_14px_var(--background)] text-transparent absolute bottom-6 w-full z-[1] select-none pointer-events-none"
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: { opacity: 0 },
             animate: { opacity: 1 },
-            transition: { duration: 1, delay: 2.5 },
+            transition: { duration: 1, delay: 2 },
           },
         })}
       >

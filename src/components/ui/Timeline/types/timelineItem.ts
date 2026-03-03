@@ -1,8 +1,10 @@
+import { CodeProps } from "@/components/ui/Code/types";
+
 export interface TimelineItem {
   id: string;
   header: TimelineItemHeader;
   body: TimelineItemBody;
-  isCurrent?: boolean;
+  isActive?: boolean;
 }
 
 export interface TimelineItemProps extends TimelineItem {
@@ -19,7 +21,7 @@ type TimelineItemHeader = {
 };
 
 export type TimelineItemHeaderTags = {
-  other: TimelineItemHeaderTag[];
+  others: TimelineItemHeaderTag[];
   main: TimelineItemHeaderTag[];
 };
 
@@ -34,6 +36,7 @@ type TimelineItemHeaderTag = {
 
 type TimelineItemBody = {
   description: Record<string, string>;
+  codes: CodeProps[];
   post?: React.ReactNode;
 };
 
@@ -45,11 +48,12 @@ export type TimelineItemHeaderProps = {
   dateRange: string[];
   tags: TimelineItemHeaderTags;
   url?: string;
-  isCurrent?: boolean;
+  isActive?: boolean;
 };
 
 export type TimelineItemDescriptionHightlightedProps = {
   children: React.ReactNode;
   color: string;
   id: string;
+  codes: CodeProps[];
 };

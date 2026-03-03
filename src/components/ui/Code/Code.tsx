@@ -7,7 +7,7 @@ import { useState } from "react";
 import CodeTemplateSkeleton from "@/components/ui/Code/CodeTemplateSkeleton";
 import { motion, AnimatePresence } from "motion/react";
 import { useGlobalModal } from "@/components/ui/Modal";
-import { useCodeFormatter, useCodeHighlighter, useUID } from "@/utils";
+import { useCodeFormatter, useCodeHighlighter, useUID } from "@/hooks";
 import { CodeContent, CodeHeader } from "@/components/modals/Code";
 import "./style.css";
 

@@ -1,4 +1,4 @@
-import { useIsHoverDevice } from "@/utils";
+import { getIsHoverDevice } from "@/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -24,13 +24,13 @@ export default function Tooltip({
   const [isClicked, setIsClicked] = useState(false);
 
   const handleMouseEnter = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       setIsOpen(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       setIsOpen(false);
     }
   };
@@ -45,7 +45,7 @@ export default function Tooltip({
   };
 
   const handleClick = () => {
-    if (!useIsHoverDevice()) {
+    if (!getIsHoverDevice()) {
       setIsOpen(true);
     }
 

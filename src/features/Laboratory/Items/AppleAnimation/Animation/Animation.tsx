@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { GeneratedGradient, GradientState, Props, Wave } from "./types";
 import { getRandomInt, lerp, lerpColor } from "./utils";
-import { useGlobal } from "@/contexts/GlobalContext";
+import { useGlobal } from "@/contexts";
 
 export default function Animation(props: Props) {
   const [canvas, setCanvas] = useState<Canvas>();

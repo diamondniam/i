@@ -1,5 +1,5 @@
 import { WindowEventUtil } from "@/types";
-import { useDebouncedCallback } from "@/utils/useDebounce";
+import { useDebouncedCallback } from "@/hooks/useDebounce";
 import { useEffect, useState } from "react";
 
 export type Size = {

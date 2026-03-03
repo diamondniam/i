@@ -4,7 +4,7 @@ import {
   Context as ContextProps,
   Provider as ProviderProps,
 } from "@/components/ui/Timeline/types";
-import { useDebounce, useResizeObserver } from "@/utils";
+import { useDebounce, useResizeObserver } from "@/hooks";
 import {
   createContext,
   useRef,
@@ -33,7 +33,7 @@ export const useProvider = () => {
   return context;
 };
 
-export const Provider = ({ children, highlightedMap }: ProviderProps) => {
+export const Provider = ({ children }: ProviderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement | null>(null);
   const itemsRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -120,8 +120,6 @@ export const Provider = ({ children, highlightedMap }: ProviderProps) => {
         timelineActiveLineTop,
         isActiveLineVisible,
         isMounted,
-
-        highlightedMap,
 
         containerWidth,
         containerHeight,

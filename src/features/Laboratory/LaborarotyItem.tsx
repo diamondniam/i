@@ -1,6 +1,5 @@
-import { useGlobal } from "@/contexts/GlobalContext";
 import { LaboratoryItemProps } from "@/features/Laboratory/types";
-import { useOpimizedAnimations } from "@/utils";
+import { useOpimizedAnimations } from "@/hooks";
 import { motion } from "motion/react";
 import { useLocale } from "next-intl";
 import { useRef } from "react";
@@ -8,8 +7,9 @@ import { twMerge } from "tailwind-merge";
 
 export default function LaboratoryItem(props: LaboratoryItemProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { hardware } = useGlobal();
   const locale = useLocale();
+
+  const optimizeAnimations = useOpimizedAnimations();
 
   return (
     <motion.div
@@ -25,8 +25,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
         `flex justify-center gap-3 w-full h-full max-lg:flex-col-reverse max-lg:items-center`,
         props.classNames?.container
       )}
-      {...useOpimizedAnimations({
-        hardware,
+      {...optimizeAnimations({
         elseAnimations: {
           initial: { opacity: 0 },
           whileInView: { opacity: 1 },
@@ -37,8 +36,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
     >
       <motion.div
         className={twMerge("min-h-[200px]", props.classNames?.children)}
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: { opacity: 0 },
             whileInView: { opacity: 1 },
@@ -52,8 +50,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
 
       <motion.div
         className="w-full max-lg:text-center"
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: { opacity: 0 },
             whileInView: { opacity: 1 },
@@ -66,8 +63,7 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
 
         <motion.p
           className="text-[var(--gray)] overflow-hidden"
-          {...useOpimizedAnimations({
-            hardware,
+          {...optimizeAnimations({
             animations: {
               initial: { opacity: 0 },
               whileInView: { opacity: 1 },

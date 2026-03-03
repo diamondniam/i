@@ -9,6 +9,8 @@ import EmailContact from "@/features/SocialMedia/EmailContact";
 import InstagramContact from "@/features/SocialMedia/InstagramContact";
 import TelegramContact from "@/features/SocialMedia/TelegramContact";
 import { useInView } from "motion/react";
+import { useLocale } from "next-intl";
+import { useConfig } from "@/contexts";
 
 export default function SocialMediaHorizontal({
   ref,
@@ -21,6 +23,13 @@ export default function SocialMediaHorizontal({
   const [isScrolled, setIsScrolled] = useState(false);
   const isInView = useInView(ref, { amount: 0.8 });
   const animationFrameId = useRef<number | null>(null);
+
+  const { data: configData } = useConfig();
+  const locale = useLocale();
+
+  const statusData = configData?.find(
+    (item: any) => item.id === "status"
+  )?.data;
 
   const scrollStep = () => {
     if (containerRef.current && !isScrolled) {
@@ -56,8 +65,23 @@ export default function SocialMediaHorizontal({
       )}
     >
       <div className={twMerge("flex flex-col relative gap-5 w-full")}>
-        <div className="flex flex-col gap-3 items-center self-center justify-center w-[150px] flex-none">
+        <div className="flex flex-col gap-3 items-center self-center justify-center flex-none">
           <Avatar size={90} />
+
+          {statusData?.id && (
+            <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center gap-2 w-2 h-2 rounded-full animate-pulse"
+                style={{
+                  backgroundColor: statusData.colors[statusData.id],
+                }}
+              ></div>
+
+              <p className="text-[var(--gray)] font-light text-sm">
+                {statusData.translations[statusData.id][locale]}
+              </p>
+            </div>
+          )}
 
           <div className="flex gap-3">
             <InstagramContact />

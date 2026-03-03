@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/public/data/codes
+/public/data/jobs.json
 
 # next.js
 /.next/

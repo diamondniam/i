@@ -1,19 +1,27 @@
 "use client";
 
-import { useGlobal } from "@/contexts/GlobalContext";
+import { useConfig } from "@/contexts";
 import BannerCircles from "@/features/Banner/BannerCircles";
 import BannerTitle from "@/features/Banner/BannerTitle";
-import { useOpimizedAnimations } from "@/utils";
+import { useOpimizedAnimations } from "@/hooks";
 import BannerLaptop from "@public/images/bannerLaptop.svg";
 import BannerPhone from "@public/images/bannerPhone.svg";
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { AnimatePresence, motion } from "motion/react";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef } from "react";
 
 export default function Banner() {
   const containerRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
-  const { hardware } = useGlobal();
+  const locale = useLocale();
+
+  const { data: configData } = useConfig();
+
+  const statusData = configData?.find(
+    (item: any) => item.id === "status"
+  )?.data;
+
+  const optimizeAnimations = useOpimizedAnimations();
 
   return (
     <section
@@ -27,12 +35,11 @@ export default function Banner() {
         <div className="absolute h-[200px] bottom-full md:w-[300px] w-[250px] overflow-hidden">
           <motion.div
             className="md:w-[115px] w-[100px] absolute bottom-0 right-0"
-            {...useOpimizedAnimations({
-              hardware,
+            {...optimizeAnimations({
               animations: {
                 initial: { opacity: 0, y: 200 },
                 animate: { opacity: 1, y: 0 },
-                transition: { duration: 1, delay: 2.5 },
+                transition: { duration: 1, delay: 1.5 },
               },
             })}
           >
@@ -41,12 +48,11 @@ export default function Banner() {
 
           <motion.div
             className="md:w-[230px] w-[200px] absolute bottom-0 left-0"
-            {...useOpimizedAnimations({
-              hardware,
+            {...optimizeAnimations({
               animations: {
                 initial: { opacity: 0, y: 200 },
                 animate: { opacity: 1, y: 0 },
-                transition: { duration: 1, delay: 2 },
+                transition: { duration: 1, delay: 1 },
               },
             })}
           >
@@ -58,18 +64,39 @@ export default function Banner() {
 
         <motion.h2
           className="text-[var(--gray)] font-light text-center"
-          {...useOpimizedAnimations({
-            hardware,
+          {...optimizeAnimations({
             animations: {
               initial: { opacity: 0 },
               animate: { opacity: 1 },
-              transition: { duration: 1, delay: 2.5 },
+              transition: { duration: 1, delay: 1.5 },
             },
           })}
         >
           {t("components.banner.description")}
         </motion.h2>
       </div>
+
+      <AnimatePresence>
+        {statusData?.id && (
+          <motion.div
+            className="absolute top-0 flex items-center justify-center gap-2 mt-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div
+              className="flex items-center gap-2 w-2 h-2 rounded-full animate-pulse"
+              style={{
+                backgroundColor: statusData.colors[statusData.id],
+              }}
+            ></div>
+
+            <p className="text-[var(--gray)] font-light text-sm">
+              {statusData.translations[statusData.id][locale]}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

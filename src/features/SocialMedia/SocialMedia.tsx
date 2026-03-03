@@ -9,6 +9,8 @@ import { useEffect, useRef } from "react";
 import InstagramContact from "@/features/SocialMedia/InstagramContact";
 import TelegramContact from "@/features/SocialMedia/TelegramContact";
 import EmailContact from "@/features/SocialMedia/EmailContact";
+import { useConfig } from "@/contexts";
+import { useLocale } from "next-intl";
 
 const IPHONE_TOP_HEIGHT = 30;
 const IPHONE_BOTTOM_HEIGHT = 30;
@@ -20,13 +22,22 @@ const LINK = "https://instagram.com/diamondniam";
 export default function SocialMedia({
   ref,
   className,
+  scrollTrigger,
 }: {
   ref: React.RefObject<HTMLDivElement | null>;
   className?: string;
+  scrollTrigger?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isScrolled = useRef(false);
   const animationFrameId = useRef<number | null>(null);
+
+  const { data: configData } = useConfig();
+  const locale = useLocale();
+
+  const statusData = configData?.find(
+    (item: any) => item.id === "status"
+  )?.data;
 
   const scrollStep = () => {
     if (containerRef.current && !isScrolled.current) {
@@ -36,7 +47,7 @@ export default function SocialMedia({
   };
 
   useEffect(() => {
-    if (containerRef.current) {
+    if (containerRef.current && scrollTrigger) {
       if (!isScrolled.current) {
         scrollStep();
       } else {
@@ -51,7 +62,7 @@ export default function SocialMedia({
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [isScrolled]);
+  }, [isScrolled, scrollTrigger]);
 
   return (
     <div
@@ -76,6 +87,21 @@ export default function SocialMedia({
         }}
       >
         <Avatar />
+
+        {statusData?.id && (
+          <div className="flex items-center justify-center gap-2">
+            <div
+              className="flex items-center gap-2 w-2 h-2 rounded-full animate-pulse"
+              style={{
+                backgroundColor: statusData.colors[statusData.id],
+              }}
+            ></div>
+
+            <p className="text-[var(--gray)] font-light text-xs">
+              {statusData.translations[statusData.id][locale]}
+            </p>
+          </div>
+        )}
 
         <div className="sticky top-0 flex gap-1 z-[1]">
           <InstagramContact className="!w-[30px] !h-[30px]" />

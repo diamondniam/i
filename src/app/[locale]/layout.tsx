@@ -5,8 +5,8 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import ClientBootstrap from "@/components/ClientBootstrap";
-import GlobalProvider from "@/contexts/GlobalContext";
 import { twMerge } from "tailwind-merge";
+import GlobalProvider from "@/contexts/GlobalContext";
 
 const inter = Inter({
   variable: "--font-inter",

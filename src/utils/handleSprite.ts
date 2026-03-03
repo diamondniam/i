@@ -1,4 +1,4 @@
-import { preloadImages } from "@/utils/useImage";
+import { preloadImages } from "@/utils";
 
 type SpriteSheet = {
   frames: Record<string, any>;

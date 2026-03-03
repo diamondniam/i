@@ -7,9 +7,9 @@ import NickRoomAnimation from "@/features/NickRoomAnimation";
 import { useNavigationStore } from "@/store/navigation";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useGlobal } from "@/contexts";
 import Footer from "@/features/Footer";
 import Header from "@/features/Header";
-import { useGlobal } from "@/contexts/GlobalContext";
 
 export default function Home() {
   const {

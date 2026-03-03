@@ -6,8 +6,8 @@ import laboratory from "@public/data/laboratory.json";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
-import { useIsHoverDevice } from "@/utils";
 import { useNavigationStore } from "@/store";
+import { getIsHoverDevice } from "@/utils";
 
 export default function NickRoom() {
   const [isPointerOn, setIsPointerOn] = useState(false);
@@ -19,7 +19,7 @@ export default function NickRoom() {
     useNavigationStore();
 
   const handlePointerOn = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       if (pointerTimeout.current) {
         clearTimeout(pointerTimeout.current);
       }
@@ -29,7 +29,7 @@ export default function NickRoom() {
   };
 
   const handleClick = () => {
-    if (!useIsHoverDevice()) {
+    if (!getIsHoverDevice()) {
       setIsPointerOn(true);
     }
 
@@ -38,7 +38,7 @@ export default function NickRoom() {
   };
 
   const handlePointerLeave = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       if (pointerTimeout.current) {
         clearTimeout(pointerTimeout.current);
       }
@@ -70,7 +70,7 @@ export default function NickRoom() {
   };
 
   useEffect(() => {
-    if (!useIsHoverDevice()) {
+    if (!getIsHoverDevice()) {
       if (isInView) {
         setIsPointerOn(true);
       } else {
@@ -100,7 +100,7 @@ export default function NickRoom() {
         whileTap={"clicked"}
         whileHover={"active"}
       >
-        <div className="relative w-full h-full overflow-hidden rounded-lg">
+        <div className="relative w-full h-full overflow-hidden rounded-lg cursor-help">
           <Image
             src="/images/laboratoryNickRoom.jpg"
             fill

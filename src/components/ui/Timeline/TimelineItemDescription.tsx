@@ -1,7 +1,8 @@
+import { CodeProps } from "@/components/ui/Code/types";
 import TimelineItemDescriptionHighlighted from "@/components/ui/Timeline/TimelineItemDescriptionHighlighted";
 import { TimelineItemDescriptionHightlightedProps } from "@/components/ui/Timeline/types";
-import { useGlobal } from "@/contexts/GlobalContext";
-import { getBreakedText, useOpimizedAnimations } from "@/utils";
+import { useOpimizedAnimations } from "@/hooks";
+import { getBreakedText } from "@/utils";
 import parse, { domToReact } from "html-react-parser";
 import { motion } from "motion/react";
 import { useLocale } from "next-intl";
@@ -9,15 +10,17 @@ import { useMemo } from "react";
 
 export default function TimelineItemDescription({
   description,
+  codes,
 }: {
+  codes: CodeProps[];
   description: Record<string, string>;
 }) {
   const descriptionComponentsMap: Record<string, React.ElementType> = {
     highlighted: ({ ...props }: TimelineItemDescriptionHightlightedProps) =>
-      TimelineItemDescriptionHighlighted({ ...props }),
+      TimelineItemDescriptionHighlighted({ ...props, codes }),
   };
-  const { hardware } = useGlobal();
   const locale = useLocale();
+  const optimizeAnimations = useOpimizedAnimations();
 
   const descriptionParseOptions = {
     replace: (domNode: any) => {
@@ -39,8 +42,7 @@ export default function TimelineItemDescription({
 
   return (
     <motion.div
-      {...useOpimizedAnimations({
-        hardware,
+      {...optimizeAnimations({
         animations: {
           initial: { opacity: 0 },
           whileInView: { opacity: 1 },

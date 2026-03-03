@@ -9,7 +9,7 @@ import TimelineItems from "@/components/ui/Timeline/TimelineItems";
 
 export default function Timeline(props: TimelineProps) {
   return (
-    <Provider highlightedMap={props.highlightedMap}>
+    <Provider>
       <div className="flex relative pl-3 overflow-hidden">
         <TimelinePosition />
 

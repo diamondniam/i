@@ -3,18 +3,16 @@ import { useMemo, useRef, useState } from "react";
 
 import { CodeContent, CodeHeader } from "@/components/modals/Code";
 import { useGlobalModal } from "@/components/ui/Modal";
-import { useProvider } from "@/components/ui/Timeline/Provider";
 import { TimelineItemDescriptionHightlightedProps } from "@/components/ui/Timeline/types";
 
 import {
-  hexToRgba,
   useClickOutside,
   useCodeFormatter,
   useCodeHighlighter,
-  useIsHoverDevice,
   useOpimizedAnimations,
-} from "@/utils";
-import { useGlobal } from "@/contexts/GlobalContext";
+} from "@/hooks";
+import { useGlobal } from "@/contexts";
+import { getIsHoverDevice, hexToRgba } from "@/utils";
 
 const ANIMATION_DELAY = 2;
 
@@ -22,6 +20,7 @@ export default function TimelineItemDescriptionHighlighted({
   children,
   color,
   id,
+  codes,
 }: TimelineItemDescriptionHightlightedProps) {
   const containerRef = useRef<HTMLButtonElement | null>(null);
   const isInView = useInView(containerRef, { once: true });
@@ -33,16 +32,18 @@ export default function TimelineItemDescriptionHighlighted({
 
   const [code, setCode] = useState("");
 
-  const { highlightedMap } = useProvider();
-
   const codeHighlighter = useCodeHighlighter();
 
-  if (highlightedMap) {
+  const currentCode = codes.find((code) => code.id === id);
+
+  const optimizeAnimations = useOpimizedAnimations();
+
+  if (codes && currentCode) {
     useCodeFormatter({
       highlighter: codeHighlighter.current,
-      code: highlightedMap[id].template,
+      code: currentCode.template,
       setCode,
-      lang: highlightedMap[id].lang,
+      lang: currentCode.lang,
     });
   }
 
@@ -104,7 +105,7 @@ export default function TimelineItemDescriptionHighlighted({
   );
 
   const handleOpenModal = () => {
-    if (highlightedMap) {
+    if (currentCode) {
       if (openModalTimeout.current) {
         clearTimeout(openModalTimeout.current);
       }
@@ -112,7 +113,7 @@ export default function TimelineItemDescriptionHighlighted({
       openModalTimeout.current = setTimeout(() => {
         nonModalClosingElements.current = [containerRef.current as Element];
         currentModalId.current = id;
-        setHeader(<CodeHeader path={highlightedMap[id].path} />);
+        setHeader(<CodeHeader path={currentCode.path} />);
         setModal(<CodeContent code={code} />);
         setIsModalShown(true);
       }, 100);
@@ -120,19 +121,19 @@ export default function TimelineItemDescriptionHighlighted({
   };
 
   const handleHoverStart = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       handleOpenModal();
       setIsHovered(true);
     }
   };
 
   const handleClick = () => {
-    if (useIsHoverDevice()) {
+    if (getIsHoverDevice()) {
       setIsModalFull(true);
       setIsHovered(true);
     }
 
-    if (!useIsHoverDevice()) {
+    if (!getIsHoverDevice()) {
       handleOpenModal();
     }
   };
@@ -147,8 +148,8 @@ export default function TimelineItemDescriptionHighlighted({
   };
 
   const handleHoverEnd = () => {
-    if (useIsHoverDevice()) {
-      if (highlightedMap) {
+    if (getIsHoverDevice()) {
+      if (currentCode) {
         if (openModalTimeout.current) {
           clearTimeout(openModalTimeout.current);
         }
@@ -177,8 +178,7 @@ export default function TimelineItemDescriptionHighlighted({
       ref={containerRef}
       className={`rounded-sm px-0.5`}
       variants={variants}
-      {...useOpimizedAnimations({
-        hardware,
+      {...optimizeAnimations({
         animations: {
           initial: "initial",
         },

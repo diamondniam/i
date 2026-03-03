@@ -1,8 +1,9 @@
 import { frames } from "@/features/RennordAnimation/utils";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
-import { loadSpriteFrames, useActivePage } from "@/utils";
+import { useActivePage } from "@/hooks";
 import Image from "next/image";
+import { loadSpriteFrames } from "@/utils";
 
 interface RennordAnimationProps {
   containerRef: React.RefObject<HTMLElement | null>;

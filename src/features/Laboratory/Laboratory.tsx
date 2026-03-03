@@ -1,7 +1,6 @@
 "use client";
 
-import { useFooterPhone } from "@/contexts";
-import { useGlobal } from "@/contexts/GlobalContext";
+import { useFooterPhone, useGlobal } from "@/contexts";
 import {
   AppleAnimation,
   NickRoom,

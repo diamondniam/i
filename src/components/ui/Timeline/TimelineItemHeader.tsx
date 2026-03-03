@@ -10,8 +10,8 @@ import { motion, useInView } from "motion/react";
 import { useProvider } from "@/components/ui/Timeline/Provider";
 import { useRef, useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
-import { useGlobal } from "@/contexts/GlobalContext";
-import { useOpimizedAnimations } from "@/utils";
+import { useOpimizedAnimations } from "@/hooks";
+import { useGlobal } from "@/contexts";
 
 export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
   const { itemsHeaderRefs } = useProvider();
@@ -39,6 +39,8 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
     isTitleInView = useInView(titleRef, { once: true });
   }
 
+  const optimizeAnimations = useOpimizedAnimations();
+
   return (
     <div
       ref={(el: HTMLDivElement | null) => {
@@ -47,8 +49,7 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
     >
       <motion.div
         className="textXS text-[var(--gray)] font-light"
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: { opacity: 0, x: 100 },
             transition: { delay: 1, duration: 0.5 },
@@ -64,25 +65,26 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
       </motion.div>
 
       <div className="flex gap-1 items-center">
-        <h2 ref={titleRef} className="textL">
-          {hardware.power === "high" ? (
-            <Text
-              text={props.title}
-              letterArgs={{
-                animate: isTitleInView ? "visible" : "hidden",
-              }}
-              delay={0.5}
-            />
-          ) : (
-            props.title
-          )}
-        </h2>
+        {props.title && (
+          <h2 ref={titleRef} className="textL">
+            {hardware.power === "high" ? (
+              <Text
+                text={props.title}
+                letterArgs={{
+                  animate: isTitleInView ? "visible" : "hidden",
+                }}
+                delay={0.5}
+              />
+            ) : (
+              props.title
+            )}
+          </h2>
+        )}
 
         {props.url && (
           <Link href={props.url} target="_blank" className="flex-none">
             <motion.div
-              {...useOpimizedAnimations({
-                hardware,
+              {...optimizeAnimations({
                 animations: {
                   initial: { opacity: 0, scale: 0.5 },
                   whileInView: linkAnimation.styles,
@@ -124,23 +126,24 @@ export default function TimelineItemHeader(props: TimelineItemHeaderProps) {
         )}
       </div>
 
-      <div
-        ref={jobPositionRef}
-        className="text-[var(--gray)] textM !font-light overflow-hidden"
-      >
-        <motion.p
-          {...useOpimizedAnimations({
-            hardware,
-            animations: {
-              initial: { y: 60 },
-              animate: isJobPositionInView ? { y: 0 } : { y: 60 },
-              transition: { delay: 1.5, duration: 0.5 },
-            },
-          })}
+      {props.position && (
+        <div
+          ref={jobPositionRef}
+          className="text-[var(--gray)] textM !font-light overflow-hidden"
         >
-          {props.position}
-        </motion.p>
-      </div>
+          <motion.p
+            {...optimizeAnimations({
+              animations: {
+                initial: { y: 60 },
+                animate: isJobPositionInView ? { y: 0 } : { y: 60 },
+                transition: { delay: 1.5, duration: 0.5 },
+              },
+            })}
+          >
+            {props.position}
+          </motion.p>
+        </div>
+      )}
 
       <TimelineItemTags tags={props.tags} />
     </div>

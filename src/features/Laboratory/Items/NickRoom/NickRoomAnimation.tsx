@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { frames } from "./utils/animation";
-import { loadSpriteFrames, preloadImages, useActivePage } from "@/utils";
+import { loadSpriteFrames } from "@/utils";
 
 type Props = {
   isPointerOn: boolean;

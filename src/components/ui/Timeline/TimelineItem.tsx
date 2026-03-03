@@ -10,8 +10,7 @@ import { twMerge } from "tailwind-merge";
 import TimelineItemDescription from "@/components/ui/Timeline/TimelineItemDescription";
 import TimelineItemHeader from "@/components/ui/Timeline/TimelineItemHeader";
 import { useEffect, useState } from "react";
-import { useGlobal } from "@/contexts/GlobalContext";
-import { useOpimizedAnimations } from "@/utils";
+import { useOpimizedAnimations } from "@/hooks";
 
 export default function TimelineItem(props: TimelineItemProps) {
   const {
@@ -43,7 +42,7 @@ export default function TimelineItem(props: TimelineItemProps) {
       TIMELINE_INITIAL_OPACITY_ANIMATION_DELAY_DURATION,
   });
 
-  const { hardware } = useGlobal();
+  const optimizeAnimations = useOpimizedAnimations();
 
   useEffect(() => {
     if (isSet) {
@@ -113,8 +112,7 @@ export default function TimelineItem(props: TimelineItemProps) {
               : "auto"
           }px`,
         }}
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: {
               opacity: 0,
@@ -139,8 +137,7 @@ export default function TimelineItem(props: TimelineItemProps) {
 
       <motion.div
         className="gapS"
-        {...useOpimizedAnimations({
-          hardware,
+        {...optimizeAnimations({
           animations: {
             initial: {
               transform: "translateX(0px)",
@@ -170,7 +167,10 @@ export default function TimelineItem(props: TimelineItemProps) {
             index={props.index}
           />
 
-          <TimelineItemDescription description={props.body.description} />
+          <TimelineItemDescription
+            codes={props.body.codes}
+            description={props.body.description}
+          />
         </div>
 
         <div>{props.children}</div>

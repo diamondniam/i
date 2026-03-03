@@ -23,8 +23,6 @@ export type Context = {
   isActiveLineVisible: boolean;
   isMounted: boolean;
 
-  highlightedMap?: Record<string, CodeProps>;
-
   containerWidth: number;
   containerHeight: number;
 
@@ -35,5 +33,4 @@ export type Context = {
 
 export type Provider = {
   children: React.ReactNode;
-  highlightedMap?: Record<string, CodeProps>;
 };

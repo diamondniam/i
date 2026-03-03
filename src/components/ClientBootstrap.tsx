@@ -1,7 +1,7 @@
 "use client";
 
 import { useNavigationStore } from "@/store/navigation";
-import { setLocale } from "@/utils";
+import { setLocale } from "@/hooks";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 

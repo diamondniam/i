@@ -1,6 +1,6 @@
 import { useProvider } from "@/components/ui/Timeline/Provider";
-import { useGlobal } from "@/contexts/GlobalContext";
-import { useOpimizedAnimations } from "@/utils";
+import { useGlobal } from "@/contexts";
+import { useOpimizedAnimations } from "@/hooks";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import "./style.css";
@@ -54,6 +54,8 @@ export default function Timeline() {
     }
   }, [isSet, containerHeight, containerWidth]);
 
+  const optimizeAnimations = useOpimizedAnimations();
+
   useEffect(() => {
     if (isActiveLineVisible) {
       setActivePostionLineHeight(TIMELINE_ACTIVE_LINE_HEIGHT);
@@ -74,8 +76,7 @@ export default function Timeline() {
                 TIMELINE_DOT_SIZE / 2
               }px`,
             }}
-            {...useOpimizedAnimations({
-              hardware,
+            {...optimizeAnimations({
               animations: {
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
