@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import { useFooterPhone } from "@/contexts";
 import "./styles.css";
 import { getIsHoverDevice } from "@/utils";
-import Canvas from "@border-waves/core";
+import Canvas, { SetCanvasProps } from "@border-waves/core";
 
 const appleAnimation = laboratory[1];
 
@@ -66,6 +66,18 @@ export default function AppleAnimation() {
     animationsBorder.initial.gradientInterval
   );
 
+  const animationCanvasOptions: SetCanvasProps = {
+    blur: "4px",
+    waveAmplitude,
+    waveSpawnInterval,
+    gradientInterval,
+    width: 190,
+    height: 410,
+    radius: 25,
+    pointsPerMaxEdge: 60,
+    waveLength: { min: 10, max: 20 },
+  };
+
   const handlePointerEnter = () => {
     if (getIsHoverDevice()) {
       if (pointerAnimationTimeout.current) {
@@ -93,28 +105,19 @@ export default function AppleAnimation() {
   };
 
   useEffect(() => {
-    if (!animationRef.current) return;
-
-    const options = {
-      waveAmplitude,
-      waveSpawnInterval,
-      gradientInterval,
-      width: 190,
-      height: 410,
-      radius: 25,
-      pointsPerMaxEdge: 60,
-      waveLength: { min: 10, max: 20 },
-    };
-
     if (animationCanvasClass.current) {
-      animationCanvasClass.current.setCanvas(options);
-    } else {
+      animationCanvasClass.current.setCanvas(animationCanvasOptions);
+    }
+  }, [waveAmplitude, waveSpawnInterval, gradientInterval]);
+
+  useEffect(() => {
+    if (animationRef.current && isInView) {
       animationCanvasClass.current = new Canvas({
         el: animationRef.current,
-        ...options,
+        ...animationCanvasOptions,
       });
     }
-  }, [waveAmplitude, waveSpawnInterval, gradientInterval, isInView]);
+  }, [isInView]);
 
   return (
     <LaboratoryItem
