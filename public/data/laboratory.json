@@ -10,12 +10,12 @@
   },
   {
     "id": "apple-siri-animation",
-    "title": "Apple Siri border animation",
+    "title": "Border Waves Animation",
     "description": {
-      "en": "Inspired by apple ai flows and @trpfsu (on twitter) and created border waves animation.",
-      "ru": "Вдохновившись AI-анимациями Apple и @trpfsu (в Twitter), создал анимацию волнистых границ."
+      "en": "Inspired by Apple AI Siri flows, I created package for border waves animation.",
+      "ru": "Вдохновившись AI-анимациями Siri у Apple, я создал библиотеку анимации волнистых границ."
     },
-    "link": "https://github.com/diamondniam/apple-ai-animation"
+    "link": "https://github.com/diamondniam/border-waves"
   },
   {
     "id": "nick-room",

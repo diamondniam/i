@@ -10,6 +10,7 @@
     "prepare-db-types": "export $(cat .env | xargs) && npx supabase gen types typescript --project-id $NEXT_PUBLIC_SUPABASE_API_DOMAIN > src/types/database.ts"
   },
   "dependencies": {
+    "@border-waves/core": "^1.0.3",
     "@gsap/react": "^2.1.2",
     "@heroicons/react": "^2.2.0",
     "@supabase/supabase-js": "^2.98.0",

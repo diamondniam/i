@@ -3,13 +3,13 @@
 import LaboratoryItem from "@/features/Laboratory/LaborarotyItem";
 import Image from "next/image";
 import laboratory from "@public/data/laboratory.json";
-import Animation from "@/features/Laboratory/Items/AppleAnimation/Animation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, useInView } from "motion/react";
 import { motion } from "motion/react";
 import { useFooterPhone } from "@/contexts";
 import "./styles.css";
 import { getIsHoverDevice } from "@/utils";
+import Canvas from "@border-waves/core";
 
 const appleAnimation = laboratory[1];
 
@@ -50,6 +50,8 @@ const animationsBorder = {
 export default function AppleAnimation() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { amount: 0.8 });
+  const animationRef = useRef<HTMLCanvasElement | null>(null);
+  const animationCanvasClass = useRef<Canvas | null>(null);
 
   const { laboratoryPhoneRef } = useFooterPhone();
 
@@ -89,6 +91,30 @@ export default function AppleAnimation() {
       }, 300);
     }
   };
+
+  useEffect(() => {
+    if (!animationRef.current) return;
+
+    const options = {
+      waveAmplitude,
+      waveSpawnInterval,
+      gradientInterval,
+      width: 190,
+      height: 410,
+      radius: 25,
+      pointsPerMaxEdge: 60,
+      waveLength: { min: 10, max: 20 },
+    };
+
+    if (animationCanvasClass.current) {
+      animationCanvasClass.current.setCanvas(options);
+    } else {
+      animationCanvasClass.current = new Canvas({
+        el: animationRef.current,
+        ...options,
+      });
+    }
+  }, [waveAmplitude, waveSpawnInterval, gradientInterval, isInView]);
 
   return (
     <LaboratoryItem
@@ -142,16 +168,7 @@ export default function AppleAnimation() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1 }}
               >
-                <Animation
-                  width={190}
-                  height={410}
-                  radius={25}
-                  pointsPerMaxEdge={60}
-                  waveAmplitude={waveAmplitude}
-                  waveLength={{ min: 10, max: 20 }}
-                  waveSpawnInterval={waveSpawnInterval}
-                  gradientInterval={gradientInterval}
-                />
+                <canvas ref={animationRef}></canvas>
               </motion.div>
             </div>
           )}
