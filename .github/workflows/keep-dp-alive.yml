@@ -12,6 +12,6 @@ jobs:
     steps:
       - name: Ping Database
         run: |
-          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/get_server_time" \
-          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/keep-alive" \
+          -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}"
