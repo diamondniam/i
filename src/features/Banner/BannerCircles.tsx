@@ -50,6 +50,8 @@ export default function BannerCircles() {
     params: DOMKeyframesDefinition,
     transition?: AnimationOptions
   ) => {
+    if (!ref) return;
+
     animate(ref, params, { duration: INITIAL_DURATION / 1000, ...transition });
   };
 

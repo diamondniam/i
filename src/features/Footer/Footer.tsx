@@ -42,169 +42,179 @@ export default function Footer() {
   const { setNickRoomAnimating, setNickRoomAnimatingDir } =
     useNavigationStore();
 
-  useGSAP(() => {
-    const laboratoryBound = laboratoryRef.current!.getBoundingClientRect();
-    const laboratoryPhoneBound =
-      laboratoryPhoneRef.current!.getBoundingClientRect();
+  useGSAP(
+    () => {
+      const laboratoryBound = laboratoryRef.current!.getBoundingClientRect();
+      const laboratoryPhoneBound =
+        laboratoryPhoneRef.current!.getBoundingClientRect();
 
-    const laboratoryTimelineScrollTrigger = laboratoryRef.current;
-    const laboratoryTimelineScrollStart = "top top";
+      const laboratoryTimelineScrollTrigger = laboratoryRef.current;
+      const laboratoryTimelineScrollStart = "top top";
 
-    laboratoryTimeline.current = gsap.timeline({
-      scrollTrigger: {
-        trigger: laboratoryTimelineScrollTrigger,
-        start: laboratoryTimelineScrollStart,
-        end: `+=${PHONE_ANIMATION_HEIGHT}`,
-        scrub: true,
-        pin: true,
-      },
-    });
+      laboratoryTimeline.current = gsap.timeline({
+        scrollTrigger: {
+          trigger: laboratoryTimelineScrollTrigger,
+          start: laboratoryTimelineScrollStart,
+          end: `+=${PHONE_ANIMATION_HEIGHT}`,
+          scrub: true,
+          pin: true,
+        },
+      });
 
-    if (!isMobile) {
-      if (
-        socialMediaRef.current &&
-        laboratoryRef.current &&
-        laboratoryPhoneRef.current &&
-        laboratoryRef.current
-      ) {
-        ScrollTrigger.refresh();
+      if (!isMobile) {
+        if (
+          socialMediaRef.current &&
+          laboratoryRef.current &&
+          laboratoryPhoneRef.current &&
+          laboratoryRef.current
+        ) {
+          ScrollTrigger.refresh();
 
-        const laboratoryItems = Array.from(
-          laboratoryRef.current!.querySelector("div")!.children
-        );
+          const laboratoryItems = Array.from(
+            laboratoryRef.current!.querySelector("div")!.children
+          );
 
-        laboratoryItems.sort((a) => {
-          if (a.contains(laboratoryPhoneRef.current)) return 1;
-          return -1;
-        });
+          laboratoryItems.sort((a) => {
+            if (a.contains(laboratoryPhoneRef.current)) return 1;
+            return -1;
+          });
 
-        laboratoryItems.forEach((item, i) => {
-          const isPreLast = i === laboratoryItems.length - 2;
-          const isLast = i === laboratoryItems.length - 1;
+          laboratoryItems.forEach((item, i) => {
+            const isPreLast = i === laboratoryItems.length - 2;
+            const isLast = i === laboratoryItems.length - 1;
 
-          laboratoryTimeline.current!.to(item, {
-            id: item.id,
-            opacity: 0,
+            laboratoryTimeline.current!.to(item, {
+              id: item.id,
+              opacity: 0,
+              onReverseComplete: () => {
+                const el = laboratoryRef.current;
+
+                if (el) {
+                  if (isPreLast) {
+                    el.classList.remove("pointer-events-none", "select-none");
+                  } else if (!isLast) {
+                    item.classList.remove("pointer-events-none", "select-none");
+                  }
+                }
+              },
+              onComplete: () => {
+                const el = laboratoryRef.current;
+
+                if (el) {
+                  if (isPreLast) {
+                    el.classList.add("pointer-events-none", "select-none");
+                  } else if (!isLast) {
+                    item.classList.add("pointer-events-none", "select-none");
+                  }
+                }
+              },
+            });
+          });
+
+          const targetPhoneBound =
+            targetPhoneRef.current!.getBoundingClientRect();
+          const lastScreenBound =
+            lastScreenRef.current!.getBoundingClientRect();
+
+          const phoneXInit = laboratoryPhoneBound.left;
+          const phoneXTarget = targetPhoneBound.left;
+
+          const phoneYInit = laboratoryPhoneBound.top - laboratoryBound.top;
+          const phoneYTarget = targetPhoneBound.top - lastScreenBound.top;
+
+          laboratoryTimeline.current.fromTo(
+            phoneRef.current,
+            {
+              x: phoneXInit,
+              y: phoneYInit,
+              opacity: 0,
+            },
+            {
+              opacity: 1,
+            },
+            "<"
+          );
+
+          laboratoryTimeline.current.to(
+            laboratoryRef.current!.querySelector("div"),
+            {
+              opacity: 0,
+            }
+          );
+
+          laboratoryTimeline.current.to(phoneRef.current, {
+            x: phoneXTarget,
+            y: phoneYTarget,
+            duration: 2,
             onReverseComplete: () => {
-              if (isPreLast) {
-                laboratoryRef.current!.classList.remove(
+              const phoneEl = phoneRef.current;
+              const socialMediaEl = laboratoryRef.current;
+
+              if (phoneEl && socialMediaEl) {
+                phoneEl.classList.add("pointer-events-none", "select-none");
+                socialMediaEl.classList.add(
                   "pointer-events-none",
                   "select-none"
                 );
-              } else if (!isLast) {
-                item.classList.remove("pointer-events-none", "select-none");
               }
             },
             onComplete: () => {
-              if (isPreLast) {
-                laboratoryRef.current!.classList.add(
+              const phoneEl = phoneRef.current;
+              const socialMediaEl = laboratoryRef.current;
+
+              if (phoneEl && socialMediaEl) {
+                phoneEl.classList.remove("pointer-events-none", "select-none");
+                socialMediaEl.classList.remove(
                   "pointer-events-none",
                   "select-none"
                 );
-              } else if (!isLast) {
-                item.classList.add("pointer-events-none", "select-none");
               }
             },
           });
-        });
 
-        const targetPhoneBound =
-          targetPhoneRef.current!.getBoundingClientRect();
-        const lastScreenBound = lastScreenRef.current!.getBoundingClientRect();
+          laboratoryTimeline.current.to(
+            socialMediaRef.current,
+            {
+              opacity: 1,
+              onComplete: () => {
+                setSocialMediaScrollTrigger(true);
+              },
+              onReverseComplete: () => {
+                setSocialMediaScrollTrigger(false);
+              },
+            },
+            "<"
+          );
 
-        const phoneXInit = laboratoryPhoneBound.left;
-        const phoneXTarget = targetPhoneBound.left;
+          const lastScreenItems = [cactusRef.current, titlesRef.current];
 
-        const phoneYInit = laboratoryPhoneBound.top - laboratoryBound.top;
-        const phoneYTarget = targetPhoneBound.top - lastScreenBound.top;
+          for (let i = 0; i < lastScreenItems.length; i++) {
+            const element = lastScreenItems[i];
 
-        laboratoryTimeline.current.fromTo(
-          phoneRef.current,
-          {
-            x: phoneXInit,
-            y: phoneYInit,
-            opacity: 0,
-          },
-          {
-            opacity: 1,
-          },
-          "<"
-        );
-
-        laboratoryTimeline.current.to(
-          laboratoryRef.current!.querySelector("div"),
-          {
-            opacity: 0,
+            gsap.to(element, {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              delay: i * 2 + 1,
+              scrollTrigger: {
+                trigger: laboratoryRef.current,
+                start: "top top",
+                end: `+=${PHONE_ANIMATION_HEIGHT}`,
+                scrub: 4 * i + 4,
+              },
+            });
           }
-        );
-
-        laboratoryTimeline.current.to(phoneRef.current, {
-          x: phoneXTarget,
-          y: phoneYTarget,
-          duration: 2,
-          onReverseComplete: () => {
-            phoneRef.current!.classList.add(
-              "pointer-events-none",
-              "select-none"
-            );
-            socialMediaRef.current!.classList.add(
-              "pointer-events-none",
-              "select-none"
-            );
-          },
-          onComplete: () => {
-            phoneRef.current!.classList.remove(
-              "pointer-events-none",
-              "select-none"
-            );
-            socialMediaRef.current!.classList.remove(
-              "pointer-events-none",
-              "select-none"
-            );
-          },
-        });
-
-        laboratoryTimeline.current.to(
-          socialMediaRef.current,
-          {
-            opacity: 1,
-            onComplete: () => {
-              setSocialMediaScrollTrigger(true);
-            },
-            onReverseComplete: () => {
-              setSocialMediaScrollTrigger(false);
-            },
-          },
-          "<"
-        );
-
-        const lastScreenItems = [cactusRef.current, titlesRef.current];
-
-        for (let i = 0; i < lastScreenItems.length; i++) {
-          const element = lastScreenItems[i];
-
-          gsap.to(element, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            delay: i * 2 + 1,
-            scrollTrigger: {
-              trigger: laboratoryRef.current,
-              start: "top top",
-              end: `+=${PHONE_ANIMATION_HEIGHT}`,
-              scrub: 4 * i + 4,
-            },
-          });
         }
+      } else {
+        ScrollTrigger.getAll().forEach((st) => st.kill(true));
+        cactusRef.current!.style.opacity = "1";
+        cactusRef.current!.style.transform = "none";
+        titlesRef.current!.style.opacity = "1";
+        titlesRef.current!.style.transform = "none";
       }
-    } else {
-      ScrollTrigger.getAll().forEach((st) => st.kill(true));
-      cactusRef.current!.style.opacity = "1";
-      cactusRef.current!.style.transform = "none";
-      titlesRef.current!.style.opacity = "1";
-      titlesRef.current!.style.transform = "none";
-    }
-  }, [isMobile]);
+    },
+    { scope: containerRef, dependencies: [isMobile] }
+  );
 
   const handleCactusClick = () => {
     setNickRoomAnimatingDir("forward");
@@ -305,7 +315,7 @@ export default function Footer() {
               : `translateY(${LAST_SCREEN_CACTUS_ANIMATION_INITIAL_Y}px)`,
             opacity: isSimpleView ? 1 : 0,
           }}
-          onClick={() => handleCactusClick()}
+          onClick={handleCactusClick}
         >
           <Image
             src="/images/footerCactus.png"
