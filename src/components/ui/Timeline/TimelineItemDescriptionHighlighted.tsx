@@ -113,7 +113,9 @@ export default function TimelineItemDescriptionHighlighted({
       openModalTimeout.current = setTimeout(() => {
         nonModalClosingElements.current = [containerRef.current as Element];
         currentModalId.current = id;
-        setHeader(<CodeHeader path={currentCode.path} />);
+        setHeader(
+          !!currentCode.path ? <CodeHeader path={currentCode.path} /> : null
+        );
         setModal(<CodeContent code={code} />);
         setIsModalShown(true);
       }, 100);

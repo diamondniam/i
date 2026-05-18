@@ -4,7 +4,9 @@ import { createHighlighter, Highlighter } from "shiki";
 import kanagawaDragon from "shiki/themes/kanagawa-dragon.mjs";
 
 export function useCodeHighlighter(
-  { langs }: { langs: string[] } = { langs: ["vue", "js"] }
+  { langs }: { langs: string[] } = {
+    langs: ["vue", "js", "markdown", "java", "json"],
+  }
 ) {
   const highlighter = useRef<Highlighter | null>(null);
 

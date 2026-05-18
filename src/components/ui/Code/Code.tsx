@@ -33,7 +33,7 @@ export default function Code(props: { code: CodeProps }) {
 
   return (
     <div className="gapS bg-[var(--background-secondary)] rounded-lg shadow-md">
-      <CodeHeader path={props.code.path} />
+      {props.code.path && <CodeHeader path={props.code.path} />}
 
       <div className="h-full relative">
         <div className="px-3">
