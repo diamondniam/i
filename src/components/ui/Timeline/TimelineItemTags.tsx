@@ -8,7 +8,7 @@ import {
   Transition,
   useInView,
 } from "motion/react";
-import { Size, useOpimizedAnimations, useResize } from "@/hooks";
+import { Size, useDebounce, useOpimizedAnimations, useResize } from "@/hooks";
 import { useGlobal } from "@/contexts";
 
 const TAG_ANIMATION_SCALE_INITIAL_AMOUNT = 0.3;
@@ -32,6 +32,8 @@ export default function TimelineItemTags({
   );
   let isInView: boolean;
   const [isShowAll, setShowAll] = useState(false);
+
+  const isShowAllDebounced = useDebounce(isShowAll, 1);
 
   const allTags = useMemo(() => [...tags.main, ...tags.others], [tags]);
 
@@ -164,7 +166,7 @@ export default function TimelineItemTags({
         ))}
 
         <AnimatePresence mode="popLayout">
-          {!isShowAll ? (
+          {!isShowAllDebounced ? (
             <motion.button
               onClick={() => {
                 setShowAll(true);

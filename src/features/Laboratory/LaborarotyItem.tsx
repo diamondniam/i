@@ -35,7 +35,13 @@ export default function LaboratoryItem(props: LaboratoryItemProps) {
       })}
     >
       <motion.div
-        className={twMerge("min-h-[200px]", props.classNames?.children)}
+        className={twMerge(
+          "min-h-[200px] max-lg:touch-none",
+          props.classNames?.children
+        )}
+        onContextMenu={(e) => {
+          e.preventDefault();
+        }}
         {...optimizeAnimations({
           animations: {
             initial: { opacity: 0 },

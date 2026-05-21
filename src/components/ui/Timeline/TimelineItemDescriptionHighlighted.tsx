@@ -28,6 +28,7 @@ export default function TimelineItemDescriptionHighlighted({
   const [isShown, setIsShown] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const openModalTimeout = useRef<NodeJS.Timeout | null>(null);
+  const openModalTimeoutDelay = 100;
   const { hardware } = useGlobal();
 
   const [code, setCode] = useState("");
@@ -118,35 +119,27 @@ export default function TimelineItemDescriptionHighlighted({
         );
         setModal(<CodeContent code={code} />);
         setIsModalShown(true);
-      }, 100);
+      }, openModalTimeoutDelay);
     }
   };
 
   const handleHoverStart = () => {
     if (getIsHoverDevice()) {
-      handleOpenModal();
       setIsHovered(true);
     }
   };
 
-  const handleClick = () => {
-    if (getIsHoverDevice()) {
-      setIsModalFull(true);
-      setIsHovered(true);
-    }
-
+  const handleMobileTap = () => {
     if (!getIsHoverDevice()) {
       handleOpenModal();
     }
   };
 
-  const handlePointerDown = () => {
-    setIsClicked(true);
-  };
-
-  const handlePointerUp = () => {
-    setIsClicked(false);
-    setIsHovered(false);
+  const handleDesktopClick = () => {
+    if (getIsHoverDevice()) {
+      setIsModalFull(true);
+      setIsHovered(true);
+    }
   };
 
   const handleHoverEnd = () => {
@@ -187,12 +180,18 @@ export default function TimelineItemDescriptionHighlighted({
       })}
       animate={getAnimation}
       onHoverStart={handleHoverStart}
-      onClick={handleClick}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
       onHoverEnd={handleHoverEnd}
-      onPointerCancel={handlePointerUp}
-      onPointerLeave={handlePointerUp}
+      onClick={handleDesktopClick}
+      onTapStart={() => setIsClicked(true)}
+      onTap={() => {
+        setIsClicked(false);
+        setIsHovered(false);
+        handleMobileTap();
+      }}
+      onTapCancel={() => {
+        setIsClicked(false);
+        setIsHovered(false);
+      }}
     >
       {children}
     </motion.button>
