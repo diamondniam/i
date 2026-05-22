@@ -1,4 +1,5 @@
 import { LenisRef } from "lenis/react";
+import { ScrollTrigger } from "gsap/all";
 
 export function handleIsScrollingFn(
   isScrolling: React.RefObject<boolean>,
@@ -60,10 +61,6 @@ export function unlockScroll({
     return;
   }
 
-  if (lenisRef.current) {
-    lenisRef.current.lenis?.stop();
-  }
-
   document.documentElement.style.position = "";
   document.documentElement.style.top = "";
   document.documentElement.style.width = "";
@@ -73,13 +70,17 @@ export function unlockScroll({
 
   document.documentElement.dataset.scrollY = "";
 
-  requestAnimationFrame(() => {
-    document.documentElement.scrollTo(0, parseInt(scrollY));
-  });
+  const targetScroll = parseInt(scrollY, 10);
 
-  setTimeout(() => {
-    if (lenisRef.current) {
-      lenisRef.current?.lenis?.start();
-    }
-  }, 500);
+  window.scrollTo(0, targetScroll);
+
+  ScrollTrigger.refresh();
+
+  if (lenisRef.current?.lenis) {
+    const lenis = lenisRef.current.lenis;
+
+    lenis.scrollTo(targetScroll, { immediate: true });
+
+    lenis.start();
+  }
 }

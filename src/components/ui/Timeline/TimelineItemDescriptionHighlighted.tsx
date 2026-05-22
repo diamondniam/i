@@ -126,6 +126,7 @@ export default function TimelineItemDescriptionHighlighted({
   const handleHoverStart = () => {
     if (getIsHoverDevice()) {
       setIsHovered(true);
+      handleOpenModal();
     }
   };
 
@@ -139,6 +140,7 @@ export default function TimelineItemDescriptionHighlighted({
     if (getIsHoverDevice()) {
       setIsModalFull(true);
       setIsHovered(true);
+      handleOpenModal();
     }
   };
 
