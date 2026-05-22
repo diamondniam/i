@@ -6,11 +6,11 @@ import "./style.css";
 
 import posts from "@public/data/socialMediaPosts.json";
 import { useEffect, useRef } from "react";
-import InstagramContact from "@/features/SocialMedia/InstagramContact";
 import TelegramContact from "@/features/SocialMedia/TelegramContact";
 import EmailContact from "@/features/SocialMedia/EmailContact";
 import { useConfig } from "@/contexts";
 import { useLocale } from "next-intl";
+import CVLink from "@/features/SocialMedia/CVLink";
 
 const IPHONE_TOP_HEIGHT = 30;
 const IPHONE_BOTTOM_HEIGHT = 30;
@@ -104,9 +104,9 @@ export default function SocialMedia({
         )}
 
         <div className="sticky top-0 flex gap-1 z-[1]">
-          <InstagramContact className="!w-[30px] !h-[30px]" />
           <EmailContact className="!w-[30px] !h-[30px]" />
           <TelegramContact className="!w-[30px] !h-[30px]" />
+          <CVLink className="!w-[30px] !h-[30px]" />
         </div>
 
         <div className="flex flex-col w-full gap-3">

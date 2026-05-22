@@ -10,6 +10,9 @@
       },
       "telegram": {
         "text": "Follow Telegram"
+      },
+      "cv": {
+        "text": "Download CV"
       }
     }
   }

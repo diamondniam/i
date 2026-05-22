@@ -11,6 +11,7 @@ import TelegramContact from "@/features/SocialMedia/TelegramContact";
 import { useInView } from "motion/react";
 import { useLocale } from "next-intl";
 import { useConfig } from "@/contexts";
+import CVLink from "@/features/SocialMedia/CVLink";
 
 export default function SocialMediaHorizontal({
   ref,
@@ -87,6 +88,7 @@ export default function SocialMediaHorizontal({
             <InstagramContact />
             <EmailContact />
             <TelegramContact />
+            <CVLink />
           </div>
         </div>
 
